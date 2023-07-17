@@ -1,6 +1,6 @@
 import { IData } from "@/app/sevices/typedata";
 import { getData, getDataDetail } from "@/app/sevices/untils";
-import Head from "next/head";
+
 import Image from "next/image";
 import Link from "next/link";
 interface Fulldata extends IData {
@@ -11,12 +11,14 @@ import React, { FC } from "react";
 interface ParamsBlog {
   params: { slug: string };
 }
-const domainsever = process.env.DOMAIN_URL || "https://zecky.online/";
+
+const domainsever = process.env.DOMAIN_URL || "https://blog.zecky.online";
 export async function generateMetadata({ params }: ParamsBlog) {
-  const data: IData = await getDataDetail(params.slug);
+  const data: Fulldata = await getDataDetail(params.slug);
   return {
     title: data.title + " | Zecky",
     description: data.des,
+    keywords: [data.title, ...data.title.split(" ")],
     metadataBase: new URL(`${domainsever}/blog/${data.slug}`),
     alternates: {
       canonical: process.env.DOMAIN_URL,
@@ -27,7 +29,24 @@ export async function generateMetadata({ params }: ParamsBlog) {
       },
     },
     openGraph: {
-      images: data.image,
+      title: data.title,
+      description: data.des,
+      type: "article",
+      publishedTime: data.updatedAt,
+      authors: ["zecky.online", "blog.zecky.online", "Phạm Hoài Nam"],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      nocache: true,
+      googleBot: {
+        index: true,
+        follow: false,
+        noimageindex: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
     },
   };
 }
@@ -45,65 +64,60 @@ export async function generateStaticParams() {
 
 const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
   const data: Fulldata = await getDataDetail(params.slug);
-  const schema = {
+  const schema1 = {
     "@context": "http://schema.org",
-    "@type": "NewsArticle",
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": `${process.env.DOMAIN_URL}/blog/${data.slug}`,
-    },
-    headline: `${data.title}`,
-    description: `${data.des}`,
-    image: {
-      "@type": "ImageObject",
-      url: `${data.image}`,
-      width: 700,
-      height: 438,
-    },
-    datePublished: data.createdAt,
-    dateModified: data.updatedAt,
-    author: {
-      "@type": "Person",
-      name: "Hoài Nam",
-    },
-    publisher: {
-      "@type": "Organization",
-      name: `${process.env.DOMAIN_URL}`,
-      logo: {
-        "@type": "ImageObject",
-        url: "../../favicon.ico",
-        width: 70,
-        height: 70,
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        item: {
+          "@id": domainsever,
+          name: "Trang chủ",
+        },
       },
+
+      {
+        "@type": "ListItem",
+        position: 2,
+        item: {
+          "@id": domainsever,
+          name: "blog-developer",
+        },
+      },
+
+      {
+        "@type": "ListItem",
+        position: 3,
+        item: {
+          "@id": `${domainsever}/blog/${data.slug}`,
+          name: `✅${data.title}`,
+        },
+      },
+    ],
+  };
+  const schema2 = {
+    "@context": "http://schema.org/",
+    "@type": "Book",
+    name: data.title,
+    description: data.des,
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "5.0",
+      bestRating: "5",
+      ratingCount: "1",
     },
   };
-
   return (
-    <div>
-      <Head>
-        <meta property="og:url" content={`/blog/${params.slug}`} />
-        <meta property="og:image" content={data.image} />
-        <meta name="site_path" content="/" />
-        <meta name="author" content="zecky.online" />
-        <meta property="og:type" content="article" />
-        <meta name="og:site_name" content="zecky.online" />
-        <meta property="og:image:type" content="image/jpg" />
-        <meta property="og:image:width" content="600" />
-        <meta property="og:image:height" content="315" />
-        <meta name="keywords" content={data.title} />
-        <meta name="robots" content="index, follow" />
-        <meta http-equiv="refresh" content="3600" />
-        <meta name="Language" content="vi" />
-        <meta name="distribution" content="Global" />
-        <meta name="revisit-after" content="1 days" />
-        <meta property="twitter:image" content={data.image} />
-        <meta property="twitter:card" content="summary_large_image" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-        />
-      </Head>
-
+    <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema1) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema2) }}
+      />
       <div className="menu text-white text-sm mb-4 flex items-center gap-1  text-ellipsis overflow-hidden whitespace-nowrap">
         <Link href="/">Trang chủ</Link> /<Link href="/blog">Tin tức</Link> /
         <p className="sm:max-w-[400px] max-w-[calc(100vw-200px)]  text-ellipsis overflow-hidden whitespace-nowrap ">
@@ -130,7 +144,7 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
           <Link href="/blog">Xem thêm...</Link>
         </button>
       </div>
-    </div>
+    </main>
   );
 };
 

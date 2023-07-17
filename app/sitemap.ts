@@ -7,7 +7,7 @@ interface Fulldata extends IData {
 const domain = process.env.DOMAIN_URL;
 export default async function sitemap() {
   const data = await getData();
-  const listurl = ["https://blog.zecky.online", "https://zecky.online/"];
+  const listurl = [domain, "https://zecky.online/", `${domain}/search`];
   const listData = listurl.map((url) => ({
     url,
     lastModified: new Date().toISOString(),

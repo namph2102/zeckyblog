@@ -1,7 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Footer, Header } from "./component";
+
 import { Toaster } from "react-hot-toast";
 const inter = Inter({ subsets: ["latin"] });
 const domainsever = process.env.DOMAIN_URL || "https://zecky.online";
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   generator: "Zecky - Ứng dụng nhắn tin",
   applicationName: "Zecky - Ứng dụng nhắn tin",
   referrer: "origin-when-cross-origin",
-  keywords: ["zecky bài viết", "zecky blog", "zecky chính sách"],
+  keywords: ["zecky bài viết", "zecky blog", "zecky chính sách", "báo"],
   authors: [
     { name: "Phạm Hoài Nam" },
     { name: "Hoài Nam", url: "https://www.facebook.com/namhoai2102" },
@@ -43,11 +43,7 @@ export default function RootLayout({
   return (
     <html lang="vi">
       <body suppressHydrationWarning={true} className={inter.className}>
-        <div className="container mx-auto">
-          <Header />
-          <div className="min-h-[60vh]">{children}</div>
-          <Footer />
-        </div>
+        {children}
         <Toaster position="top-right" reverseOrder={false} />
       </body>
     </html>

@@ -7,11 +7,11 @@ import { Pagination } from "@mui/material";
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import BlogItemSketon from "../component/BlogItemSketon";
-
+let listBlogsData: IData[] = [];
 export default function Blog() {
-  const [listBlogs, setListBlogs] = useState<IData[]>([]);
+  const [listBlogs, setListBlogs] = useState<IData[]>(listBlogsData);
   const [infoPage, setInfoPage] = useState({
-    totalPage: 0,
+    totalPage: Math.ceil(listBlogs.length / 10),
     currentPage: 1,
     pageInblog: 10,
   });
@@ -19,6 +19,7 @@ export default function Blog() {
     getAllBlog().then((data) => {
       if (data?.length > 0) {
         setListBlogs(data);
+        listBlogsData = data;
         setInfoPage((prev) => ({
           ...prev,
           totalPage: Math.ceil(data.length / infoPage.pageInblog),

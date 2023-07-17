@@ -42,7 +42,7 @@ const CrawWebsite = () => {
       });
 
       if (listImageCover && listImageCover?.length > 0) {
-        setListImage(listImageCover);
+        setListImage(Array.from(new Set(listImageCover)));
       }
       const paragraphs: any = [];
       $("p").each((index, element) => {
@@ -68,8 +68,8 @@ const CrawWebsite = () => {
           title: title.trim(),
           image,
           des,
-          content: paragraphs.join(""),
-          slug: slugify(title.toLowerCase().trim().replace(/:/, "")),
+          content: paragraphs.join("").replace(/\s{2}/g, " "),
+          slug: slugify(title.toLowerCase().trim().replace(/:/g, "")),
         });
       }
     });

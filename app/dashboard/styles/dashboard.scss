@@ -1,0 +1,21 @@
+.border_line-style {
+  border-color: rgba(47, 128, 237, 0.1);
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #ffff;
+}
+p {
+  color: #fff;
+}
+.btn_hover {
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    background-color: #fff;
+    color: #333;
+  }
+}
