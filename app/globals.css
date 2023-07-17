@@ -1,27 +1,87 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+html {
+  background-color: #222831;
+  line-height: 1.15;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
 }
+body {
+  font-family: Nunito, sans-serif;
+  font-size: 1.125rem;
+  line-height: 32px;
+  color: #ffffff;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+  background-color: #222831;
+  font-weight: 400;
+  text-rendering: optimizeLegibility;
+}
+@media screen and (max-width: 768px) {
+  body {
+    font-size: 1rem;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.text-color-read,
+p,
+ul {
+  color: #bcb9b7;
+  line-height: 2;
+  font-weight: 300;
+  text-align: justify;
+}
+.text-color-head,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 400;
+  color: #efbb35;
+  padding-bottom: 10px;
+}
+h1 {
+  font-size: 30px;
+  line-height: 50px;
+}
+h2 {
+  font-size: 24px;
+}
+h3 {
+  font-size: 22px;
+}
+h4 {
+  font-size: 20px;
+}
+h5 {
+  font-size: 18px;
+}
+h6 {
+  font-size: 16px;
+}
+.MuiBreadcrumbs-separator {
+  color: #ffffff !important;
+}
+.menu > a {
+  color: #58a6ff;
+  font-weight: 300;
+  text-decoration: none;
+  word-break: break-word;
+}
+.menu > a:hover {
+  color: #f59bac !important;
+}
+.panation ul li button {
+  color: #ffffff !important;
+}
+.panation ul li div {
+  color: #ffffff !important;
+}
+.nav-item.nav-link {
+  color: #f59bac !important;
+}
+article h2 {
+  font-size: 1rem !important;
 }
