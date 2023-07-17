@@ -15,6 +15,15 @@ function isImageLink(url: string) {
   var pattern = /\.(jpeg|jpg|png)$/i;
   return pattern.test(url);
 }
+function slugifyCover(text: string) {
+  return text
+    .toString()
+    .toLowerCase()
+    .replace(/\s+/g, "-") // Thay thế khoảng trắng bằng dấu gạch ngang
+    .replace(/[^\w\-]+/g, "") // Loại bỏ các ký tự đặc biệt
+    .replace(/\-\-+/g, "-") // Loại bỏ các dấu gạch ngang liên tiếp
+    .replace(/^-+|-+$/g, ""); // Loại bỏ các dấu gạch ngang ở đầu và cuối chuỗi
+}
 
 const CrawWebsite = () => {
   const [url, setUrl] = useState("");
@@ -69,7 +78,7 @@ const CrawWebsite = () => {
           image,
           des,
           content: paragraphs.join(""),
-          slug: slugify(title).toLowerCase(),
+          slug: slugifyCover(slugify(title)),
         });
       }
     });

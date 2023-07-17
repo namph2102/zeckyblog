@@ -5,7 +5,7 @@ import { IData } from "../sevices/typedata";
 export async function GET(request: NextRequest) {
   try {
     await connectMoongodb();
-    const listBlogs = (await blogModel.find()) || [];
+    const listBlogs = (await blogModel.find().sort({ updatedAt: -1 })) || [];
     return NextResponse.json(listBlogs);
   } catch (err: any) {
     return NextResponse.json({ statusCode: 404, listBlogs: err.message });

@@ -18,6 +18,7 @@ const ImageItem: React.FC<{ img: string }> = ({ img }) => {
   const handleHideBox = () => {
     if (divRef.current) {
       divRef.current.classList.add("hidden");
+      toast.success("Xóa thành công!");
     }
   };
   return (

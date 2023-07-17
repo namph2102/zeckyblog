@@ -10,12 +10,7 @@ const connectMoongodb = async () => {
       useNewUrlParser: true,
       dbName: "webchatting",
     })
-    .then(() => {
-      console.log("kết nối thành công");
-    })
-    .catch((err) => {
-      console.log(err);
-    })
+
     .finally(() => {
       isCoonect = true;
     });
