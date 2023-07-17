@@ -22,7 +22,7 @@ function slugifyCover(text: string) {
     .replace(/\s+/g, "-") // Thay thế khoảng trắng bằng dấu gạch ngang
     .replace(/[^\w\-]+/g, "") // Loại bỏ các ký tự đặc biệt
     .replace(/\-\-+/g, "-") // Loại bỏ các dấu gạch ngang liên tiếp
-    .replace(/^-+|-+$/g, ""); // Loại bỏ các dấu gạch ngang ở đầu và cuối chuỗi
+    .replace(/^-+|-+$/g, "");
 }
 
 const CrawWebsite = () => {
@@ -78,7 +78,7 @@ const CrawWebsite = () => {
           image,
           des,
           content: paragraphs.join(""),
-          slug: slugifyCover(slugify(title)),
+          slug: slugify(slugifyCover(title)),
         });
       }
     });
