@@ -102,7 +102,7 @@ const CrawWebsite = () => {
             slug: info.slug,
           }));
           toast.success(data.message);
-          setUrl("");
+          setUrl(() => "");
           setListImage(() => []);
         })
         .catch(() => {
@@ -113,6 +113,13 @@ const CrawWebsite = () => {
     }
   };
   const handleSubmitData = async (formData: FormData) => {
+    setInfo(() => ({
+      title: "",
+      des: "",
+      image: "",
+      content: "",
+      slug: "",
+    }));
     const data: any = formData.get("url");
     if (formData.get("url")) {
       setUrl(data);
@@ -165,7 +172,7 @@ const CrawWebsite = () => {
           listImage.map((img, index) => <ImageItem img={img} key={index} />)}
       </section>
 
-      {info.content && info.image && (
+      {info.content && info.image && url && (
         <ViewDescription handleCreateBlog={handleCreateBlog} data={info} />
       )}
     </div>
