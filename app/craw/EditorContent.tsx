@@ -35,11 +35,16 @@ const moduleOptions = {
 const EditorContent: React.FC<EditorContentProps> = ({ text, setText }) => {
   const handleChange = (value: string) => {
     let newvalue = value;
-    if (newvalue.includes("**")) {
+    if (newvalue.includes("*")) {
       newvalue = newvalue.replace(/\*/g, "");
     }
-    newvalue = newvalue.replace(/&lt;/g, "<");
-    newvalue = newvalue.replace(/&gt;/g, ">");
+    if (newvalue.includes("image")) {
+      newvalue = newvalue.replace(
+        /linkimage(.*?)linkimage/g,
+        '<figure class="flex items-center flex-col justify-center "><img width="300" height="150" src="$1" class="sm:max-w-[600px] max-w-full sm:w-auto w-full h-auto object-cover" alt="Ảnh mô tả" /><figcaption class="text-center text-sm my-2 opacity-70">Ảnh minh họa</figcaption></figure>'
+      );
+    }
+
     setText(newvalue);
   };
   return (

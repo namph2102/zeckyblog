@@ -2,9 +2,8 @@ import Image from "next/image";
 import React, { useRef } from "react";
 import toast from "react-hot-toast";
 const ImageItem: React.FC<{ img: string }> = ({ img }) => {
-  const textHTML = `<figure class="flex items-center flex-col justify-center "><img width="300" height="150" src="${img}" class="sm:max-w-[600px] max-w-full w-auto h-auto object-cover" alt="Ảnh mô tả" /><figcaption class="text-center text-sm my-2 opacity-70">Ảnh minh họa</figcaption></figure>`;
   const handleCopy = (kind: number) => {
-    const text = kind == 1 ? img : `**${textHTML}**`;
+    const text = kind == 1 ? img : `linkimage${img}linkimage`;
     navigator.clipboard
       .writeText(text)
       .then(() => {
@@ -40,23 +39,21 @@ const ImageItem: React.FC<{ img: string }> = ({ img }) => {
         Link ảnh:{" "}
         <button
           onClick={() => handleCopy(1)}
-          className="py-2 px-3 text-sm rounded-full bg-yellow-600"
+          className="py-2 px-3 text-sm rounded-full bg-yellow-800"
         >
           Copy Link
         </button>
       </p>
-      <p className="text-sm break-words">{img}</p>
 
       <p className="mt-4">
-        HTMLCover:{" "}
+        Ảnh Edit:{" "}
         <button
           onClick={() => handleCopy(2)}
-          className="py-2 px-3 text-sm rounded-full bg-green-600"
+          className="py-2 px-3 text-sm rounded-full bg-green-800"
         >
-          Copy HTML
+          Copy ảnh edit
         </button>
       </p>
-      <p className="text-sm break-words">{textHTML}</p>
     </div>
   );
 };

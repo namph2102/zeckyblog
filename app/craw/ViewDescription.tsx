@@ -46,23 +46,31 @@ const ViewDescription: React.FC<ViewDescriptionProps> = ({
   };
   return (
     <div className="my-2">
-      <hr />
+      <hr className="my-4" />
       <h2 className="text-center mt-4">Chỉnh sửa định dạng</h2>
       <h4>Tiêu đề</h4>
       <TextareaAutosize
         value={infoSetting.title}
-        className="w-full text-black"
+        className="w-full px-2 py-1 text-black"
         onChange={(e) => handleChangeContent("title", e.target.value)}
       />
-      <hr />
+      <hr className="my-4" />
       <h4>Slug</h4>
       <TextareaAutosize
         value={infoSetting.slug}
         onChange={(e) => handleChangeContent("slug", e.target.value)}
-        className="w-full text-black"
+        className="w-full px-2 py-1 text-black"
       />
-      <hr />
-      <h4>Ảnh</h4>
+      <hr className="my-4" />
+
+      <h4>Mô tả SEO</h4>
+      <TextareaAutosize
+        value={infoSetting.des}
+        onChange={(e) => handleChangeContent("des", e.target.value)}
+        className="w-full px-2 py-1 text-black"
+      />
+      <hr className="my-4" />
+      <h4>Ảnh SEO</h4>
       <Image
         className="w-full h-auto object-cover"
         src={infoSetting.image}
@@ -73,9 +81,9 @@ const ViewDescription: React.FC<ViewDescriptionProps> = ({
       <TextareaAutosize
         onChange={(e) => handleChangeContent("image", e.target.value)}
         value={infoSetting.image}
-        className="w-full text-black"
+        className="w-full px-2 py-1 text-black"
       />
-      <hr />
+      <hr className="my-4" />
       <h4 className="text-center my-4 font-bold">Chỉnh sửa nội dung</h4>
       <EditorContent
         text={infoSetting.content}
