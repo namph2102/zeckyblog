@@ -19,3 +19,15 @@ p {
     color: #333;
   }
 }
+
+.text_style-eclipse {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.active_href {
+  color: #58a6ff;
+  font-weight: 300;
+  text-decoration: none;
+  word-break: break-word;
+}

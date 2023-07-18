@@ -6,6 +6,13 @@ const blogMoModel = new Schema(
     des: { type: String, require: true },
     image: { type: String, require: true },
     content: { type: String, require: true },
+    status: { type: Boolean, default: false },
+    author: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      default: "649eb8529eeb9ff7df44758b",
+      ref: "User",
+    },
   },
   { timestamps: true }
 );

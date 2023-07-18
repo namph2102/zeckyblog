@@ -6,7 +6,7 @@ export const instantAxiosSever = axios.create({
   },
 });
 export const getAllBlog = async () => {
-  const res = await axios.get("/api");
+  const res = await axios.get("/api/blog");
   const data = await res.data;
   return data;
 };

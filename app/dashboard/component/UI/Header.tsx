@@ -10,7 +10,7 @@ import {
 } from "react-icons/bi";
 const HeaderDashboard = () => {
   return (
-    <div className=" my-4">
+    <div className=" my-4 border_line-style border-r-2">
       <header className="border_line-style border-b-[2px]">
         <h2 className="font-bold px-6 my-4">
           <span className="text-2xl">Zecky</span>{" "}

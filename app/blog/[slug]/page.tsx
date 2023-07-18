@@ -1,10 +1,13 @@
 import { IData } from "@/app/sevices/typedata";
 import { getData, getDataDetail } from "@/app/sevices/untils";
 import Link from "next/link";
-
+import { notFound } from "next/navigation";
 interface Fulldata extends IData {
   createdAt: string;
   updatedAt: string;
+  author: {
+    fullname: string;
+  };
 }
 import React, { FC } from "react";
 interface ParamsBlog {
@@ -14,11 +17,17 @@ interface ParamsBlog {
 const domainsever = process.env.DOMAIN_URL || "https://blog.zecky.online";
 export async function generateMetadata({ params }: ParamsBlog) {
   const data: Fulldata = await getDataDetail(params.slug);
+  if (!data) {
+    return {};
+  }
   return {
     title: data.title + " | Zecky",
     description: data.des,
     keywords: [data.title, ...data.title.split(" ")],
     metadataBase: new URL(`${domainsever}/blog/${data.slug}`),
+    authors: ["blog.zecky.online", "zecky.online"],
+    creator: data.author.fullname,
+    publisher: data.author.fullname,
     alternates: {
       canonical: process.env.DOMAIN_URL,
       languages: {
@@ -32,7 +41,7 @@ export async function generateMetadata({ params }: ParamsBlog) {
       description: data.des,
       type: "article",
       publishedTime: data.updatedAt,
-      authors: ["zecky.online", "blog.zecky.online", "Phạm Hoài Nam"],
+      authors: ["zecky.online", "blog.zecky.online", data.author.fullname],
     },
     robots: {
       index: true,
@@ -63,6 +72,9 @@ export async function generateStaticParams() {
 
 const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
   const data: Fulldata = await getDataDetail(params.slug);
+  if (!data) {
+    notFound();
+  }
   const schema1 = {
     "@context": "http://schema.org",
     "@type": "BreadcrumbList",

@@ -72,7 +72,9 @@ const CrawWebsite = () => {
             image,
             des,
             content: paragraphs.join("").replace(/\s{2}/g, " "),
-            slug: slugify(title.toLowerCase().trim().replace(/:/g, "")),
+            slug: slugify(
+              title.toLowerCase().trim().replace(/:/g, "").replace(/('|")/g, "")
+            ),
           });
           if (listImageCover && listImageCover?.length > 0) {
             setListImage(Array.from(new Set(listImageCover)));
@@ -158,11 +160,11 @@ const CrawWebsite = () => {
           </p>
           <hr />
           <h1 className="text-color-head text-center">{info.title}</h1>
-          OenGrap Image:
+          Ảnh SEO:
           {info.image && isImageLink(info.image) && (
             <Image src={info.image} width={300} height={120} alt={info.title} />
           )}
-          <p>Description: {info.des}</p>
+          <p>Mô Tả SEO: {info.des}</p>
           <hr />
         </>
       )}

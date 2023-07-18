@@ -9,7 +9,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <section className="basis-1/4">
         <HeaderDashboard />
       </section>
-      <section className="basis-3/4">
+      <section className="basis-3/4 mx-2">
         <QueryClientProvider client={queryClient}>
           {children}
         </QueryClientProvider>

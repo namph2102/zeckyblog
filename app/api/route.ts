@@ -2,15 +2,6 @@ import connectMoongodb from "../sevices/database/connectDatabase";
 import blogModel from "../sevices/database/BlogModel";
 import { NextRequest, NextResponse } from "next/server";
 import { IData } from "../sevices/typedata";
-export async function GET(request: NextRequest) {
-  try {
-    await connectMoongodb();
-    const listBlogs = (await blogModel.find().sort({ updatedAt: -1 })) || [];
-    return NextResponse.json(listBlogs);
-  } catch (err: any) {
-    return NextResponse.json({ statusCode: 404, listBlogs: err.message });
-  }
-}
 
 export async function HEAD(request: NextRequest) {}
 
@@ -26,6 +17,7 @@ export async function POST(request: NextRequest) {
         message: "Bài viết đã tồn tại rồi",
       });
     }
+
     const data = await blogModel.create(body);
     return NextResponse.json({
       statusCode: 201,

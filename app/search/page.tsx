@@ -43,6 +43,7 @@ export const metadata: Metadata = {
 
 const AllBlog = async () => {
   const listBlogInPage: IData[] = await getData();
+
   const schema1 = {
     "@context": "http://schema.org",
     "@type": "BreadcrumbList",
