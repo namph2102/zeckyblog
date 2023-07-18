@@ -1,4 +1,5 @@
 import "./globals.css";
+import "./blogdetail.scss";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
@@ -34,7 +35,7 @@ export const metadata: Metadata = {
   description:
     "Hãy cùng khám phá ứng dụng Zecky tuyệt vời này, chatGPT hoàn toàn miễn phí. Với zecky, để giúp đỡ khách hàng trong việc tìm kiếm thông tin và giải đáp các câu hỏi liên quan đến sản phẩm hoặc dịch vụ của bạn.",
 };
-
+import Script from "next/script";
 export default function RootLayout({
   children,
 }: {
@@ -42,6 +43,21 @@ export default function RootLayout({
 }) {
   return (
     <html lang="vi">
+      <Script
+        strategy="lazyOnload"
+        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GOOGLE_ANALYTICS_KEY}`}
+      />
+      <Script strategy="lazyOnload" id="my-script">
+        {`
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
+                    gtag('config', '${process.env.GOOGLE_ANALYTICS_KEY}', {
+                    page_path: window.location.pathname,
+                    });
+                `}
+      </Script>
+
       <body suppressHydrationWarning={true} className={inter.className}>
         {children}
         <Toaster position="top-right" reverseOrder={false} />

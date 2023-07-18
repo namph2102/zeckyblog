@@ -12,10 +12,13 @@ import TextareaAutosize from "@mui/base/TextareaAutosize";
 import ImageItem from "./ImageItem";
 import toast from "react-hot-toast";
 function isImageLink(url: string) {
-  var pattern = /\.(jpeg|jpg|png)$/i;
+  var pattern = /\.(jpeg|jpg|png|svg)$/i;
   return pattern.test(url);
 }
-
+function checkImageUrl(url: string) {
+  var pattern = /^(http|https):\/\//;
+  return pattern.test(url);
+}
 const CrawWebsite = () => {
   const [url, setUrl] = useState("");
   const [info, setInfo] = useState<IData>({
@@ -28,51 +31,58 @@ const CrawWebsite = () => {
   const [listImage, setListImage] = useState<string[]>([]);
   useEffect(() => {
     if (!url) return;
-    axios.get(url).then((res) => {
-      const $ = cheerio.load(res.data);
-      const title = $("h1").text() || $("title").text();
-      const image = $('meta[property="og:image"]').attr("content");
-      const des = $('meta[name="description"]').attr("content");
-      const listImageCover: string[] = [];
-      $("img[src]").each((i, img) => {
-        const src = $(img).attr("src");
-        if (src) {
-          listImageCover.push(src);
-        }
-      });
+    axios
+      .get(url)
+      .then((res) => {
+        const $ = cheerio.load(res.data);
+        const title = $("h1").text() || $("title").text();
+        const image = $('meta[property="og:image"]').attr("content");
+        const des = $('meta[name="description"]').attr("content");
+        const listImageCover: string[] = [];
+        $("img[src]").each((i, img) => {
+          const src = $(img).attr("src");
 
-      if (listImageCover && listImageCover?.length > 0) {
-        setListImage(Array.from(new Set(listImageCover)));
-      }
-      const paragraphs: any = [];
-      $("p").each((index, element) => {
-        const paragraphText = $(element).text()?.trim().replace(/\s{2}/, " ");
-        const regex = /((http|https):\/\/[^\s]+)/g;
-        const links = paragraphText.match(regex);
-        if (links && links[0]) {
-          links.forEach((link) => {
-            if (isImageLink(link)) {
-              paragraphs.push(
-                `<figure><img src="${link}" class="w-full h-auto object-cover" alt="Ảnh mô tả" /><figcaption class="text-center font-semibold text-sm">Ảnh Minh họa</figcaption></figure>`
-              );
-            } else
-              paragraphs.push(
-                `<a href="${link}" target="_blank" rel="noopener noreferrer">${link}</a>`
-              );
-          });
-        }
-        paragraphText && paragraphs.push(paragraphText + "**");
-      });
-      if (title && image && des && paragraphs && paragraphs.length > 0) {
-        setInfo({
-          title: title.trim(),
-          image,
-          des,
-          content: paragraphs.join("").replace(/\s{2}/g, " "),
-          slug: slugify(title.toLowerCase().trim().replace(/:/g, "")),
+          if (src && checkImageUrl(src)) {
+            listImageCover.push(src);
+          }
         });
-      }
-    });
+
+        const paragraphs: any = [];
+        $("p").each((index, element) => {
+          const paragraphText = $(element).text()?.trim().replace(/\s{2}/, " ");
+          const regex = /((http|https):\/\/[^\s]+)/g;
+          const links = paragraphText.match(regex);
+          if (links && links[0]) {
+            links.forEach((link) => {
+              if (isImageLink(link)) {
+                paragraphs.push(
+                  `<figure class="flex items-center flex-col justify-center "><img width="300" height="150" src="${link}" class="sm:max-w-[600px] max-w-full w-auto h-auto object-cover" alt="Ảnh mô tả" /><figcaption class="text-center text-sm my-2 opacity-70">Ảnh minh họa</figcaption></figure>`
+                );
+              } else
+                paragraphs.push(
+                  `<a href="${link}" target="_blank" rel="noopener noreferrer">${link}</a>`
+                );
+            });
+          }
+          paragraphText && paragraphs.push(`<p>${paragraphText}</p>`);
+        });
+        if (title && image && des && paragraphs && paragraphs.length > 0) {
+          setInfo({
+            title: title.trim(),
+            image,
+            des,
+            content: paragraphs.join("").replace(/\s{2}/g, " "),
+            slug: slugify(title.toLowerCase().trim().replace(/:/g, "")),
+          });
+          if (listImageCover && listImageCover?.length > 0) {
+            setListImage(Array.from(new Set(listImageCover)));
+          }
+        }
+        toast.success("Lấy thành công nội dung");
+      })
+      .catch(() => {
+        toast.error("Không thể lấy nội dung");
+      });
   }, [url]);
 
   const handleCreateBlog = (info: IData) => {
@@ -84,13 +94,13 @@ const CrawWebsite = () => {
         .post("/api", { method: "POST", body: info })
         .then((res) => res.data)
         .then((data) => {
-          setInfo({
+          setInfo(() => ({
             title: "",
             des: "",
             image: "",
             content: "",
             slug: info.slug,
-          });
+          }));
           toast.success(data.message);
           setUrl("");
           setListImage(() => []);
@@ -98,6 +108,8 @@ const CrawWebsite = () => {
         .catch(() => {
           toast.error("Thêm thất bại!");
         });
+    } else {
+      toast.error("Thiếu dữ liệu rồi vui lòng kiểm tra lại");
     }
   };
   const handleSubmitData = async (formData: FormData) => {
@@ -106,6 +118,7 @@ const CrawWebsite = () => {
       setUrl(data);
     }
   };
+
   return (
     <div>
       <form action={handleSubmitData}>
@@ -118,11 +131,13 @@ const CrawWebsite = () => {
           />
         </div>
         <button className="py-2 mt-2 px-5 bg-green-600" type="submit">
-          Craw Link
+          Lấy nội dung
         </button>
         {info.slug && !info.title && (
           <button type="button" className="ml-2 py-2 mt-2 px-5 bg-red-600">
-            <Link href={`/blog/${info.slug}`}>Bài viết vừa thêm</Link>
+            <Link target="_blank" href={`/blog/${info.slug}`}>
+              Bài viết vừa thêm
+            </Link>
           </button>
         )}
       </form>
@@ -150,7 +165,7 @@ const CrawWebsite = () => {
           listImage.map((img, index) => <ImageItem img={img} key={index} />)}
       </section>
 
-      {info.content && info.image && isImageLink(info.image) && (
+      {info.content && info.image && (
         <ViewDescription handleCreateBlog={handleCreateBlog} data={info} />
       )}
     </div>

@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 html {
-  background-color: #222831;
   line-height: 1.15;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
@@ -84,4 +83,7 @@ h6 {
 }
 article h2 {
   font-size: 1rem !important;
+}
+.ql-toolbar.ql-snow {
+  background-color: #ffffff;
 }

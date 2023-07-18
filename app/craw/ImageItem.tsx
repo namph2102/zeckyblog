@@ -2,7 +2,7 @@ import Image from "next/image";
 import React, { useRef } from "react";
 import toast from "react-hot-toast";
 const ImageItem: React.FC<{ img: string }> = ({ img }) => {
-  const textHTML = `<figure><img src="${img}" class="w-full h-auto object-cover" alt="Ảnh mô tả" /><figcaption class="text-center font-semibold text-sm mt-2">Ảnh minh họa</figcaption></figure>`;
+  const textHTML = `<figure class="flex items-center flex-col justify-center "><img width="300" height="150" src="${img}" class="sm:max-w-[600px] max-w-full w-auto h-auto object-cover" alt="Ảnh mô tả" /><figcaption class="text-center text-sm my-2 opacity-70">Ảnh minh họa</figcaption></figure>`;
   const handleCopy = (kind: number) => {
     const text = kind == 1 ? img : `**${textHTML}**`;
     navigator.clipboard

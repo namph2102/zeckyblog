@@ -9,11 +9,11 @@ import Head from "next/head";
 import BlogItemSketon from "../component/BlogItemSketon";
 let listBlogsData: IData[] = [];
 export default function Blog() {
+  const pageInblog = 10;
   const [listBlogs, setListBlogs] = useState<IData[]>(listBlogsData);
   const [infoPage, setInfoPage] = useState({
     totalPage: Math.ceil(listBlogs.length / 10),
     currentPage: 1,
-    pageInblog: 10,
   });
   useEffect(() => {
     getAllBlog().then((data) => {
@@ -22,7 +22,7 @@ export default function Blog() {
         listBlogsData = data;
         setInfoPage((prev) => ({
           ...prev,
-          totalPage: Math.ceil(data.length / infoPage.pageInblog),
+          totalPage: Math.ceil(data.length / pageInblog),
         }));
       }
     });
@@ -32,8 +32,8 @@ export default function Blog() {
   };
 
   const listBlogInPage = listBlogs.slice(
-    (infoPage.currentPage - 1) * infoPage.pageInblog,
-    infoPage.currentPage * infoPage.pageInblog
+    (infoPage.currentPage - 1) * pageInblog,
+    infoPage.currentPage * pageInblog
   );
 
   return (

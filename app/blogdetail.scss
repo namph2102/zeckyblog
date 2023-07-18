@@ -1,0 +1,54 @@
+#blog_page-detail {
+  font-family: Nunito, sans-serif !important;
+  .ql-container {
+    font-family: Nunito, sans-serif !important;
+    font-size: 16px;
+  }
+  a {
+    color: #58a6ff;
+    font-weight: 300;
+    text-decoration: none;
+    word-break: break-word;
+    &:hover {
+      color: #f59bac !important;
+    }
+  }
+  h1 {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  h3 {
+    font-size: 1.17rem;
+    font-weight: bold;
+  }
+  h4 {
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  h5 {
+    font-size: 0.83rem;
+    font-weight: bold;
+  }
+  h6 {
+    font-size: 0.67rem;
+    font-weight: bold;
+  }
+  li {
+    color: #bcb9b7;
+  }
+  p {
+    margin-bottom: 8px;
+  }
+  p:has(img) {
+    margin: 8px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2px;
+  }
+}

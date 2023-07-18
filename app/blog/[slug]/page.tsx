@@ -1,8 +1,7 @@
 import { IData } from "@/app/sevices/typedata";
 import { getData, getDataDetail } from "@/app/sevices/untils";
-
-import Image from "next/image";
 import Link from "next/link";
+
 interface Fulldata extends IData {
   createdAt: string;
   updatedAt: string;
@@ -118,6 +117,7 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema2) }}
       />
+
       <div className="menu text-white text-sm mb-4 flex items-center gap-1  text-ellipsis overflow-hidden whitespace-nowrap">
         <Link href="/">Trang chủ</Link> /<Link href="/blog">Tin tức</Link> /
         <p className="sm:max-w-[400px] max-w-[calc(100vw-200px)]  text-ellipsis overflow-hidden whitespace-nowrap ">
@@ -125,20 +125,12 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
         </p>
       </div>
 
-      <h1 className="mt-8 text-center">{data.title}</h1>
-      <article dangerouslySetInnerHTML={{ __html: data.content }}></article>
-      <figure>
-        <figcaption className="text-center">
-          <h3>Ảnh Minh Họa</h3>
-        </figcaption>
-        <Image
-          src={data.image}
-          alt={data.title}
-          width={300}
-          height={200}
-          className="w-full mt-4"
-        />
-      </figure>
+      <h1 className="mt-8 text-center mb-12">{data.title}</h1>
+      <article
+        id="blog_page-detail"
+        dangerouslySetInnerHTML={{ __html: data.content }}
+      ></article>
+
       <div className="flex justify-center">
         <button className="font-bold mt-3">
           <Link href="/blog">Xem thêm...</Link>

@@ -1,7 +1,10 @@
+"use client";
 import React, { useState } from "react";
 import TextareaAutosize from "@mui/base/TextareaAutosize";
 import { IData } from "../sevices/typedata";
 import Image from "next/image";
+import EditorContent from "./EditorContent";
+
 interface ViewDescriptionProps {
   data: IData;
   handleCreateBlog: (blog: IData) => void;
@@ -34,15 +37,12 @@ const ViewDescription: React.FC<ViewDescriptionProps> = ({
       return { ...prev };
     });
   };
-
-  const contentCover =
-    infoSetting.content
-      ?.split("**")
-      ?.map((paragraphs) => (paragraphs ? `<p>${paragraphs}</p>` : ""))
-      .join("") || "";
   const handleSubmit = () => {
-    const blogNew = { ...infoSetting, content: contentCover };
+    const blogNew = infoSetting;
     handleCreateBlog(blogNew);
+  };
+  const handleChangecontentEditor = (value: string) => {
+    handleChangeContent("content", value);
   };
   return (
     <div className="my-2">
@@ -76,31 +76,22 @@ const ViewDescription: React.FC<ViewDescriptionProps> = ({
         className="w-full text-black"
       />
       <hr />
-      <h4>Nội dung Website</h4>
-      <TextareaAutosize
-        value={infoSetting.content}
-        onChange={(e) => handleChangeContent("content", e.target.value)}
-        className="w-full text-black"
+      <h4 className="text-center my-4 font-bold">Chỉnh sửa nội dung</h4>
+      <EditorContent
+        text={infoSetting.content}
+        setText={handleChangecontentEditor}
       />
-      <hr className="h-2" />
-      <h2 className="text-center mt-12">Nội dung Website</h2>
 
+      <hr className="h-2" />
+      <h2 className="text-center mt-12">Nội dung sẽ được tạo</h2>
       <h1 className="mt-8 text-center">{infoSetting.title}</h1>
-      {contentCover && (
-        <article dangerouslySetInnerHTML={{ __html: contentCover }}></article>
+
+      {infoSetting.content && (
+        <article
+          id="blog_page-detail"
+          dangerouslySetInnerHTML={{ __html: infoSetting.content }}
+        ></article>
       )}
-      <figure>
-        <figcaption className="text-center">
-          <h3>Ảnh Minh Họa</h3>
-        </figcaption>
-        <Image
-          src={infoSetting.image}
-          alt={infoSetting.title}
-          width={300}
-          height={200}
-          className="w-full mt-4"
-        />
-      </figure>
 
       <div className="flex justify-center">
         <button
