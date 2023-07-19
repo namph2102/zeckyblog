@@ -35,21 +35,21 @@ const ImageItem: React.FC<{ img: string }> = ({ img }) => {
         height={50}
         alt="lỗi ảnh"
       />
-      <p className="mt-2">
+      <p className="mt-2 cursor-pointer">
         Link ảnh:{" "}
         <button
           onClick={() => handleCopy(1)}
-          className="py-2 px-3 text-sm rounded-full bg-yellow-800"
+          className="py-2 px-3 cursor-pointer text-sm rounded-full bg-yellow-800"
         >
           Copy Link
         </button>
       </p>
 
-      <p className="mt-4">
+      <p className="mt-4 cursor-pointer">
         Ảnh Edit:{" "}
         <button
           onClick={() => handleCopy(2)}
-          className="py-2 px-3 text-sm rounded-full bg-green-800"
+          className="py-2 px-3 cursor-pointer text-sm rounded-full bg-green-800"
         >
           Copy ảnh edit
         </button>

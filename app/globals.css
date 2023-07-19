@@ -11,7 +11,7 @@ body {
   font-size: 1.125rem;
   line-height: 32px;
   color: #ffffff;
-
+  overflow-x: hidden;
   background-color: #222831;
   font-weight: 400;
   text-rendering: optimizeLegibility;

@@ -1,12 +1,21 @@
 import axios from "axios";
+import { getCookie } from "cookies-next";
+export const DOMAIN_SEVER = process.env.DOMAIN_sever;
+export const DOMAIN_HOST = process.env.DOMAIN_URL;
 export const instantAxiosSever = axios.create({
-  baseURL: process.env.DOMAIN_sever,
+  baseURL: DOMAIN_SEVER,
   headers: {
     "Content-Type": "application/json",
   },
 });
-export const getAllBlog = async () => {
-  const res = await axios.get("/api/blog");
+export const customeAxios = axios.create({
+  baseURL: DOMAIN_SEVER,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+export const getAllBlogFromSever = async () => {
+  const res = await axios.get(DOMAIN_SEVER + "/blog/allblog");
   const data = await res.data;
   return data;
 };
@@ -25,6 +34,7 @@ export const getDataDetail = async (slug: string) => {
   const data = await res.data;
   return data;
 };
+
 export function removeVietnameseTones(str: string) {
   str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
   str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
@@ -55,4 +65,9 @@ export function removeVietnameseTones(str: string) {
     " "
   );
   return str;
+}
+export function capitalizeText(str: string) {
+  return str.replace(/(^|\s)\w/g, function (match) {
+    return match.toUpperCase();
+  });
 }

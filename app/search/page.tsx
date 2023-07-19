@@ -3,8 +3,8 @@ import { Metadata } from "next";
 import { getData } from "../sevices/untils";
 import Link from "next/link";
 import Image from "next/image";
-import { IData } from "../sevices/typedata";
-const domainsever = process.env.DOMAIN_URL || "https://blog.zecky.online";
+import { IDataBlog } from "../sevices/typedata";
+const DOMAIN_HOST = process.env.DOMAIN_URL || "https://blog.zecky.online";
 const titleMessage = "Tổng hợp bài viết hay trên thế giới";
 const descriptionMessage =
   "Tổng hợp bài viết tâm huyết tại Zecky, Hãy tham gia zecky để sử dụng ChatGPT phiên bản mới nhất, hoàn toàn miễn phí nhé!";
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
 };
 
 const AllBlog = async () => {
-  const listBlogInPage: IData[] = await getData();
+  const listBlogInPage: IDataBlog[] = await getData();
 
   const schema1 = {
     "@context": "http://schema.org",
@@ -52,7 +52,7 @@ const AllBlog = async () => {
         "@type": "ListItem",
         position: 1,
         item: {
-          "@id": domainsever,
+          "@id": DOMAIN_HOST,
           name: "Trang chủ",
         },
       },
@@ -61,7 +61,7 @@ const AllBlog = async () => {
         "@type": "ListItem",
         position: 2,
         item: {
-          "@id": domainsever,
+          "@id": DOMAIN_HOST,
           name: "blog-developer",
         },
       },
@@ -70,7 +70,7 @@ const AllBlog = async () => {
         "@type": "ListItem",
         position: 3,
         item: {
-          "@id": `${domainsever}/search`,
+          "@id": `${DOMAIN_HOST}/search`,
           name: `✅${titleMessage}`,
         },
       },
@@ -107,7 +107,7 @@ const AllBlog = async () => {
       <section className="grid sm:grid-cols-2 grid-cols-1 gap-4">
         {listBlogInPage.map((blog) => (
           <article key={blog.slug}>
-            <Link href={`/blog/${blog.slug}`}>
+            <Link href={`/${blog.slug}`}>
               <Image
                 src={blog.image}
                 width={200}

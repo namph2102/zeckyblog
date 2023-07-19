@@ -1,5 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 const colors = require("tailwindcss/colors");
+delete colors["lightBlue"];
+delete colors["warmGray"];
+delete colors["lightBlue"];
+delete colors["coolGray"];
+delete colors["blueGray"];
 
 module.exports = {
   content: [
@@ -29,6 +34,7 @@ module.exports = {
       screens: {
         sm: "640px",
         lg: "840px",
+        xl: "1024px",
       },
     },
   },

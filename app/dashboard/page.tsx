@@ -1,5 +1,7 @@
+"use client";
 import Link from "next/link";
 import React from "react";
+import { useSelector } from "react-redux";
 import {
   BsEye,
   BsChatLeftDots,
@@ -7,7 +9,15 @@ import {
   BsPerson,
   BsGraphDownArrow,
 } from "react-icons/bs";
+
+import LoginDashBoard from "./component/LoginDashBoard";
+import { RootState } from "../sevices/store";
+
 const DashBoard = () => {
+  const account = useSelector((state: RootState) => state.account.user);
+  if (account.permission === "member") {
+    return <LoginDashBoard />;
+  }
   return (
     <main>
       <section className="my-3 border_line-style  border-b-2">

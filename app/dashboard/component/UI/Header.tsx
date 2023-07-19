@@ -1,5 +1,8 @@
+import { AppDispatch, RootState } from "@/app/sevices/store";
+import { firstloginWebsite } from "@/app/sevices/store/slice/AccountSlice";
+import { getCookie } from "cookies-next";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   BiLogInCircle,
   BiHomeAlt,
@@ -7,10 +10,37 @@ import {
   BiUser,
   BiBook,
   BiChat,
+  BiBookReader,
 } from "react-icons/bi";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 const HeaderDashboard = () => {
+  const router = useRouter();
+  const account = useSelector((state: RootState) => state.account.user);
+  const dispatch: AppDispatch = useDispatch();
+  useEffect(() => {
+    const accessToken: any = getCookie("accessToken") || "";
+    if (accessToken) {
+      dispatch(firstloginWebsite(accessToken))
+        .then((data) => {
+          if (!data.payload) {
+            router.push("/dashboard/login");
+          }
+        })
+        .catch(() => {
+          router.push("/dashboard/login");
+        });
+    }
+  }, []);
+  useEffect(() => {
+    if (!account.fullname) return;
+    if (account.permission == "member") {
+      router.push("/dashboard/login");
+    }
+  }, [account.permission, account.fullname]);
   return (
-    <div className=" my-4 border_line-style border-r-2">
+    <div className=" my-4 ">
       <header className="border_line-style border-b-[2px]">
         <h2 className="font-bold px-6 my-4">
           <span className="text-2xl">Zecky</span>{" "}
@@ -21,65 +51,90 @@ const HeaderDashboard = () => {
         <figure className="flex  items-center gap-2 font-bold px-6 my-4">
           <Image
             className="object-cover rounded-lg"
-            src="http://flixtv.volkovdesign.com/admin/img/user.svg"
+            src={
+              account.avatar ||
+              "http://flixtv.volkovdesign.com/admin/img/user.svg"
+            }
             width={40}
             height={40}
             alt="logo"
           />
           <figcaption className="text-base ">
-            <span className="text-xs">Admin</span>
-            <p className="font-semibold">Hoài Nam</p>
+            <span className="text-xs first-letter:uppercase">
+              {account.permission == "zecky"
+                ? "Quản trị viên cao cấp"
+                : account.permission}
+            </span>
+            <p className="font-semibold capitalize">
+              {account.fullname || "Zecky"}
+            </p>
           </figcaption>
         </figure>
         <button className="text-3xl btn_hover p-1 rounded-sm">
           <BiLogInCircle />
         </button>
       </div>
-      <nav>
-        <ul className="font-bold px-6 mt-8">
-          <li>
-            <p className="flex gap-2 items-center my-4 cursor-pointer hover:text-blue-600">
-              <span className="text-2xl">
-                <BiHomeAlt />
-              </span>
-              <span className="font-semibold text-base">Bảng điều khiển</span>
-            </p>
-          </li>
-          <li>
-            <p className="flex gap-2 items-center my-4 cursor-pointer hover:text-blue-600">
-              <span className="text-2xl">
-                <BiUser />
-              </span>
-              <span className="font-semibold text-base">Tài khoản</span>
-            </p>
-          </li>
-          <li>
-            <p className="flex gap-2 items-center my-4 cursor-pointer hover:text-blue-600">
-              <span className="text-2xl">
-                <BiChat />
-              </span>
-              <span className="font-semibold text-base">Nhóm chat</span>
-            </p>
-          </li>
-          <li>
-            <p className="flex gap-2 items-center my-4 cursor-pointer hover:text-blue-600">
-              <span className="text-2xl">
-                <BiFile />
-              </span>
-              <span className="font-semibold text-base">Tài liệu</span>
-            </p>
-          </li>
+      {!account.permission || account.permission !== "member" ? (
+        <nav>
+          <ul className="font-bold px-6 mt-8">
+            <li>
+              <p className="flex gap-2 items-center my-4 cursor-pointer hover:text-blue-600">
+                <span className="text-2xl">
+                  <BiHomeAlt />
+                </span>
+                <span className="font-semibold text-base">Bảng điều khiển</span>
+              </p>
+            </li>
+            <li>
+              <p className="flex gap-2 items-center my-4 cursor-pointer hover:text-blue-600">
+                <span className="text-2xl">
+                  <BiUser />
+                </span>
+                <span className="font-semibold text-base">Tài khoản</span>
+              </p>
+            </li>
+            <li>
+              <p className="flex gap-2 items-center my-4 cursor-pointer hover:text-blue-600">
+                <span className="text-2xl">
+                  <BiChat />
+                </span>
+                <span className="font-semibold text-base">Nhóm chat</span>
+              </p>
+            </li>
+            <li>
+              <p className="flex gap-2 items-center my-4 cursor-pointer hover:text-blue-600">
+                <span className="text-2xl">
+                  <BiFile />
+                </span>
+                <span className="font-semibold text-base">Tài liệu</span>
+              </p>
+            </li>
 
-          <li>
-            <p className="flex gap-2 items-center my-4 cursor-pointer hover:text-blue-600">
-              <span className="text-2xl">
-                <BiBook />
-              </span>
-              <span className="font-semibold text-base">Bài Viết</span>
-            </p>
-          </li>
-        </ul>
-      </nav>
+            <li>
+              <p className="flex gap-2 items-center my-4 cursor-pointer hover:text-blue-600">
+                <span className="text-2xl">
+                  <BiBook />
+                </span>
+                <span className="font-semibold text-base">Bài Viết</span>
+              </p>
+            </li>
+            <li>
+              <Link href="/dashboard/craw">
+                <p className="flex gap-2 items-center my-4 cursor-pointer hover:text-blue-600">
+                  <span className="text-2xl">
+                    <BiBookReader />
+                  </span>
+                  <span className="font-semibold text-base">Cào Website</span>
+                </p>
+              </Link>
+            </li>
+          </ul>
+        </nav>
+      ) : (
+        <p className="px-2 text-red-500 text-base">
+          Lưu ý: chỉ có quản trị viên mới được vào đây
+        </p>
+      )}
     </div>
   );
 };

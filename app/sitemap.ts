@@ -1,9 +1,6 @@
-import { IData } from "./sevices/typedata";
+import { IDataBlog } from "./sevices/typedata";
 import { getData } from "./sevices/untils";
-interface Fulldata extends IData {
-  createdAt: string;
-  updatedAt: string;
-}
+
 const domain = process.env.DOMAIN_URL;
 export default async function sitemap() {
   const data = await getData();
@@ -12,8 +9,8 @@ export default async function sitemap() {
     url,
     lastModified: new Date().toISOString(),
   }));
-  const listsitemapblog = data.map((blog: Fulldata) => ({
-    url: `${domain}/blog/${blog.slug}`,
+  const listsitemapblog = data.map((blog: IDataBlog) => ({
+    url: `${domain}/${blog.slug}`,
     lastModified: blog.updatedAt,
   }));
   return [...listData, ...listsitemapblog];

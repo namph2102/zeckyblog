@@ -1,22 +1,23 @@
 "use client";
 import Link from "next/link";
-import { getAllBlog } from "../sevices/untils";
-import { IData } from "../sevices/typedata";
+
+import { IDataBlog } from "../sevices/typedata";
 import Image from "next/image";
 import { Pagination } from "@mui/material";
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import BlogItemSketon from "../component/BlogItemSketon";
-let listBlogsData: IData[] = [];
+import blogController from "../sevices/controller/blogController";
+let listBlogsData: IDataBlog[] = [];
 export default function Blog() {
   const pageInblog = 10;
-  const [listBlogs, setListBlogs] = useState<IData[]>(listBlogsData);
+  const [listBlogs, setListBlogs] = useState<IDataBlog[]>(listBlogsData);
   const [infoPage, setInfoPage] = useState({
     totalPage: Math.ceil(listBlogs.length / 10),
     currentPage: 1,
   });
   useEffect(() => {
-    getAllBlog().then((data) => {
+    blogController.getAllBlogFromSever().then((data) => {
       if (data?.length > 0) {
         setListBlogs(data);
         listBlogsData = data;
@@ -52,7 +53,7 @@ export default function Blog() {
       <section className="grid sm:grid-cols-2 grid-cols-1 gap-4">
         {listBlogInPage.map((blog) => (
           <article key={blog.slug}>
-            <Link href={`/blog/${blog.slug}`}>
+            <Link href={`/${blog.slug}`}>
               <Image
                 src={blog.image}
                 width={200}

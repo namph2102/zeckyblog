@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import TextareaAutosize from "@mui/base/TextareaAutosize";
-import { IData } from "../sevices/typedata";
+import { IData } from "../../sevices/typedata";
 import Image from "next/image";
 import EditorContent from "./EditorContent";
 
@@ -45,7 +45,7 @@ const ViewDescription: React.FC<ViewDescriptionProps> = ({
     handleChangeContent("content", value);
   };
   return (
-    <div className="my-2">
+    <div id="blog_page-detail" className="my-2">
       <hr className="my-4" />
       <h2 className="text-center mt-4">Chỉnh sửa định dạng</h2>
       <h4>Tiêu đề</h4>
@@ -84,15 +84,18 @@ const ViewDescription: React.FC<ViewDescriptionProps> = ({
         className="w-full px-2 py-1 text-black"
       />
       <hr className="my-4" />
-      <h4 className="text-center my-4 font-bold">Chỉnh sửa nội dung</h4>
+      <h2 className="text-center my-4 font-bold">Chỉnh sửa nội dung</h2>
       <EditorContent
         text={infoSetting.content}
         setText={handleChangecontentEditor}
       />
 
       <hr className="h-2" />
+
       <h2 className="text-center mt-12">Nội dung sẽ được tạo</h2>
-      <h1 className="mt-8 text-center">{infoSetting.title}</h1>
+      <h1 className="mt-8 text-center first-letter:uppercase">
+        {infoSetting.title}
+      </h1>
 
       {infoSetting.content && (
         <article
@@ -110,7 +113,6 @@ const ViewDescription: React.FC<ViewDescriptionProps> = ({
           Tạo Trang Blog
         </button>
       </div>
-      <hr className="h-2 bg-white" />
     </div>
   );
 };

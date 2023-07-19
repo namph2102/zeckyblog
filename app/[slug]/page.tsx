@@ -1,22 +1,20 @@
-import { IData } from "@/app/sevices/typedata";
+import { IData, IDataBlog } from "@/app/sevices/typedata";
 import { getData, getDataDetail } from "@/app/sevices/untils";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-interface Fulldata extends IData {
-  createdAt: string;
-  updatedAt: string;
-  author: {
-    fullname: string;
-  };
-}
+
 import React, { FC } from "react";
 interface ParamsBlog {
   params: { slug: string };
 }
-
-const domainsever = process.env.DOMAIN_URL || "https://blog.zecky.online";
+interface ISlugApi {
+  data: IDataBlog;
+  listBlogRandom: IDataBlog[];
+}
+const DOMAIN_HOST = process.env.DOMAIN_URL || "https://blog.zecky.online";
 export async function generateMetadata({ params }: ParamsBlog) {
-  const data: Fulldata = await getDataDetail(params.slug);
+  const { data }: ISlugApi = await getDataDetail(params.slug);
   if (!data) {
     return {};
   }
@@ -24,7 +22,7 @@ export async function generateMetadata({ params }: ParamsBlog) {
     title: data.title + " | Zecky",
     description: data.des,
     keywords: [data.title, ...data.title.split(" ")],
-    metadataBase: new URL(`${domainsever}/blog/${data.slug}`),
+    metadataBase: new URL(`${DOMAIN_HOST}/${data.slug}`),
     authors: ["blog.zecky.online", "zecky.online"],
     creator: data.author.fullname,
     publisher: data.author.fullname,
@@ -71,7 +69,7 @@ export async function generateStaticParams() {
 }
 
 const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
-  const data: Fulldata = await getDataDetail(params.slug);
+  const { data, listBlogRandom }: ISlugApi = await getDataDetail(params.slug);
   if (!data) {
     notFound();
   }
@@ -83,7 +81,7 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
         "@type": "ListItem",
         position: 1,
         item: {
-          "@id": domainsever,
+          "@id": DOMAIN_HOST,
           name: "Trang chủ",
         },
       },
@@ -92,7 +90,7 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
         "@type": "ListItem",
         position: 2,
         item: {
-          "@id": domainsever,
+          "@id": DOMAIN_HOST,
           name: "blog-developer",
         },
       },
@@ -101,7 +99,7 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
         "@type": "ListItem",
         position: 3,
         item: {
-          "@id": `${domainsever}/blog/${data.slug}`,
+          "@id": `${DOMAIN_HOST}/${data.slug}`,
           name: `✅${data.title}`,
         },
       },
@@ -137,17 +135,35 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
         </p>
       </div>
 
-      <h1 className="mt-8 text-center mb-12">{data.title}</h1>
+      <h1 className="mt-8 text-center mb-12 first-letter:uppercase">
+        {data.title}
+      </h1>
       <article
         id="blog_page-detail"
         dangerouslySetInnerHTML={{ __html: data.content }}
       ></article>
 
-      <div className="flex justify-center">
-        <button className="font-bold mt-3">
-          <Link href="/blog">Xem thêm...</Link>
-        </button>
-      </div>
+      <h2 className="text-center mt-8 mb-4 text-xl font-semibold">
+        Một số tin tức khác
+      </h2>
+
+      <section className="grid sm:grid-cols-2 lg:grid-cols-3 grid-cols-1 sm:gap-4 gap-2">
+        {listBlogRandom.map((blog) => (
+          <article key={blog.slug}>
+            <Link href={`/${blog.slug}`}>
+              <Image
+                src={blog.image}
+                width={200}
+                height={100}
+                alt="test"
+                className="w-full sm:h-[200px] h-[300px] object-cover"
+              />
+              <h2 className="line-clamp-1 mt-2 px-2">{blog.title}</h2>
+              <p className="indent-3 line-clamp-3 text-sm">{blog.des} </p>
+            </Link>
+          </article>
+        ))}
+      </section>
     </main>
   );
 };

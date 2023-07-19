@@ -1,7 +1,22 @@
-export interface IData {
+interface IIData {
   title: string;
   des: string;
   image: string;
   content: string;
   slug: string;
+}
+// idataCreateBlog
+export interface IData extends IIData {
+  author: string;
+  category: string;
+  pathImage?: string;
+}
+export interface IDataBlog extends IIData {
+  createdAt: string;
+  updatedAt: string;
+  view: string;
+  status: boolean;
+  author: {
+    fullname: string;
+  };
 }
