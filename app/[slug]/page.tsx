@@ -25,9 +25,10 @@ export async function generateMetadata({ params }: ParamsBlog) {
     metadataBase: new URL(`${DOMAIN_HOST}/${data.slug}`),
     authors: ["blog.zecky.online", "zecky.online"],
     creator: data.author.fullname,
+
     publisher: data.author.fullname,
     alternates: {
-      canonical: process.env.DOMAIN_URL,
+      canonical: `${DOMAIN_HOST}/${data.slug}`,
       languages: {
         "en-US": "/en-US",
         "de-DE": "/de-DE",
@@ -135,7 +136,7 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
         </p>
       </div>
 
-      <h1 className="mt-8 text-center mb-12 first-letter:uppercase">
+      <h1 className="mt-8 text-center sm:mb-12 mb-8 first-letter:uppercase">
         {data.title}
       </h1>
       <article
@@ -143,27 +144,30 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
         dangerouslySetInnerHTML={{ __html: data.content }}
       ></article>
 
-      <h2 className="text-center mt-8 mb-4 text-xl font-semibold">
-        Một số tin tức khác
-      </h2>
-
-      <section className="grid sm:grid-cols-2 lg:grid-cols-3 grid-cols-1 sm:gap-4 gap-2">
-        {listBlogRandom.map((blog) => (
-          <article key={blog.slug}>
-            <Link href={`/${blog.slug}`}>
-              <Image
-                src={blog.image}
-                width={200}
-                height={100}
-                alt="test"
-                className="w-full sm:h-[200px] h-[300px] object-cover"
-              />
-              <h2 className="line-clamp-1 mt-2 px-2">{blog.title}</h2>
-              <p className="indent-3 line-clamp-3 text-sm">{blog.des} </p>
-            </Link>
-          </article>
-        ))}
-      </section>
+      {listBlogRandom && listBlogRandom.length > 0 && (
+        <>
+          <h2 className="text-center mt-8 mb-4 text-xl font-semibold">
+            Một số tin tức liên quan
+          </h2>
+          <section className="grid sm:grid-cols-2 lg:grid-cols-3 grid-cols-1 sm:gap-4 gap-6">
+            {listBlogRandom.map((blog) => (
+              <article key={blog.slug}>
+                <Link href={`/${blog.slug}`}>
+                  <Image
+                    src={blog.image}
+                    width={200}
+                    height={100}
+                    alt="test"
+                    className="w-full sm:h-[200px] h-[300px] object-cover"
+                  />
+                  <h2 className="line-clamp-1 mt-2 px-2">{blog.title}</h2>
+                  <p className="indent-3 line-clamp-3 text-base">{blog.des} </p>
+                </Link>
+              </article>
+            ))}
+          </section>
+        </>
+      )}
     </main>
   );
 };

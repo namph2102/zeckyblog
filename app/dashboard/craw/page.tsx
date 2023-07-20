@@ -1,17 +1,22 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 export const dynamic = "force-dynamic";
 import * as cheerio from "cheerio";
 import axios from "axios";
-import Image from "next/image";
 import slugify from "slugify";
 import { IData } from "../../sevices/typedata";
 
 import ViewDescription from "./ViewDescription";
 import TextareaAutosize from "@mui/base/TextareaAutosize";
-import ImageItem from "./ImageItem";
+
 import toast from "react-hot-toast";
-import { DOMAIN_HOST, removeVietnameseTones } from "../../sevices/untils";
+import {
+  DOMAIN_HOST,
+  checkImageUrl,
+  handleOpenNewWindown,
+  isImageLink,
+  removeVietnameseTones,
+} from "../../sevices/untils";
 import blogController from "../../sevices/controller/blogController";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/sevices/store";
@@ -19,14 +24,8 @@ import LoginDashBoard from "../component/LoginDashBoard";
 import "./blogdetail.scss";
 
 import CateGorySelect from "./CategorySelect";
-function isImageLink(url: string) {
-  var pattern = /\.(jpeg|jpg|png|svg)$/i;
-  return pattern.test(url);
-}
-function checkImageUrl(url: string) {
-  var pattern = /^(http|https):\/\//;
-  return pattern.test(url);
-}
+import ImageContainer from "./ImageContainer";
+
 const CrawWebsite = () => {
   const account = useSelector((state: RootState) => state.account.user);
   const [category, setCategory] = useState({ value: "", label: "" });
@@ -45,7 +44,7 @@ const CrawWebsite = () => {
 
   const [info, setInfo] = useState<IData>(infoInitValue);
   const [listImage, setListImage] = useState<string[]>([]);
-
+  const inputRef = useRef<any>(null);
   const handleCrawLink = useCallback(
     (linkCraw: string) => {
       if (!linkCraw) return;
@@ -130,6 +129,9 @@ const CrawWebsite = () => {
             slug: coverData.slug,
             author: account._id,
           }));
+          if (inputRef.current) {
+            inputRef.current.value = DOMAIN_HOST + "/" + coverData.slug;
+          }
           toast.success(data.message);
           setUrl(() => "");
           setListImage(() => []);
@@ -142,7 +144,8 @@ const CrawWebsite = () => {
     }
   };
   const handleSubmitData = async (formData: FormData) => {
-    setInfo(() => infoInitValue);
+    setInfo((prev) => ({ ...prev, ...infoInitValue }));
+    setListImage(() => []);
     const data: any = formData.get("url");
     if (data && checkImageUrl(data)) {
       handleCrawLink(data);
@@ -151,12 +154,7 @@ const CrawWebsite = () => {
       toast.error("Đây không phải là đường dẫn đúng!");
     }
   };
-  const handleOpenNewWindown = (slug: string) => {
-    const url = DOMAIN_HOST + "/" + slug;
-    const windowName = "Xem trang";
-    const windowFeatures = "width=800,height=600";
-    window.open(url, windowName, windowFeatures);
-  };
+
   if (!account.fullname && account.permission === "member")
     return <LoginDashBoard />;
 
@@ -177,13 +175,17 @@ const CrawWebsite = () => {
         <form action={handleSubmitData}>
           <div className="mt-3">
             <TextareaAutosize
+              ref={inputRef}
               className="text-black py-2 px-4 min-h-[38px] w-full "
               placeholder="Nhập url website"
               name="url"
               minRows={1}
             />
           </div>
-          <button className="py-2 mt-2 px-5 bg-green-600" type="submit">
+          <button
+            className="py-2 mt-2 px-5 bg-green-600 hover:bg-green-900 rounded-2xl"
+            type="submit"
+          >
             Lấy nội dung
           </button>
           {info.slug && !info.title && (
@@ -200,7 +202,7 @@ const CrawWebsite = () => {
 
       {info.title && url && (
         <>
-          <p>
+          <p className="my-2">
             {info.content && info.des && info.slug && info.image && info.title
               ? "Bạn có thể tạo bài viết này"
               : "Không nên tạo bài viết"}
@@ -209,17 +211,9 @@ const CrawWebsite = () => {
         </>
       )}
       {listImage && listImage.length > 0 && (
-        <h2 className="text-color-head text-center capitalize py-16">
-          Danh sách ảnh có thể sử dụng
-        </h2>
+        <ImageContainer listImage={listImage} />
       )}
 
-      <section className="grid sm:grid-cols-3 lg:grid-cols-4 grid-cols-2 gap-4">
-        {listImage &&
-          listImage.length > 0 &&
-          listImage.map((img, index) => <ImageItem img={img} key={index} />)}
-      </section>
-      <hr className="h-4 bg-white" />
       <section className="container mx-auto">
         <h1 className="text-color-head text-center capitalize my-4">
           {info.title}

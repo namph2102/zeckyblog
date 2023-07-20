@@ -9,23 +9,7 @@ interface ViewDescriptionProps {
   data: IData;
   handleCreateBlog: (blog: IData) => void;
 }
-// function Debounced(callback: any, delay: number = 200) {
-//   delay = delay || 0;
-//   let timeId: number | undefined | any;
-//   console.log(timeId);
-//   return (...args: any) => {
-//     console.log(args);
-//     if (timeId) {
-//       clearTimeout(timeId);
-//       timeId = undefined;
-//     }
-//     timeId = setTimeout(() => {
-//       callback(args);
 
-//       clearTimeout(timeId);
-//     }, delay);
-//   };
-// }
 const ViewDescription: React.FC<ViewDescriptionProps> = ({
   data,
   handleCreateBlog,
@@ -93,7 +77,7 @@ const ViewDescription: React.FC<ViewDescriptionProps> = ({
       <hr className="h-2" />
 
       <h2 className="text-center mt-12">Nội dung sẽ được tạo</h2>
-      <h1 className="mt-8 text-center first-letter:uppercase">
+      <h1 className="mt-8 text-center first-letter:uppercase mb-8">
         {infoSetting.title}
       </h1>
 
@@ -107,7 +91,7 @@ const ViewDescription: React.FC<ViewDescriptionProps> = ({
       <div className="flex justify-center">
         <button
           type="button"
-          className="py-2 px-5 bg-green-600 my-3 rounded-full"
+          className="py-2 px-5 bg-green-600 hover:bg-green-900 my-3 rounded-full"
           onClick={handleSubmit}
         >
           Tạo Trang Blog

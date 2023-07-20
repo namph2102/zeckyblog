@@ -16,18 +16,13 @@ body {
   font-weight: 400;
   text-rendering: optimizeLegibility;
 }
-@media screen and (max-width: 768px) {
-  body {
-    font-size: 1rem;
-  }
-}
 
 .text-color-read,
 p,
 ul {
   color: #bcb9b7;
   line-height: 2;
-  font-weight: 300;
+  font-weight: 200;
   text-align: justify;
 }
 .text-color-head,
@@ -42,23 +37,23 @@ h6 {
   padding-bottom: 10px;
 }
 h1 {
-  font-size: 30px;
-  line-height: 50px;
+  font-size: 1.8rem;
+  line-height: 40px;
 }
 h2 {
-  font-size: 24px;
+  font-size: 1.5rem;
 }
 h3 {
-  font-size: 22px;
+  font-size: 1.4rem;
 }
 h4 {
-  font-size: 20px;
+  font-size: 1.25rem;
 }
 h5 {
-  font-size: 18px;
+  font-size: 1.2rem;
 }
 h6 {
-  font-size: 16px;
+  font-size: 1rem;
 }
 .MuiBreadcrumbs-separator {
   color: #ffffff !important;
@@ -86,4 +81,21 @@ article h2 {
 }
 .ql-toolbar.ql-snow {
   background-color: #ffffff;
+}
+@media screen and (max-width: 768px) {
+  body {
+    font-size: 1.05rem;
+  }
+  p,
+  ul {
+    line-height: 1.8;
+    font-weight: 200 !important;
+  }
+  h1 {
+    font-size: 1.7rem;
+    line-height: 30px;
+  }
+  h2 {
+    font-size: 1.4rem;
+  }
 }

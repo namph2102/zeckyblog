@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getCookie } from "cookies-next";
+import { toast } from "react-hot-toast";
 export const DOMAIN_SEVER = process.env.DOMAIN_sever;
 export const DOMAIN_HOST = process.env.DOMAIN_URL;
 export const instantAxiosSever = axios.create({
@@ -70,4 +71,72 @@ export function capitalizeText(str: string) {
   return str.replace(/(^|\s)\w/g, function (match) {
     return match.toUpperCase();
   });
+}
+export const handleOpenNewWindown = (slug: string) => {
+  if (!slug) return;
+  const url = DOMAIN_HOST + "/" + slug;
+  const windowName = "Xem trang Demo";
+  const windowFeatures = "width=800,height=600";
+  window.open(url, windowName, windowFeatures);
+};
+export function Debounced(callback: any, delay: number = 200) {
+  delay = delay || 0;
+  let timeId: number | undefined | any;
+  console.log(timeId);
+  return (...args: any) => {
+    console.log(args);
+    if (timeId) {
+      clearTimeout(timeId);
+      timeId = undefined;
+    }
+    timeId = setTimeout(() => {
+      callback(args);
+
+      clearTimeout(timeId);
+    }, delay);
+  };
+}
+export function isImageLink(url: string) {
+  var pattern = /\.(jpeg|jpg|png|svg)$/i;
+  return pattern.test(url);
+}
+export function checkImageUrl(url: string) {
+  var pattern = /^(http|https):\/\//;
+  return pattern.test(url);
+}
+export async function uploadFileSever(file: File) {
+  if (!file.type.includes("image")) {
+    toast.error("Đây không phải ảnh");
+    return;
+  } else {
+    toast.success("Đang xử lý...");
+  }
+  const formdata = new FormData();
+  formdata.append("file", file);
+  return fetch(DOMAIN_SEVER + "/upload", {
+    method: "POST",
+    body: formdata,
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.status == 201) {
+        if (data?.fileInform?.fileName) {
+          toast.success("Tải ảnh thành công");
+          return data.fileInform;
+        }
+      }
+    })
+    .catch(() => {
+      toast.error("Tải ảnh thất bại");
+    });
+}
+export async function deleteFileUpload(path: string) {
+  customeAxios
+    .post("/upload/delete", {
+      data: path,
+    })
+    .then((res) => res.data)
+    .then((data) => {
+      toast.success(data);
+    });
 }

@@ -48,7 +48,6 @@ const CateGorySelect: React.FC<CateGorySelectProps> = ({ setNewCatogory }) => {
     }
   };
   useEffect(() => {
-    if (!account.fullname) return;
     cateController.getAllcate().then(({ listCate }) => {
       if (listCate && listCate.length > 0) {
         const coverlistCate = listCate.map((item: any) => ({
@@ -59,7 +58,7 @@ const CateGorySelect: React.FC<CateGorySelectProps> = ({ setNewCatogory }) => {
         setListCate(() => coverlistCate);
       }
     });
-  }, [account.fullname]);
+  }, []);
   const handleChange = (data: any) => {
     setNewCatogory(() => data);
     setIsOpenSelect(false);
@@ -96,7 +95,7 @@ const CateGorySelect: React.FC<CateGorySelectProps> = ({ setNewCatogory }) => {
           <hr className="h-1 my-4" />
 
           <Select
-            placeholder="Chọn chủ đề"
+            placeholder="Chọn danh mục có sẳn"
             closeMenuOnSelect={false}
             options={listCate}
             onChange={handleChange}
