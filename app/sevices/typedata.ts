@@ -14,9 +14,13 @@ export interface IData extends IIData {
 export interface IDataBlog extends IIData {
   createdAt: string;
   updatedAt: string;
-  view: string;
+  view: number;
   status: boolean;
   author: {
     fullname: string;
+  };
+  category: {
+    cate: string;
+    slug: string;
   };
 }

@@ -4,6 +4,8 @@ import TextareaAutosize from "@mui/base/TextareaAutosize";
 import { IData } from "../../sevices/typedata";
 import Image from "next/image";
 import EditorContent from "./EditorContent";
+import { DOMAIN_HOST } from "@/app/sevices/untils";
+import ShareSocial from "@/app/component/ShareSocial";
 
 interface ViewDescriptionProps {
   data: IData;
@@ -70,6 +72,7 @@ const ViewDescription: React.FC<ViewDescriptionProps> = ({
       <hr className="my-4" />
       <h2 className="text-center my-4 font-bold">Chỉnh sửa nội dung</h2>
       <EditorContent
+        title={infoSetting.title}
         text={infoSetting.content}
         setText={handleChangecontentEditor}
       />
@@ -77,16 +80,24 @@ const ViewDescription: React.FC<ViewDescriptionProps> = ({
       <hr className="h-2" />
 
       <h2 className="text-center mt-12">Nội dung sẽ được tạo</h2>
-      <h1 className="mt-8 text-center first-letter:uppercase mb-8">
+      <h1 className="mt-8 text-center  first-letter:uppercase">
         {infoSetting.title}
       </h1>
-
+      <ShareSocial link={`${DOMAIN_HOST + "/" + infoSetting.slug}`} />
       {infoSetting.content && (
         <article
           id="blog_page-detail"
           dangerouslySetInnerHTML={{ __html: infoSetting.content }}
         ></article>
       )}
+      <p title="Tác giả" className="flex font-bold justify-end text-white">
+        Hoài Nam
+      </p>
+
+      <ShareSocial
+        link={`${DOMAIN_HOST + "/" + infoSetting.slug}`}
+        isTextShare
+      />
 
       <div className="flex justify-center">
         <button

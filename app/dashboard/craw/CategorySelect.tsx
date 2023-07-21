@@ -70,6 +70,7 @@ const CateGorySelect: React.FC<CateGorySelectProps> = ({ setNewCatogory }) => {
         <ul className="text-yellow-300 text-sm mt-4 mb-2 list-disc marker:bg-yellow-500 ">
           <li>Nếu không tìm thấy chủ đề thì hãy tự thêm nhé</li>
           <li>Vui lòng chọn danh mục trước nhé</li>
+          <li>Đặt tên danh mục ngắn gọn, dễ hiểu, và có ý nghĩa</li>
         </ul>
       </div>
       {isOpenSelect && (
@@ -81,6 +82,8 @@ const CateGorySelect: React.FC<CateGorySelectProps> = ({ setNewCatogory }) => {
               className="text-sm py-2 px-2"
               placeholder="Tạo danh mục mới"
               required
+              minLength={2}
+              maxLength={100}
               id=""
             />
             <div className="my-2 text-sm">
@@ -94,14 +97,17 @@ const CateGorySelect: React.FC<CateGorySelectProps> = ({ setNewCatogory }) => {
           </form>
           <hr className="h-1 my-4" />
 
-          <Select
-            placeholder="Chọn danh mục có sẳn"
-            closeMenuOnSelect={false}
-            options={listCate}
-            onChange={handleChange}
-            id="long-value-select"
-            instanceId="long-value-select"
-          />
+          <section className="capitalize">
+            <Select
+              placeholder="Chọn danh mục có sẳn"
+              closeMenuOnSelect={false}
+              options={listCate}
+              onChange={handleChange}
+              id="long-value-select"
+              instanceId="long-value-select"
+              className="max-w-[400]"
+            />
+          </section>
         </>
       )}
     </main>

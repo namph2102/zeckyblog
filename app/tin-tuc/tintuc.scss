@@ -1,0 +1,28 @@
+.select_filter {
+  display: inline-block;
+  width: 100%;
+  vertical-align: middle;
+  border-radius: 0;
+  background: #151d25;
+  padding: 8px 0 8px 10px;
+  border: none;
+  color: #fff;
+  font-size: 12.5px;
+  border-radius: 3px;
+}
+.letterFillter > li > span {
+  padding: 6px 16.2222px;
+  line-height: 1.42857143;
+  text-decoration: none;
+  color: #e2e2e2;
+  background-color: #151d25;
+  border: 1px solid #202a35;
+  margin-left: -1px;
+  margin-top: -1px;
+  cursor: pointer;
+  font-weight: 300;
+  font-size: 14px;
+  &:hover {
+    background-color: #926b09;
+  }
+}

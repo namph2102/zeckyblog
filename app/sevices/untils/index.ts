@@ -1,6 +1,7 @@
 import axios from "axios";
-import { getCookie } from "cookies-next";
+
 import { toast } from "react-hot-toast";
+import slugify from "slugify";
 export const DOMAIN_SEVER = process.env.DOMAIN_sever;
 export const DOMAIN_HOST = process.env.DOMAIN_URL;
 export const instantAxiosSever = axios.create({
@@ -68,9 +69,12 @@ export function removeVietnameseTones(str: string) {
   return str;
 }
 export function capitalizeText(str: string) {
-  return str.replace(/(^|\s)\w/g, function (match) {
-    return match.toUpperCase();
-  });
+  return (str.charAt(0).toUpperCase() + str.slice(1)).replace(
+    /(^|\s)\w/g,
+    function (match) {
+      return match.toUpperCase();
+    }
+  );
 }
 export const handleOpenNewWindown = (slug: string) => {
   if (!slug) return;
@@ -140,3 +144,61 @@ export async function deleteFileUpload(path: string) {
       toast.success(data);
     });
 }
+export function sortArrayFollowKey<T>(arr: T[], key: string) {
+  if (arr.length <= 1) {
+    return arr;
+  }
+  quicksort(arr, 0, arr.length - 1, key);
+  return arr;
+}
+function quicksort(list: any[], left: number, right: number, key: string) {
+  const pilot = list[Math.floor((right + left) / 2)][key];
+  let l = left;
+  let r = right;
+  let tam;
+  console.log(pilot);
+  do {
+    while (list[l][key] < pilot) {
+      l++;
+    }
+    while (list[r][key] > pilot) {
+      r--;
+    }
+    if (l <= r) {
+      tam = list[l][key];
+      list[l][key] = list[r][key];
+      list[r][key] = tam;
+      l++;
+      r--;
+    }
+  } while (l <= r);
+  if (left < r) {
+    quicksort(list, left, r, key);
+  }
+  if (l < right) {
+    quicksort(list, l, right, key);
+  }
+}
+export function CreateSlug(str: string) {
+  return slugify(
+    removeVietnameseTones(str)
+      .replace(/[^\w\s]/g, "")
+      .toLowerCase()
+      .trim()
+  );
+}
+export const componentsProps = {
+  tooltip: {
+    sx: {
+      "& .MuiTooltip-tooltip": {
+        padding: "10px",
+        maxWidth: 200,
+        height: 100,
+      },
+      bgcolor: "common.black",
+      "& .MuiTooltip-arrow": {
+        color: "common.black",
+      },
+    },
+  },
+};

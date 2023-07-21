@@ -23,6 +23,7 @@
     "cookies-next": "^2.1.2",
     "eslint": "8.44.0",
     "eslint-config-next": "13.4.10",
+    "moment": "^2.29.4",
     "mongoose": "^7.3.4",
     "next": "13.4.10",
     "postcss": "8.4.26",

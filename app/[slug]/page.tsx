@@ -3,14 +3,19 @@ import { getData, getDataDetail } from "@/app/sevices/untils";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-
 import React, { FC } from "react";
+import { BiChevronRight } from "react-icons/bi";
+import ShareSocial from "../component/ShareSocial";
+import moment from "moment";
+import { Header } from "../component";
+import { ICateCreate } from "../sevices/controller/cateController";
 interface ParamsBlog {
   params: { slug: string };
 }
 interface ISlugApi {
   data: IDataBlog;
   listBlogRandom: IDataBlog[];
+  listCate: ICateCreate[];
 }
 const DOMAIN_HOST = process.env.DOMAIN_URL || "https://blog.zecky.online";
 export async function generateMetadata({ params }: ParamsBlog) {
@@ -19,7 +24,7 @@ export async function generateMetadata({ params }: ParamsBlog) {
     return {};
   }
   return {
-    title: data.title + " | Zecky",
+    title: data.title,
     description: data.des,
     keywords: [data.title, ...data.title.split(" ")],
     metadataBase: new URL(`${DOMAIN_HOST}/${data.slug}`),
@@ -70,7 +75,9 @@ export async function generateStaticParams() {
 }
 
 const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
-  const { data, listBlogRandom }: ISlugApi = await getDataDetail(params.slug);
+  const { data, listBlogRandom, listCate }: ISlugApi = await getDataDetail(
+    params.slug
+  );
   if (!data) {
     notFound();
   }
@@ -128,26 +135,40 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema2) }}
       />
-
-      <div className="menu text-white text-sm mb-4 flex items-center gap-1  text-ellipsis overflow-hidden whitespace-nowrap">
-        <Link href="/">Trang chủ</Link> /<Link href="/blog">Tin tức</Link> /
-        <p className="sm:max-w-[400px] max-w-[calc(100vw-200px)]  text-ellipsis overflow-hidden whitespace-nowrap ">
-          {data.title}
-        </p>
+      <Header listMenu={listCate} />
+      <div className="menu text-white text-sm mb-4 flex justify-between items-center gap-1  text-ellipsis overflow-hidden whitespace-nowrap">
+        <nav className="flex items-center gap-1">
+          <Link className="capitalize" href={`/danh-muc/${data.category.slug}`}>
+            {data.category.cate}
+          </Link>
+          <BiChevronRight />
+          <Link className="capitalize last_child" href={`/tin-tuc`}>
+            tin tức
+          </Link>
+        </nav>
+        <div className="datetime text-xs">
+          {" "}
+          {moment(data.createdAt).format("hh:mm:ss - DD/MM/YYYY")}
+        </div>
       </div>
 
-      <h1 className="mt-8 text-center sm:mb-12 mb-8 first-letter:uppercase">
-        {data.title}
-      </h1>
+      <h1 className="mt-8 text-center  first-letter:uppercase">{data.title}</h1>
+      <ShareSocial link={DOMAIN_HOST + "/" + data.slug} />
       <article
         id="blog_page-detail"
         dangerouslySetInnerHTML={{ __html: data.content }}
       ></article>
-
+      <p
+        title="Tác giả"
+        className="flex font-normal capitalize text-sm justify-end text-white"
+      >
+        {data.author.fullname}
+      </p>
+      <ShareSocial isTextShare link={DOMAIN_HOST + "/" + data.slug} />
       {listBlogRandom && listBlogRandom.length > 0 && (
         <>
           <h2 className="text-center mt-8 mb-4 text-xl font-semibold">
-            Một số tin tức liên quan
+            Tin tức liên quan
           </h2>
           <section className="grid sm:grid-cols-2 lg:grid-cols-3 grid-cols-1 sm:gap-4 gap-6">
             {listBlogRandom.map((blog) => (
@@ -157,7 +178,7 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
                     src={blog.image}
                     width={200}
                     height={100}
-                    alt="test"
+                    alt={blog.title}
                     className="w-full sm:h-[200px] h-[300px] object-cover"
                   />
                   <h2 className="line-clamp-1 mt-2 px-2">{blog.title}</h2>
@@ -168,6 +189,11 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
           </section>
         </>
       )}
+      <p className="text-center flex justify-center mt-4 text-white">
+        <Link className="hover:text-hover" href="/tin-tuc">
+          Xem thêm...
+        </Link>
+      </p>
     </main>
   );
 };

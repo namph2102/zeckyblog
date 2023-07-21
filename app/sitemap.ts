@@ -4,7 +4,12 @@ import { getData } from "./sevices/untils";
 const domain = process.env.DOMAIN_URL;
 export default async function sitemap() {
   const data = await getData();
-  const listurl = [domain, "https://zecky.online/", `${domain}/search`];
+  const listurl = [
+    domain,
+    "https://zecky.online/",
+    `${domain}/tim-kiem`,
+    `${domain}/tim-tuc`,
+  ];
   const listData = listurl.map((url) => ({
     url,
     lastModified: new Date().toISOString(),

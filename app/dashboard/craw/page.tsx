@@ -3,7 +3,6 @@ import React, { useCallback, useRef, useState } from "react";
 export const dynamic = "force-dynamic";
 import * as cheerio from "cheerio";
 import axios from "axios";
-import slugify from "slugify";
 import { IData } from "../../sevices/typedata";
 
 import ViewDescription from "./ViewDescription";
@@ -11,17 +10,17 @@ import TextareaAutosize from "@mui/base/TextareaAutosize";
 
 import toast from "react-hot-toast";
 import {
+  CreateSlug,
   DOMAIN_HOST,
   checkImageUrl,
   handleOpenNewWindown,
   isImageLink,
-  removeVietnameseTones,
 } from "../../sevices/untils";
 import blogController from "../../sevices/controller/blogController";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/sevices/store";
 import LoginDashBoard from "../component/LoginDashBoard";
-import "./blogdetail.scss";
+import "../../styles/blogdetail.scss";
 
 import CateGorySelect from "./CategorySelect";
 import ImageContainer from "./ImageContainer";
@@ -82,7 +81,7 @@ const CrawWebsite = () => {
                   );
               });
             }
-            paragraphText && paragraphs.push(`<p >${paragraphText}</p>`);
+            paragraphText && paragraphs.push(`<p >${paragraphText}</p><br/>`);
           });
           if (title && image && des && paragraphs && paragraphs.length > 0) {
             setInfo((prev) => ({
@@ -91,11 +90,7 @@ const CrawWebsite = () => {
               image,
               des,
               content: paragraphs.join("").replace(/\s{2}/g, " "),
-              slug: slugify(
-                removeVietnameseTones(title)
-                  .replace(/[^\w\s]/g, "")
-                  .toLowerCase()
-              ),
+              slug: CreateSlug(title),
             }));
             if (listImageCover && listImageCover?.length > 0) {
               setListImage(Array.from(new Set(listImageCover)));
@@ -210,7 +205,7 @@ const CrawWebsite = () => {
           <hr />
         </>
       )}
-      {listImage && listImage.length > 0 && (
+      {info.title && listImage && listImage.length > 0 && (
         <ImageContainer listImage={listImage} />
       )}
 

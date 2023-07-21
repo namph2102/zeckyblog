@@ -1,4 +1,4 @@
-import { DOMAIN_SEVER, customeAxios } from "../untils";
+import { customeAxios } from "../untils";
 
 export interface ICateCreate {
   slug: string;

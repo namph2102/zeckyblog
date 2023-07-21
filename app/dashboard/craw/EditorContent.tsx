@@ -8,6 +8,7 @@ import "react-quill/dist/quill.snow.css";
 interface EditorContentProps {
   text: string;
   setText: (value: string) => void;
+  title: string;
 }
 const toolbarOptions = [
   ["bold", "italic", "underline", "strike"], // toggled buttons
@@ -32,7 +33,11 @@ const moduleOptions = {
   toolbar: toolbarOptions,
 };
 
-const EditorContent: React.FC<EditorContentProps> = ({ text, setText }) => {
+const EditorContent: React.FC<EditorContentProps> = ({
+  text,
+  setText,
+  title,
+}) => {
   let covetText = text;
   const handleChange = (value: string) => {
     let newvalue = value;
@@ -42,7 +47,7 @@ const EditorContent: React.FC<EditorContentProps> = ({ text, setText }) => {
     if (newvalue.includes("image")) {
       newvalue = newvalue.replace(
         /linkimage(.*?)linkimage/g,
-        '<img width="300" height="150" src="$1" class="sm:max-w-[600px] max-w-full sm:w-auto w-full h-auto object-cover" alt="Ảnh mô tả" />'
+        `<img width="300" height="150" src="$1" class="sm:max-w-[600px] max-w-full sm:w-auto w-full h-auto object-cover" alt="${title}" />`
       );
     }
 
