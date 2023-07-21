@@ -3,7 +3,19 @@ import { DOMAIN_SEVER, customeAxios } from "../../untils";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { AppDispatch } from "..";
-
+export interface IAccount {
+  fullname: string;
+  permission: string;
+  avatar: string;
+  phone: string;
+  _id: string;
+  blocked: boolean;
+  status: boolean;
+  createdAt: string;
+  updatedAt: string;
+  email: string;
+  username: string;
+}
 const AccountSlice = createSlice({
   name: "account",
   initialState: {

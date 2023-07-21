@@ -1,39 +1,42 @@
 import { IData, IDataBlog } from "@/app/sevices/typedata";
-import { getData, getDataDetail } from "@/app/sevices/untils";
-import Image from "next/image";
+import { getData, capitalizeText } from "@/app/sevices/untils";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import React, { FC } from "react";
 import { BiChevronRight } from "react-icons/bi";
-import ShareSocial from "../component/ShareSocial";
+
 import moment from "moment";
-import { Header } from "../component";
-import { ICateCreate } from "../sevices/controller/cateController";
+import cateController, {
+  ICateData,
+} from "@/app/sevices/controller/cateController";
+import ShareSocial from "@/app/component/ShareSocial";
+import { Header } from "@/app/component";
+import ItemDetailViewMore from "@/app/component/ItemDetailViewMore";
+
 interface ParamsBlog {
   params: { slug: string };
 }
 interface ISlugApi {
-  data: IDataBlog;
+  data: ICateData;
   listBlogRandom: IDataBlog[];
-  listCate: ICateCreate[];
+  listCate: ICateData[];
 }
 const DOMAIN_HOST = process.env.DOMAIN_URL || "https://blog.zecky.online";
 export async function generateMetadata({ params }: ParamsBlog) {
-  const { data }: ISlugApi = await getDataDetail(params.slug);
+  const { data }: ISlugApi = await cateController.getCateDetail(params.slug);
   if (!data) {
     return {};
   }
+  const titleCover = `Tin tức về ${capitalizeText(data.cate)} | Zecky`;
   return {
-    title: data.title,
+    title: titleCover,
     description: data.des,
-    keywords: [data.title, ...data.title.split(" ")],
+    keywords: [data.cate],
     metadataBase: new URL(`${DOMAIN_HOST}/${data.slug}`),
     authors: ["blog.zecky.online", "zecky.online"],
-    creator: data.author.fullname,
 
-    publisher: data.author.fullname,
     alternates: {
-      canonical: `${DOMAIN_HOST}/${data.slug}`,
+      canonical: `${DOMAIN_HOST}/danh-muc/${data.slug}`,
       languages: {
         "en-US": "/en-US",
         "de-DE": "/de-DE",
@@ -42,7 +45,7 @@ export async function generateMetadata({ params }: ParamsBlog) {
     },
     twitter: {
       card: "summary_large_image",
-      title: data.title,
+      title: titleCover,
       description: data.des,
       siteId: "1646660186759892992",
       creator: "blog.zecky.online",
@@ -50,20 +53,19 @@ export async function generateMetadata({ params }: ParamsBlog) {
       images: [data.image],
     },
     openGraph: {
-      title: data.title,
+      title: titleCover,
       description: data.des,
       images: {
         url: data.image,
-        alt: data.title,
+        alt: titleCover,
       },
       type: "article",
       publishedTime: data.updatedAt,
-      authors: ["zecky.online", "blog.zecky.online", data.author.fullname],
+      authors: ["zecky.online", "blog.zecky.online"],
     },
     robots: {
       index: true,
       follow: true,
-
       googleBot: {
         index: true,
         follow: false,
@@ -77,10 +79,9 @@ export async function generateMetadata({ params }: ParamsBlog) {
 }
 
 export async function generateStaticParams() {
-  const userData: Promise<IData[]> = await getData();
-  const users = await userData;
-
-  const path = users.map(({ slug }) => ({
+  const res = await cateController.getAllcate();
+  const listCate: ICateData[] = await res.listCate;
+  const path = listCate.map(({ slug }) => ({
     slug,
   }));
 
@@ -88,13 +89,19 @@ export async function generateStaticParams() {
 }
 
 const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
-  const { data, listBlogRandom, listCate }: ISlugApi = await getDataDetail(
-    params.slug
-  );
+  const { data, listBlogRandom, listCate }: ISlugApi =
+    await cateController.getCateDetail(params.slug);
   if (!data) {
     notFound();
   }
-
+  const listCateCover = listCate.map((item, index) => ({
+    "@type": "ListItem",
+    position: index + 3,
+    item: {
+      "@id": `${DOMAIN_HOST}/${item.slug}`,
+      name: `✅${`${item.cate}`}`,
+    },
+  }));
   const schema1 = {
     "@context": "http://schema.org",
     "@type": "BreadcrumbList",
@@ -116,27 +123,19 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
           name: "blog-developer",
         },
       },
-
-      {
-        "@type": "ListItem",
-        position: 3,
-        item: {
-          "@id": `${DOMAIN_HOST}/${data.slug}`,
-          name: `✅${data.title}`,
-        },
-      },
+      ...listCateCover,
     ],
   };
   const schema2 = {
     "@context": "http://schema.org/",
     "@type": "Book",
-    name: data.title,
+    name: `${data.cate}`,
     description: data.des,
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: "5.0",
       bestRating: "5",
-      ratingCount: `${listBlogRandom.length}`,
+      ratingCount: `${listCate.length}`,
     },
   };
   return (
@@ -152,12 +151,19 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
       <Header listMenu={listCate} />
       <div className="menu text-white text-sm mb-4 flex justify-between items-center gap-1  text-ellipsis overflow-hidden whitespace-nowrap">
         <nav className="flex items-center gap-1">
-          <Link className="capitalize" href={`/danh-muc/${data.category.slug}`}>
-            {data.category.cate}
+          <Link className="capitalize" href={`/`}>
+            Trang chủ
           </Link>
           <BiChevronRight />
-          <Link className="capitalize last_child" href={`/tin-tuc`}>
-            tin tức
+          <Link className="capitalize" href={`/danh-muc/${data.slug}`}>
+            Danh mục
+          </Link>
+          <BiChevronRight />
+          <Link
+            className="capitalize last_child"
+            href={`/danh-muc/${data.slug}`}
+          >
+            {data.cate}
           </Link>
         </nav>
         <div className="datetime text-xs">
@@ -165,44 +171,16 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
           {moment(data.createdAt).format("hh:mm:ss - DD/MM/YYYY")}
         </div>
       </div>
-
-      <h1 className="mt-8 text-center  first-letter:uppercase">{data.title}</h1>
-      <ShareSocial link={DOMAIN_HOST + "/" + data.slug} />
-      <article
-        id="blog_page-detail"
-        dangerouslySetInnerHTML={{ __html: data.content }}
-      ></article>
-      <p
-        title="Tác giả"
-        className="flex font-normal capitalize text-sm justify-end text-white"
-      >
-        {data.author.fullname}
-      </p>
-      <ShareSocial isTextShare link={DOMAIN_HOST + "/" + data.slug} />
-      {listBlogRandom && listBlogRandom.length > 0 && (
-        <>
-          <h2 className="text-center mt-8 mb-4 text-xl font-semibold">
-            Tin tức liên quan
-          </h2>
-          <section className="grid sm:grid-cols-2 lg:grid-cols-3 grid-cols-1 sm:gap-4 gap-6">
-            {listBlogRandom.map((blog) => (
-              <article key={blog.slug}>
-                <Link href={`/${blog.slug}`}>
-                  <Image
-                    src={blog.image}
-                    width={200}
-                    height={100}
-                    alt={blog.title}
-                    className="w-full sm:h-[200px] h-[300px] object-cover"
-                  />
-                  <h2 className="line-clamp-1 mt-2 px-2">{blog.title}</h2>
-                  <p className="indent-3 line-clamp-3 text-base">{blog.des} </p>
-                </Link>
-              </article>
-            ))}
-          </section>
-        </>
-      )}
+      <h1 className="text-center mt-8 ">
+        Tin tức về &quot;<span className="capitalize">{data.cate}</span>&quot;
+        nổi bật tại Zecky 👈👈
+      </h1>
+      <ShareSocial link={`${DOMAIN_HOST + "/tim-kiem"}`} />
+      <section className="grid sm:grid-cols-2 grid-cols-1 gap-4">
+        {listBlogRandom.map((blog) => (
+          <ItemDetailViewMore key={blog._id} blog={blog} />
+        ))}
+      </section>
       <p className="text-center flex justify-center mt-4 text-white">
         <Link className="hover:text-hover" href="/tin-tuc">
           Xem thêm...

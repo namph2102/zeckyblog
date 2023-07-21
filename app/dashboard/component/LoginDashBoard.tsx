@@ -7,6 +7,9 @@ import { setCookie } from "cookies-next";
 import { toast } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
+import ImageLogo from "../../assets/logo.png";
+import Link from "next/link";
+import { customeAxios } from "@/app/sevices/untils";
 const LoginDashBoard = () => {
   const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
@@ -20,6 +23,8 @@ const LoginDashBoard = () => {
       const payload: any = { username, password };
       dispatch(LoginAccount(payload)).then(({ accessToken }) => {
         setCookie("accessToken", accessToken);
+        customeAxios.defaults.headers.common["Authorization"] =
+          "Bearer " + accessToken;
         router.push("/dashboard");
       });
     }
@@ -27,16 +32,20 @@ const LoginDashBoard = () => {
   return (
     <section className="bg-main">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <a href="#" className="flex items-center mb-6 text-2xl font-semibold ">
+        <Link
+          className="flex items-baseline mb-6 text-2xl font-semibold"
+          href="/"
+        >
           <Image
-            width={32}
-            height={32}
-            className="w-8 h-8 mr-2"
-            src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
-            alt="logo"
+            src={ImageLogo}
+            alt="Logo zecky"
+            width={40}
+            height={40}
+            className="object-cover"
           />
-          Zecky
-        </a>
+          <span className="text-white text-base font-medium">ecky</span>
+        </Link>
+
         <div className="w-full bg-primary  rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight  md:text-2xl ">

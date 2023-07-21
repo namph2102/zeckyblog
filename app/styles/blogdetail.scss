@@ -1,4 +1,5 @@
 $color-header: #efbb35;
+$color-text: #bcb9b7;
 #blog_page-detail {
   h1,
   h2,
@@ -93,7 +94,10 @@ $color-header: #efbb35;
   span {
     color: #bcb9b7;
   }
-
+  strong {
+    color: #dad6d4;
+    font-weight: 700 !important;
+  }
   p:has(img) {
     display: flex;
     justify-content: center;
@@ -137,7 +141,7 @@ $color-header: #efbb35;
   padding: 4px 8px;
   border-radius: 4px;
   li {
-    font-size: 1rem !important;
+    font-size: 1.1rem !important;
     font-weight: 400 !important;
     &:hover {
       color: #f59bac !important;
@@ -175,10 +179,25 @@ $color-header: #efbb35;
 
     .menu_main__container {
       display: flex !important;
+      box-shadow: 0 1px 3px #4c4949;
     }
   }
 }
-
+header {
+  li {
+    &:hover {
+      color: #f59bac !important;
+    }
+    a,
+    span {
+      font-family: Nunito, sans-serif;
+      font-size: 1.125rem;
+      line-height: 32px;
+      font-weight: 400;
+      color: antiquewhite;
+    }
+  }
+}
 .scroolbar {
   &::-webkit-scrollbar {
     width: 3px;

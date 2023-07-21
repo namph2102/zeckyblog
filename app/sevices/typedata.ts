@@ -12,6 +12,7 @@ export interface IData extends IIData {
   pathImage?: string;
 }
 export interface IDataBlog extends IIData {
+  _id: string;
   createdAt: string;
   updatedAt: string;
   view: number;

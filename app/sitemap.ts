@@ -1,9 +1,11 @@
+import cateController, { ICateData } from "./sevices/controller/cateController";
 import { IDataBlog } from "./sevices/typedata";
 import { getData } from "./sevices/untils";
 
 const domain = process.env.DOMAIN_URL;
 export default async function sitemap() {
   const data = await getData();
+  const listCategory = await cateController.getAllcate();
   const listurl = [
     domain,
     "https://zecky.online/",
@@ -18,5 +20,10 @@ export default async function sitemap() {
     url: `${domain}/${blog.slug}`,
     lastModified: blog.updatedAt,
   }));
-  return [...listData, ...listsitemapblog];
+  const listSiteMapCate =
+    listCategory.listCate.map((cate: ICateData) => ({
+      url: `${domain}/danh-muc/${cate.slug}`,
+      lastModified: cate.updatedAt,
+    })) || [];
+  return [...listData, ...listsitemapblog, ...listSiteMapCate];
 }

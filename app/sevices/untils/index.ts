@@ -1,9 +1,11 @@
 import axios from "axios";
+import moment from "moment";
 
 import { toast } from "react-hot-toast";
 import slugify from "slugify";
 export const DOMAIN_SEVER = process.env.DOMAIN_sever;
 export const DOMAIN_HOST = process.env.DOMAIN_URL;
+
 export const instantAxiosSever = axios.create({
   baseURL: DOMAIN_SEVER,
   headers: {
@@ -69,6 +71,7 @@ export function removeVietnameseTones(str: string) {
   return str;
 }
 export function capitalizeText(str: string) {
+  if (!str) return str;
   return (str.charAt(0).toUpperCase() + str.slice(1)).replace(
     /(^|\s)\w/g,
     function (match) {
@@ -202,3 +205,38 @@ export const componentsProps = {
     },
   },
 };
+
+const timeSetTing: any = {
+  months: "tháng",
+  month: "tháng",
+  years: "năm",
+  year: "năm",
+  minute: "phút",
+  minutes: "phút",
+  day: "ngày",
+  days: "ngày",
+  hours: "giờ",
+  hour: "giờ",
+  second: "giây",
+  seconds: "giây",
+};
+export function HandleTimeDiff(timestamp: any, timeEnd = "") {
+  let result: any = !timeEnd
+    ? moment(timestamp).fromNow()
+    : moment(timestamp).from(timeEnd);
+
+  if (result.includes("a few seconds ago")) return "vài giây trước";
+  if (result[1] === "n") {
+    result = result.replace("an", "1");
+  } else if (result[0] === "a") {
+    result = result.replace("a", "1");
+  }
+
+  result = result.replace("ago", "trước");
+  result = result.split(" ");
+
+  if (timeSetTing[result[1]]) {
+    result[1] = timeSetTing[result[1]];
+  }
+  return result.join(" ");
+}

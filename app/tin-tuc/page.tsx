@@ -1,9 +1,9 @@
 "use client";
 import Link from "next/link";
 import { IDataBlog } from "../sevices/typedata";
-import Image from "next/image";
+
 import { Pagination } from "@mui/material";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import BlogItemSketon from "../component/BlogItemSketon";
 import blogController from "../sevices/controller/blogController";
@@ -11,16 +11,13 @@ import "./tintuc.scss";
 import { removeVietnameseTones } from "../sevices/untils";
 import moment from "moment";
 import { nanoid } from "@reduxjs/toolkit";
-import {
-  BiChevronDown,
-  BiChevronRight,
-  BiChevronUp,
-  BiX,
-} from "react-icons/bi";
+import { BiChevronDown, BiChevronRight, BiX } from "react-icons/bi";
 import cateController, {
   ICateCreate,
 } from "../sevices/controller/cateController";
 import { Header } from "../component";
+import { RiEyeLine } from "react-icons/ri";
+import ItemDetailViewMore from "../component/ItemDetailViewMore";
 let listBlogsData: IDataBlog[] = [];
 type Record<Keys extends keyof any, ValueType> = {
   [Key in Keys]: ValueType;
@@ -37,6 +34,7 @@ export default function Blog() {
   const [listYear, setListyear] = useState<IListChar>({});
   const [listAuthor, setListAuthor] = useState<IListChar>({});
   const [listCate, setListCate] = useState<ICateCreate[]>([]);
+  const [listCateKey, setListCateKey] = useState<IListChar>({});
   const [fillterChar, setFillterChar] = useState<{ kind: string; value: any }>({
     kind: "view",
     value: "sort",
@@ -64,8 +62,15 @@ export default function Blog() {
     const listChars: IListChar = {};
     const listYears: IListChar = {};
     const listAuthor: IListChar = {};
+    const listCateKey: IListChar = {};
     listBlogs.forEach((item) => {
       const year = moment(item.createdAt).format("YYYY");
+      const cateKey = item.category.cate;
+      if (listCateKey[cateKey]) {
+        listCateKey[cateKey].push(item);
+      } else {
+        listCateKey[cateKey] = [item];
+      }
       const authorName = item.author.fullname;
       if (listAuthor[authorName]) {
         listAuthor[authorName].push(item);
@@ -91,6 +96,7 @@ export default function Blog() {
     setListValueChar(listChars);
     setListyear(listYears);
     setListAuthor(listAuthor);
+    setListCateKey(listCateKey);
   }, [listBlogs.length]);
 
   let listBlogFillter: IDataBlog[] = [];
@@ -126,6 +132,11 @@ export default function Blog() {
       listBlogFillter = listBlogs.filter(
         (item) => moment(item.createdAt).format("YYYY") == fillterChar.value
       );
+      break;
+    case "category":
+      listBlogFillter = listBlogs
+        .filter((item) => item.category.cate == fillterChar.value)
+        .sort((a, b) => b.view - a.view);
       break;
     default:
       listBlogFillter = listBlogs;
@@ -190,6 +201,22 @@ export default function Blog() {
             <select
               onChange={(e) =>
                 setFillterChar(() => ({
+                  kind: "category",
+                  value: e.target.value,
+                }))
+              }
+              className="select_filter"
+            >
+              <option value={listCate[0].slug}>Danh mục </option>
+              {Object.keys(listCateKey).map((cate) => (
+                <option key={nanoid()} className="capitalize" value={cate}>
+                  {cate}
+                </option>
+              ))}
+            </select>
+            <select
+              onChange={(e) =>
+                setFillterChar(() => ({
                   kind: "author",
                   value: e.target.value,
                 }))
@@ -240,19 +267,7 @@ export default function Blog() {
       )}
       <section className="grid sm:grid-cols-2 grid-cols-1 gap-4">
         {listBlogInPage.map((blog) => (
-          <article key={blog.slug}>
-            <Link href={`/${blog.slug}`}>
-              <Image
-                src={blog.image}
-                width={200}
-                height={100}
-                alt={blog.title}
-                className="w-full sm:h-[200px] h-[300px] object-cover"
-              />
-              <h2 className="line-clamp-1 mt-2 px-2">{blog.title}</h2>
-              <p className="indent-3 line-clamp-3 text-base">{blog.des}. </p>
-            </Link>
-          </article>
+          <ItemDetailViewMore key={blog._id} blog={blog} />
         ))}
       </section>
       {listBlogs.length <= 0 && (

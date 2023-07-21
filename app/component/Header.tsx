@@ -10,7 +10,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ listMenu }) => {
   return (
     <header className="flex sm:justify-start justify-between gap-2 mb-4 bg-main items-baseline py-4 sticky top-0  left-0 right-0 ease-in duration-300">
-      <div className="mr-3">
+      <div className="mr-6">
         <Link className="flex items-baseline" href="/">
           <>
             <Image
@@ -32,13 +32,13 @@ const Header: React.FC<HeaderProps> = ({ listMenu }) => {
       </p>
       <input id="openmenu" type="checkbox" className="hidden" />
       <nav className="menu_moblie relative sm:block hidden">
-        <ul className="sm:flex hidden gap-3  menu_main__container">
-          <li className="text-sm   py-2 font-semibold text-[#ffffff]">
+        <ul className="sm:flex hidden gap-x-6 gap-y-2  menu_main__container">
+          <li className="text-sm   py-2 font-semibold ">
             <span>
               <Link href="/"> Trang chủ</Link>
             </span>
           </li>
-          <li className="text-sm cursor-pointer relative py-2 menu-drop_parent font-semibold text-[#ffffff]">
+          <li className="text-sm cursor-pointer relative py-2 menu-drop_parent font-semibold ">
             <span className="flex gap-1 items-baseline">
               Danh mục <RiArrowDownSLine />
             </span>
@@ -57,16 +57,16 @@ const Header: React.FC<HeaderProps> = ({ listMenu }) => {
             </ul>
           </li>
 
-          <li className="text-sm   py-2 font-semibold text-[#ffffff]">
+          <li className="text-sm   py-2 font-semibold ">
             <span>
               {" "}
               <Link href="/tin-tuc"> Tin tức</Link>
             </span>
           </li>
-          <li className="text-sm  py-2 font-semibold text-[#ffffff]">
+          <li className="text-sm  py-2 font-semibold ">
             <span>
               {" "}
-              <Link href="/tim-kiem"> Bảng xếp hạn tin tức</Link>
+              <Link href="/tim-kiem"> Bảng xếp hạng</Link>
             </span>
           </li>
           <label
