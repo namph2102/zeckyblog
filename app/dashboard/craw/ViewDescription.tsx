@@ -10,10 +10,12 @@ import ShareSocial from "@/app/component/ShareSocial";
 interface ViewDescriptionProps {
   data: IData;
   handleCreateBlog: (blog: IData) => void;
+  fullname: string;
 }
 
 const ViewDescription: React.FC<ViewDescriptionProps> = ({
   data,
+  fullname = "Phạm Hoài Nam",
   handleCreateBlog,
 }) => {
   const [infoSetting, setInfoSettting] = useState<IData>(data);
@@ -90,8 +92,11 @@ const ViewDescription: React.FC<ViewDescriptionProps> = ({
           dangerouslySetInnerHTML={{ __html: infoSetting.content }}
         ></article>
       )}
-      <p title="Tác giả" className="flex font-bold justify-end text-white">
-        Hoài Nam
+      <p
+        title="Tác giả"
+        className="flex font-bold justify-end text-white capitalize"
+      >
+        {fullname}
       </p>
 
       <ShareSocial

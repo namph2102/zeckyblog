@@ -40,9 +40,22 @@ export async function generateMetadata({ params }: ParamsBlog) {
         "vi-VN": "/vi-VN",
       },
     },
+    twitter: {
+      card: "summary_large_image",
+      title: data.title,
+      description: data.des,
+      siteId: "1646660186759892992",
+      creator: "@nextjs",
+      creatorId: "1646660186759892992",
+      images: [data.image],
+    },
     openGraph: {
       title: data.title,
       description: data.des,
+      images: {
+        url: data.image,
+        alt: data.title,
+      },
       type: "article",
       publishedTime: data.updatedAt,
       authors: ["zecky.online", "blog.zecky.online", data.author.fullname],

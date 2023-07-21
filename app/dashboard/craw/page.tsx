@@ -205,16 +205,18 @@ const CrawWebsite = () => {
           <hr />
         </>
       )}
-      {info.title && listImage && listImage.length > 0 && (
-        <ImageContainer listImage={listImage} />
-      )}
+      {info.title && <ImageContainer listImage={listImage} />}
 
       <section className="container mx-auto">
         <h1 className="text-color-head text-center capitalize my-4">
           {info.title}
         </h1>
         {info.content && info.image && url && (
-          <ViewDescription handleCreateBlog={handleCreateBlog} data={info} />
+          <ViewDescription
+            fullname={account.fullname}
+            handleCreateBlog={handleCreateBlog}
+            data={info}
+          />
         )}
       </section>
     </div>
