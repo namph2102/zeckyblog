@@ -18,11 +18,13 @@ interface BlogFiedItemProps {
   blog: IDataBlog;
   account: IAccount;
   setAcction: (value: string) => void;
+  setListBlog: (prev: any) => any;
 }
 const BlogFiedItem: React.FC<BlogFiedItemProps> = ({
   blog,
   account,
   setAcction,
+  setListBlog,
 }) => {
   const [blogEdit, setBlogEdit] = useState<IData>({
     author: account._id,
@@ -46,6 +48,7 @@ const BlogFiedItem: React.FC<BlogFiedItemProps> = ({
     blogController.editBlog(dataCover, blog._id).then((message) => {
       toast.success(message), setIsOpenEdit(false);
       setAcction(`${Math.floor(Math.random() * 100)}`);
+      setListBlog((prev: any) => ({ ...prev, pageinBlog: 7 }));
     });
   };
   const [CategorySelect, setCategorySelect] = useState<{
@@ -65,6 +68,7 @@ const BlogFiedItem: React.FC<BlogFiedItemProps> = ({
     blogController
       .editBlog({ status: !blog.status }, blog._id)
       .then((message) => {
+        setListBlog((prev: any) => ({ ...prev, pageinBlog: 7 }));
         toast.success(message),
           setAcction(`${Math.floor(Math.random() * 100)}`);
       });
@@ -74,7 +78,8 @@ const BlogFiedItem: React.FC<BlogFiedItemProps> = ({
     result &&
       blogController.deleteBlog(blog._id).then((message) => {
         toast.success(message),
-          setAcction(`${Math.floor(Math.random() * 100)}`);
+          setListBlog((prev: any) => ({ ...prev, pageinBlog: 7 }));
+        setAcction(`${Math.floor(Math.random() * 100)}`);
       });
   };
   return (

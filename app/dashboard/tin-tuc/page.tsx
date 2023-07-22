@@ -104,6 +104,7 @@ const page = () => {
               {listBlog?.length > 0 ? (
                 listBlog.map((blog) => (
                   <BlogFiedItem
+                    setListBlog={setListBlog}
                     setAcction={setAcction}
                     account={account}
                     blog={blog}

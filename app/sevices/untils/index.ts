@@ -228,7 +228,8 @@ export function HandleTimeDiff(timestamp: any, timeEnd = "") {
     ? moment(timestamp).fromNow()
     : moment(timestamp).from(timeEnd);
 
-  if (result.includes("a few seconds ago")) return "vài giây trước";
+  if (result.includes("a few seconds ago")) return "Vài giây trước";
+  if (result.includes("in a few seconds")) return "Vài giây trước";
   if (result[1] === "n") {
     result = result.replace("an", "1");
   } else if (result[0] === "a") {
