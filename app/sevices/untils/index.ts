@@ -89,16 +89,15 @@ export const handleOpenNewWindown = (slug: string) => {
 export function Debounced(callback: any, delay: number = 200) {
   delay = delay || 0;
   let timeId: number | undefined | any;
-  console.log(timeId);
+
   return (...args: any) => {
-    console.log(args);
     if (timeId) {
       clearTimeout(timeId);
       timeId = undefined;
     }
     timeId = setTimeout(() => {
       callback(args);
-
+      console.log(timeId);
       clearTimeout(timeId);
     }, delay);
   };
@@ -111,9 +110,13 @@ export function checkImageUrl(url: string) {
   var pattern = /^(http|https):\/\//;
   return pattern.test(url);
 }
+
 export async function uploadFileSever(file: File) {
   if (!file.type.includes("image")) {
-    toast.error("Đây không phải ảnh");
+    toast.error("Đây không phải ảnh ");
+    return;
+  } else if (file.size / 1000 > 1500) {
+    toast.error("Ảnh phải nhỏ hơn 1.5MB ");
     return;
   } else {
     toast.success("Đang xử lý...");
@@ -240,3 +243,11 @@ export function HandleTimeDiff(timestamp: any, timeEnd = "") {
   }
   return result.join(" ");
 }
+export const checkImageExist = (url: string) => {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(true);
+    img.onerror = () => resolve(false);
+    img.src = url;
+  });
+};

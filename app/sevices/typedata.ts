@@ -4,6 +4,7 @@ interface IIData {
   image: string;
   content: string;
   slug: string;
+  source?: string;
 }
 // idataCreateBlog
 export interface IData extends IIData {
@@ -23,5 +24,8 @@ export interface IDataBlog extends IIData {
   category: {
     cate: string;
     slug: string;
+    _id: string;
   };
+  pathImage: string;
+  source: string;
 }

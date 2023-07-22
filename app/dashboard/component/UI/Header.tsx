@@ -17,6 +17,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { checkImageUrl } from "@/app/sevices/untils";
 
 const HeaderDashboard = () => {
   const router = useRouter();
@@ -45,7 +46,7 @@ const HeaderDashboard = () => {
   }, [account.permission, account.fullname]);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   return (
-    <div className=" my-4 relative z-10">
+    <div className=" my-4 relative z-[99999] bg-main">
       <header className="border_line-style border-b-[2px] lg:block flex justify-between items-center">
         <h2 className="font-bold px-6 my-4">
           <span className="text-2xl">Zecky</span>{" "}
@@ -59,7 +60,7 @@ const HeaderDashboard = () => {
         </button>
       </header>
       <main
-        className={`ease-in duration-300 bg-main w-full lg:static fixed   ${
+        className={`ease-in duration-300 bg-main w-full lg:static fixed  z-[99999]   ${
           !isOpenMenu ? "translate-y-[-200%] lg:translate-y-0" : "translate-y-0"
         }`}
       >
@@ -68,8 +69,9 @@ const HeaderDashboard = () => {
             <Image
               className="object-cover rounded-lg"
               src={
-                account.avatar ||
-                "http://flixtv.volkovdesign.com/admin/img/user.svg"
+                checkImageUrl(account.avatar)
+                  ? account.avatar
+                  : "http://flixtv.volkovdesign.com/admin/img/user.svg"
               }
               width={40}
               height={40}
@@ -126,22 +128,16 @@ const HeaderDashboard = () => {
                 </p>
               </li>
               <li>
-                <p className="flex gap-2 items-center my-4 cursor-pointer hover:text-blue-600">
-                  <span className="text-2xl">
-                    <BiFile />
-                  </span>
-                  <span className="font-semibold text-base">Tài liệu</span>
-                </p>
+                <Link href="/dashboard/tin-tuc">
+                  <p className="flex gap-2 items-center my-4 cursor-pointer hover:text-blue-600">
+                    <span className="text-2xl">
+                      <BiFile />
+                    </span>
+                    <span className="font-semibold text-base">Tin Tức</span>
+                  </p>
+                </Link>
               </li>
 
-              <li>
-                <p className="flex gap-2 items-center my-4 cursor-pointer hover:text-blue-600">
-                  <span className="text-2xl">
-                    <BiBook />
-                  </span>
-                  <span className="font-semibold text-base">Bài Viết</span>
-                </p>
-              </li>
               <li>
                 <Link href="/dashboard/craw">
                   <p className="flex gap-2 items-center my-4 cursor-pointer hover:text-blue-600">

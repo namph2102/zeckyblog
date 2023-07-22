@@ -1,5 +1,6 @@
 "use client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { HeaderDashboard } from "./component/UI";
 const queryClient = new QueryClient();
 import "./styles/dashboard.scss";
@@ -21,6 +22,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             {children}
           </section>
         </Provider>
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </main>
   );

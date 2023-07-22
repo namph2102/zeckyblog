@@ -37,6 +37,7 @@ const CrawWebsite = () => {
     author: account._id,
     category: category.value,
     pathImage: "",
+    source: "",
   };
 
   const [url, setUrl] = useState("");
@@ -49,7 +50,7 @@ const CrawWebsite = () => {
       if (!linkCraw) return;
       axios
         .get(linkCraw)
-        .then((res) => {
+        .then(async (res) => {
           const $ = cheerio.load(res.data);
           const title = $("h1").text() || $("title").text();
           const image = $('meta[property="og:image"]').attr("content");
@@ -58,7 +59,7 @@ const CrawWebsite = () => {
           $("img[src]").each((i, img) => {
             const src = $(img).attr("src");
 
-            if (src && checkImageUrl(src)) {
+            if (src) {
               listImageCover.push(src);
             }
           });
@@ -91,6 +92,7 @@ const CrawWebsite = () => {
               des,
               content: paragraphs.join("").replace(/\s{2}/g, " "),
               slug: CreateSlug(title),
+              source: url,
             }));
             if (listImageCover && listImageCover?.length > 0) {
               setListImage(Array.from(new Set(listImageCover)));
@@ -115,7 +117,7 @@ const CrawWebsite = () => {
       coverData.des = info.des.trim();
       coverData.title = info.title.trim();
       coverData.image = info.image.trim();
-
+      coverData.source = url.trim().toLowerCase();
       blogController
         .createNewblog(coverData)
         .then((data) => {
@@ -208,7 +210,7 @@ const CrawWebsite = () => {
       {info.title && <ImageContainer listImage={listImage} />}
 
       <section className="container mx-auto">
-        <h1 className="text-color-head text-center capitalize my-4">
+        <h1 className="text-color-head text-center first-letter:uppercase my-4">
           {info.title}
         </h1>
         {info.content && info.image && url && (

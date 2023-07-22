@@ -25,7 +25,13 @@ const AccountSlice = createSlice({
       _id: "",
       avatar: "",
       permission: "member",
-    },
+      blocked: true,
+      createdAt: "",
+      updatedAt: "",
+      email: "",
+      phone: "",
+      status: false,
+    } as IAccount,
   },
   reducers: {
     updateFullAccount(state, action) {

@@ -1,6 +1,8 @@
+import { checkImageExist } from "@/app/sevices/untils";
+import { Skeleton } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { BiDownload } from "react-icons/bi";
 const ImageItem: React.FC<{
@@ -9,6 +11,8 @@ const ImageItem: React.FC<{
   handleDeletefile?: (path: string) => void;
   setListInmage: (prev: any) => any;
 }> = ({ img, path, handleDeletefile, setListInmage }) => {
+  const [isLoadding, setIsloadding] = useState(true);
+  const [isHidden, setIsHidden] = useState(false);
   const handleCopy = (kind: number) => {
     const text = kind == 1 ? img : `linkimage${img}linkimage`;
     navigator.clipboard
@@ -21,13 +25,20 @@ const ImageItem: React.FC<{
       });
   };
   const divRef = useRef<HTMLDivElement>(null);
+
   const handleHideBox = () => {
+    if (path) {
+      setListInmage(
+        (prev: any) => prev.filter((item: any) => item.path != path) || [prev]
+      );
+      return;
+    }
     if (divRef.current) {
       divRef.current.classList.add("hidden");
       setListInmage(
         (prev: any) => prev.filter((item: any) => item != img) || [prev]
       );
-      toast.success("Ẩn thành công!");
+      toast.success("Xóa thành công!");
     }
   };
   const handleDeleteUpLoadImage = () => {
@@ -36,6 +47,34 @@ const ImageItem: React.FC<{
       divRef.current.classList.add("hidden");
     }
   };
+
+  useEffect(() => {
+    if (!img) return;
+
+    checkImageExist(img)
+      .then((exists) => {
+        if (exists) {
+          setIsloadding(false);
+        } else {
+          setIsHidden(true);
+          handleHideBox();
+        }
+      })
+      .catch(() => {
+        setIsHidden(true);
+        handleHideBox();
+      });
+  }, []);
+  if (isHidden) return <></>;
+  if (isLoadding)
+    return (
+      <Skeleton
+        animation="wave"
+        variant="rounded"
+        className="w-full "
+        height={300}
+      />
+    );
 
   return (
     <div ref={divRef} className="border p-4 relative">
@@ -46,10 +85,10 @@ const ImageItem: React.FC<{
         X
       </button>
       <Image
-        className="w-full h-32 object-cover"
+        className="w-full h-auto object-cover "
         src={img}
         width={100}
-        height={50}
+        height={100}
         alt="lỗi ảnh"
       />
       <p className="mt-2 cursor-pointe  text-sm  flex flex-col i">

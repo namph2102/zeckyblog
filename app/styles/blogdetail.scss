@@ -26,7 +26,7 @@ $color-text: #bcb9b7;
     max-width: max-content;
     overflow-x: scroll;
     background-color: #011626;
-    padding: 8px 16px !important;
+    padding: 12px 16px !important;
     &::-webkit-scrollbar {
       width: 4px;
       height: 8px;
@@ -98,6 +98,7 @@ $color-text: #bcb9b7;
     color: #dad6d4;
     font-weight: 700 !important;
   }
+
   p:has(img) {
     display: flex;
     justify-content: center;
@@ -200,12 +201,19 @@ header {
 }
 .scroolbar {
   &::-webkit-scrollbar {
-    width: 3px;
+    width: 4px;
+    height: 8px;
   }
   &::-webkit-scrollbar-thumb {
     background-color: #e1f533;
+    border-radius: 100rem;
   }
   &::-webkit-scrollbar-track {
     background-color: #262626;
+  }
+}
+table {
+  th {
+    white-space: nowrap;
   }
 }

@@ -58,7 +58,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({ listImage }) => {
             {listImageUpload.map((img) => (
               <ImageItem
                 handleDeletefile={handleDeletefile}
-                setListInmage={setListInmage}
+                setListInmage={setListImageUpload}
                 img={img.url}
                 path={img.path}
                 key={nanoid()}

@@ -11,12 +11,14 @@ interface ViewDescriptionProps {
   data: IData;
   handleCreateBlog: (blog: IData) => void;
   fullname: string;
+  isEdit?: boolean;
 }
 
 const ViewDescription: React.FC<ViewDescriptionProps> = ({
   data,
   fullname = "Phạm Hoài Nam",
   handleCreateBlog,
+  isEdit,
 }) => {
   const [infoSetting, setInfoSettting] = useState<IData>(data);
   const handleChangeContent = (key: any, value: string) => {
@@ -35,7 +37,7 @@ const ViewDescription: React.FC<ViewDescriptionProps> = ({
   return (
     <div id="blog_page-detail" className="my-2">
       <hr className="my-4" />
-      <h2 className="text-center mt-4">Chỉnh sửa định dạng</h2>
+      <h2 className="text-center my-4 py-2">Chỉnh sửa định dạng</h2>
       <h4>Tiêu đề</h4>
       <TextareaAutosize
         value={infoSetting.title}
@@ -110,7 +112,7 @@ const ViewDescription: React.FC<ViewDescriptionProps> = ({
           className="py-2 px-5 bg-green-600 hover:bg-green-900 my-3 rounded-full"
           onClick={handleSubmit}
         >
-          Tạo Trang Blog
+          {isEdit ? "Chỉnh sửa " : "Tạo "} bài viết
         </button>
       </div>
     </div>

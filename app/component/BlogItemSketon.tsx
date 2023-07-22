@@ -7,7 +7,7 @@ const BlogItemSketon = () => {
         animation="wave"
         variant="rounded"
         className="w-full "
-        height={150}
+        height={200}
       />
       <Skeleton
         animation="wave"
@@ -17,7 +17,15 @@ const BlogItemSketon = () => {
       />
 
       <div>
-        <Skeleton variant="rectangular" className="w-full" height={60} />
+        <Skeleton variant="rectangular" className="w-full" height={88} />
+      </div>
+      <div className="flex justify-end">
+        <Skeleton
+          animation="wave"
+          className="w-[100px]"
+          variant="text"
+          sx={{ fontSize: "1rem" }}
+        />
       </div>
     </div>
   );
