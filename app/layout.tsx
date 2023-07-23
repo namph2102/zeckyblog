@@ -49,13 +49,26 @@ export default function RootLayout({
       />
       <Script strategy="lazyOnload" id="my-script">
         {`
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){dataLayer.push(arguments);}
-                    gtag('js', new Date());
-                    gtag('config', '${process.env.GOOGLE_ANALYTICS_KEY}', {
-                    page_path: window.location.pathname,
-                    });
-                `}
+                      window.dataLayer = window.dataLayer || [];
+                      function gtag(){dataLayer.push(arguments);}
+                      gtag('js', new Date());
+                      gtag('config', '${process.env.GOOGLE_ANALYTICS_KEY}', {
+                      page_path: window.location.pathname,
+                      });
+                   
+                  `}
+      </Script>
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-B9JLVXP3YJ"
+        strategy="lazyOnload"
+      />
+      <Script strategy="lazyOnload" id="my-script">
+        {` 
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-B9JLVXP3YJ');
+      `}
       </Script>
 
       <body suppressHydrationWarning={true} className={inter.className}>
