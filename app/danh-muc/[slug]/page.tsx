@@ -151,10 +151,12 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
       <Header listMenu={listCate} />
       <div className="menu text-white text-sm mb-4 flex justify-between items-center gap-1  text-ellipsis overflow-hidden whitespace-nowrap">
         <nav className="flex items-center gap-1">
-          <Link className="capitalize" href={`/`}>
+          <Link className="capitalize sm:block hidden" href={`/`}>
             Trang chủ
           </Link>
-          <BiChevronRight />
+          <span className="sm:block hidden">
+            <BiChevronRight />
+          </span>
           <Link className="capitalize" href={`/danh-muc/${data.slug}`}>
             Danh mục
           </Link>

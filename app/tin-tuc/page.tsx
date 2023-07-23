@@ -8,7 +8,11 @@ import Head from "next/head";
 import BlogItemSketon from "../component/BlogItemSketon";
 import blogController from "../sevices/controller/blogController";
 import "./tintuc.scss";
-import { Debounced, removeVietnameseTones } from "../sevices/untils";
+import {
+  Debounced,
+  capitalizeText,
+  removeVietnameseTones,
+} from "../sevices/untils";
 import moment from "moment";
 import { nanoid } from "@reduxjs/toolkit";
 import { BiChevronDown, BiChevronRight, BiSearch, BiX } from "react-icons/bi";
@@ -36,18 +40,22 @@ export default function Blog() {
   const [listAuthor, setListAuthor] = useState<IListChar>({});
   const [listCate, setListCate] = useState<ICateCreate[]>([]);
   const [listCateKey, setListCateKey] = useState<IListChar>({});
+  const [fisrtLoadding, setFirstLoadding] = useState(true);
   const [fillterChar, setFillterChar] = useState<{ kind: string; value: any }>({
     kind: "view",
     value: "sort",
   });
   const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {
-    blogController.getAllBlogFromSever().then((data) => {
-      if (data?.length > 0) {
-        setListBlogs(data);
-        listBlogsData = data;
-      }
-    });
+    blogController
+      .getAllBlogFromSever()
+      .then((data) => {
+        if (data?.length > 0) {
+          setListBlogs(data);
+          listBlogsData = data;
+        }
+      })
+      .finally(() => setFirstLoadding(() => false));
     cateController.getAllcate().then(({ listCate }) => {
       if (listCate) {
         setListCate(listCate);
@@ -142,7 +150,7 @@ export default function Blog() {
     default:
       listBlogFillter = listBlogs;
   }
-  let totalPage = Math.ceil(listBlogFillter.length / pageInblog);
+  let totalPage = Math.ceil((listBlogFillter?.length || 1) / pageInblog);
   const currentPageFormat = currentPage > totalPage ? 1 : currentPage;
   let listBlogInPage = listBlogFillter?.length
     ? listBlogFillter.slice(
@@ -158,7 +166,9 @@ export default function Blog() {
     const search = inputRef.current?.value;
     if (search) {
       blogController.SearchPage(search).then((data) => {
-        setListBlogs(data);
+        if (data?.length > 0) {
+          setListBlogs(data);
+        }
       });
     } else {
       setListBlogs(() => listBlogsData);
@@ -220,7 +230,7 @@ export default function Blog() {
             <input
               ref={inputRef}
               onInput={Debounced(getListUserSearch, 1000)}
-              type="search "
+              type="search"
               placeholder="Tìm kiếm bài viết..."
             />
             <BiSearch />
@@ -269,7 +279,7 @@ export default function Blog() {
               <option value="">Tác giả </option>
               {Object.keys(listAuthor).map((cate) => (
                 <option className="capitalize" key={nanoid()} value={cate}>
-                  {cate}
+                  {capitalizeText(cate)}
                 </option>
               ))}
             </select>
@@ -313,7 +323,8 @@ export default function Blog() {
           <ItemDetailViewMore key={blog._id} blog={blog} />
         ))}
       </section>
-      {listBlogs.length <= 0 && (
+
+      {fisrtLoadding && (
         <section className="grid sm:grid-cols-2 grid-cols-1 gap-4">
           <BlogItemSketon />
           <BlogItemSketon />
@@ -327,6 +338,7 @@ export default function Blog() {
           <BlogItemSketon />
         </section>
       )}
+
       {totalPage > 1 && (
         <section className="text-white panation flex justify-center mt-4">
           <Pagination
