@@ -27,10 +27,12 @@ export async function generateMetadata({ params }: ParamsBlog) {
   if (!data) {
     return {};
   }
-  const titleCover = `Tin tức về ${capitalizeText(data.cate)} | Zecky`;
+  const titleCover = `Tin tức về ${capitalizeText(data.cate)}`;
   return {
     title: titleCover,
-    description: data.des,
+    description:
+      data.des ||
+      `${titleCover} được cập nhật tin nóng online Việt Nam và thế giới mới nhất trong ngày `,
     keywords: [data.cate],
     metadataBase: new URL(`${DOMAIN_HOST}/${data.slug}`),
     authors: ["blog.zecky.online", "zecky.online"],
@@ -50,13 +52,13 @@ export async function generateMetadata({ params }: ParamsBlog) {
       siteId: "1646660186759892992",
       creator: "blog.zecky.online",
       creatorId: "1646660186759892992",
-      images: [data.image],
+      images: [data.image, DOMAIN_HOST + "/opengraph-image.png"],
     },
     openGraph: {
       title: titleCover,
       description: data.des,
       images: {
-        url: data.image,
+        url: data.image || DOMAIN_HOST + "/opengraph-image.png",
         alt: titleCover,
       },
       type: "article",
@@ -98,7 +100,7 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
     "@type": "ListItem",
     position: index + 3,
     item: {
-      "@id": `${DOMAIN_HOST}/${item.slug}`,
+      "@id": `${DOMAIN_HOST}/danh-muc/${item.slug}`,
       name: `✅${`${item.cate}`}`,
     },
   }));
