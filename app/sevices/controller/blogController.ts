@@ -1,6 +1,5 @@
 import { DOMAIN_SEVER, customeAxios } from "../untils";
 import { IData, IDataBlog } from "../typedata";
-import { ICateCreate } from "./cateController";
 
 class BlogController {
   userId = "";
@@ -50,6 +49,22 @@ class BlogController {
   async adminSearchBlog(search: string, userId = "") {
     const res = await customeAxios.post(this.pathUrlBlog + "/admin/search", {
       data: { search, userId },
+      message: "tìm kiếm theo userid",
+    });
+    const result = await res.data;
+    return result;
+  }
+  async SearchPage(search: string) {
+    const res = await customeAxios.post(this.pathUrlBlog + "/search", {
+      data: search,
+      message: "tìm kiếm",
+    });
+    const result = await res.data;
+    return result;
+  }
+  async crawWebsite(link: string) {
+    const res = await customeAxios.post(this.pathUrlBlog + "/admin/craw", {
+      data: link,
       message: "tìm kiếm",
     });
     const result = await res.data;

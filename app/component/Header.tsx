@@ -39,9 +39,9 @@ const Header: React.FC<HeaderProps> = ({ listMenu }) => {
             </span>
           </li>
           <li className="text-sm cursor-pointer relative py-2 menu-drop_parent font-semibold ">
-            <span className="flex gap-1 items-baseline">
-              Danh mục <RiArrowDownSLine />
-            </span>
+            <p className="flex gap-1 items-center">
+              <span> Danh mục</span> <RiArrowDownSLine />
+            </p>
             <ul className="absolute hidden overflow-y-auto scroolbar max-h-[80vh] top-full left-0 sm:w-[500px] bg-primary w-[300px]  gap-2 flex-wrap menuDrop">
               {listMenu &&
                 listMenu.map((cate) => (

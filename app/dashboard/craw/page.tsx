@@ -1,8 +1,6 @@
 "use client";
 import React, { useCallback, useRef, useState } from "react";
 export const dynamic = "force-dynamic";
-import * as cheerio from "cheerio";
-import axios from "axios";
 import { IData } from "../../sevices/typedata";
 
 import ViewDescription from "./ViewDescription";
@@ -14,7 +12,6 @@ import {
   DOMAIN_HOST,
   checkImageUrl,
   handleOpenNewWindown,
-  isImageLink,
 } from "../../sevices/untils";
 import blogController from "../../sevices/controller/blogController";
 import { useSelector } from "react-redux";
@@ -48,58 +45,34 @@ const CrawWebsite = () => {
   const handleCrawLink = useCallback(
     (linkCraw: string) => {
       if (!linkCraw) return;
-      axios
-        .get(linkCraw)
-        .then(async (res) => {
-          const $ = cheerio.load(res.data);
-          const title = $("h1").text() || $("title").text();
-          const image = $('meta[property="og:image"]').attr("content");
-          const des = $('meta[name="description"]').attr("content");
-          const listImageCover: string[] = [];
-          $("img[src]").each((i, img) => {
-            const src = $(img).attr("src");
-
-            if (src) {
-              listImageCover.push(src);
-            }
-          });
-
-          const paragraphs: any = [];
-          $("p").each((index, element) => {
-            const paragraphText = $(element)
-              .text()
-              ?.trim()
-              .replace(/\s{2}/, " ");
-            const regex = /((http|https):\/\/[^\s]+)/g;
-            const links = paragraphText.match(regex);
-            if (links && links[0]) {
-              links.forEach((link) => {
-                if (isImageLink(link)) {
-                  paragraphs.push(`linkimage${link}linkimage`);
-                } else
-                  paragraphs.push(
-                    `<a href="${link}" target="_blank" rel="noopener noreferrer">${link}</a>`
-                  );
-              });
-            }
-            paragraphText && paragraphs.push(`<p >${paragraphText}</p><br/>`);
-          });
-          if (title && image && des && paragraphs && paragraphs.length > 0) {
-            setInfo((prev) => ({
-              ...prev,
-              title: title.trim(),
-              image,
-              des,
-              content: paragraphs.join("").replace(/\s{2}/g, " "),
-              slug: CreateSlug(title),
-              source: url,
-            }));
-            if (listImageCover && listImageCover?.length > 0) {
-              setListImage(Array.from(new Set(listImageCover)));
+      blogController
+        .crawWebsite(linkCraw)
+        .then(
+          async ({
+            title = "",
+            image = "",
+            des = "",
+            source = url,
+            content = "",
+            listImageCover = [],
+          }) => {
+            if (title) {
+              setInfo((prev) => ({
+                ...prev,
+                title: title.trim(),
+                image,
+                des,
+                content,
+                slug: CreateSlug(title),
+                source,
+              }));
+              if (listImageCover && listImageCover?.length > 0) {
+                setListImage(listImageCover);
+              }
+              toast.success("Lấy thành công nội dung");
             }
           }
-          toast.success("Lấy thành công nội dung");
-        })
+        )
         .catch(() => {
           toast.error("Không thể lấy nội dung");
         });
@@ -213,7 +186,7 @@ const CrawWebsite = () => {
         <h1 className="text-color-head text-center first-letter:uppercase my-4">
           {info.title}
         </h1>
-        {info.content && info.image && url && (
+        {info.title && url && (
           <ViewDescription
             fullname={account.fullname}
             handleCreateBlog={handleCreateBlog}

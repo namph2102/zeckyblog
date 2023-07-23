@@ -11,6 +11,7 @@ import { RootState } from "@/app/sevices/store";
 import LoadingPage from "@/app/component/LoadingPage";
 import SearchContainer from "./SearchContainer";
 import { IDataBlog } from "@/app/sevices/typedata";
+import CreateBlog from "./CreateBlog";
 
 const page = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -69,7 +70,9 @@ const page = () => {
       </section>
       <section className="min-h-[80vh] lg:w-full w-[100vw] overflow-x-auto scroolbar">
         {isLoadding && <LoadingPage />}
-
+        {account.permission !== "member" && !isLoadding && (
+          <CreateBlog setAcction={setAcction} account={account} />
+        )}
         {!isLoadding && (
           <table className="table-auto text-sm w-full text-center">
             <thead className="border_line-style  border-b-2 text-sm">

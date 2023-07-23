@@ -4,7 +4,7 @@ import TextareaAutosize from "@mui/base/TextareaAutosize";
 import { IData } from "../../sevices/typedata";
 import Image from "next/image";
 import EditorContent from "./EditorContent";
-import { DOMAIN_HOST } from "@/app/sevices/untils";
+import { CreateSlug, DOMAIN_HOST } from "@/app/sevices/untils";
 import ShareSocial from "@/app/component/ShareSocial";
 
 interface ViewDescriptionProps {
@@ -37,20 +37,31 @@ const ViewDescription: React.FC<ViewDescriptionProps> = ({
   return (
     <div id="blog_page-detail" className="my-2">
       <hr className="my-4" />
-      <h2 className="text-center my-4 py-2">Chỉnh sửa định dạng</h2>
+      <h2 className="text-center my-4 py-2">
+        {isEdit ? "Chỉnh sửa định dạng" : "Thêm bài viết mới"}
+      </h2>
+
       <h4>Tiêu đề</h4>
       <TextareaAutosize
         value={infoSetting.title}
         className="w-full px-2 py-1 text-black"
         onChange={(e) => handleChangeContent("title", e.target.value)}
+        placeholder="Nhập nội dung tiêu đề"
+        maxLength={120}
       />
-      <hr className="my-4" />
-      <h4>Slug</h4>
-      <TextareaAutosize
-        value={infoSetting.slug}
-        onChange={(e) => handleChangeContent("slug", e.target.value)}
-        className="w-full px-2 py-1 text-black"
-      />
+      {infoSetting.slug && (
+        <>
+          <hr className="my-4" />
+          <h4>Slug</h4>
+          <TextareaAutosize
+            value={infoSetting.slug || CreateSlug(infoSetting.title)}
+            onChange={(e) => handleChangeContent("slug", e.target.value)}
+            className="w-full px-2 py-1 text-black"
+            placeholder="Đường dẫn url"
+            maxLength={600}
+          />
+        </>
+      )}
       <hr className="my-4" />
 
       <h4>Mô tả SEO</h4>
@@ -58,23 +69,31 @@ const ViewDescription: React.FC<ViewDescriptionProps> = ({
         value={infoSetting.des}
         onChange={(e) => handleChangeContent("des", e.target.value)}
         className="w-full px-2 py-1 text-black"
+        placeholder="Mô tả seo"
+        minRows={2}
+        maxLength={1000}
       />
       <hr className="my-4" />
       <h4>Ảnh SEO</h4>
-      <Image
-        className="w-full h-auto object-cover"
-        src={infoSetting.image}
-        width={300}
-        height={120}
-        alt={infoSetting.title}
-      />
+      {infoSetting.image && (
+        <Image
+          className="w-full h-auto object-cover"
+          src={infoSetting.image}
+          width={300}
+          height={120}
+          alt={infoSetting.title}
+        />
+      )}
       <TextareaAutosize
         onChange={(e) => handleChangeContent("image", e.target.value)}
         value={infoSetting.image}
         className="w-full px-2 py-1 text-black"
+        placeholder="Nhập đường dẫn ảnh"
       />
       <hr className="my-4" />
-      <h2 className="text-center my-4 font-bold">Chỉnh sửa nội dung</h2>
+      <h2 className="text-center my-8 font-bold">
+        {isEdit ? "Chỉnh sửa nội dung" : "Soạn nội dung"}
+      </h2>
       <EditorContent
         title={infoSetting.title}
         text={infoSetting.content}

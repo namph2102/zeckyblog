@@ -21,7 +21,6 @@
     "add": "^2.0.6",
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
-    "cheerio": "^1.0.0-rc.12",
     "cookies-next": "^2.1.2",
     "eslint": "8.44.0",
     "eslint-config-next": "13.4.10",

@@ -35,9 +35,11 @@ const ImageContainer: React.FC<ImageContainerProps> = ({ listImage }) => {
   };
   return (
     <>
-      <h2 className="text-color-head text-center  mt-16 mb-8">
-        Danh sách ảnh có thể sử dụng
-      </h2>
+      {listImageSS.length > 0 && (
+        <h2 className="text-color-head text-center  mt-16 mb-8">
+          Danh sách ảnh có thể sử dụng
+        </h2>
+      )}
       <section className="grid sm:grid-cols-3 lg:grid-cols-4 grid-cols-2 gap-4">
         {listImageSS.map((img) => (
           <ImageItem
@@ -68,7 +70,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({ listImage }) => {
         </>
       )}
 
-      <div className="flex justify-center my-4 cursor-pointer">
+      <div className="flex justify-center mt-4 mb-12 cursor-pointer">
         <label
           htmlFor="uploadimagemore"
           className="bg-red-600 hover:bg-red-800 py-1 px-5 rounded-2xl cursor-pointer"
@@ -82,7 +84,6 @@ const ImageContainer: React.FC<ImageContainerProps> = ({ listImage }) => {
         id="uploadimagemore"
         className="hidden"
       />
-      <hr className="h-2 my-2 bg-white" />
     </>
   );
 };

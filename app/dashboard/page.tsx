@@ -94,7 +94,7 @@ const DashBoard = () => {
           </article>
         </div>
       </section>
-      <div className="grid sm:grid-cols-2 grid-cols-1  gap-2 mt-3">
+      <div className="grid lg:grid-cols-2 grid-cols-1  gap-2 mt-3">
         <article className="bg-primary rounded-2xl p-2">
           <div className="flex justify-between items-center">
             <div className="flex items-center">
@@ -221,7 +221,7 @@ const DashBoard = () => {
               <span>Bài viết</span>
             </div>
             <div className="text-sm bg-main rounded-full py-2 px-4">
-              <Link href="/user">Xem tất cả</Link>
+              <Link href="/dashboard/tin-tuc">Xem tất cả</Link>
             </div>
           </div>
           <table className="table-auto text-sm w-full text-center">

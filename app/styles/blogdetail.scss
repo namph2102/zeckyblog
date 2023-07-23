@@ -95,10 +95,13 @@ $color-text: #bcb9b7;
     color: #bcb9b7;
   }
   strong {
-    color: #dad6d4;
+    color: #c1c0bf;
     font-weight: 700 !important;
   }
-
+  .ql-video {
+    width: 100%;
+    min-height: 500px;
+  }
   p:has(img) {
     display: flex;
     justify-content: center;
@@ -151,7 +154,11 @@ $color-text: #bcb9b7;
   }
 }
 @media screen and (max-width: 640px) {
+  .ql-video {
+    min-height: 300px !important;
+  }
   p {
+    color: #c5bebb;
     img {
       width: 100% !important;
     }

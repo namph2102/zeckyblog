@@ -19,14 +19,6 @@ body {
   scroll-behavior: smooth;
 }
 
-.text-color-read,
-p,
-ul {
-  color: #bcb9b7;
-  line-height: 2;
-  font-weight: 300;
-  text-align: justify;
-}
 .text-color-head,
 h1,
 h2,
@@ -81,13 +73,21 @@ article h2 {
 .ql-toolbar.ql-snow {
   background-color: #ffffff;
 }
+.text-color-read,
+p,
+ul {
+  color: #bcb9b7;
+  line-height: 2;
+  font-weight: 300;
+  text-align: justify;
+}
 @media screen and (max-width: 768px) {
   body {
-    font-size: 1.05rem;
+    font-size: 1.05rem !important;
   }
   p,
   ul {
-    line-height: 1.8;
+    line-height: 2;
     font-weight: 200 !important;
   }
   h1 {

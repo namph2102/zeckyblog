@@ -50,7 +50,12 @@ const EditorContent: React.FC<EditorContentProps> = ({
         `<img width="300" height="150" src="$1" class="sm:max-w-[600px] max-w-full sm:w-auto w-full h-auto object-cover" alt="${title}" />`
       );
     }
-
+    if (newvalue.includes("video")) {
+      newvalue = newvalue.replace(
+        /linkvideo(.*?)linkvideo/g,
+        `<iframe width="560" height="315" src="https://www.youtube.com/embed/$1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+      );
+    }
     setText(newvalue);
   };
   if (covetText.includes("display: none !important;")) {

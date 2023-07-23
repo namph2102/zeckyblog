@@ -3,21 +3,22 @@ import Link from "next/link";
 import { IDataBlog } from "../sevices/typedata";
 
 import { Pagination } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Head from "next/head";
 import BlogItemSketon from "../component/BlogItemSketon";
 import blogController from "../sevices/controller/blogController";
 import "./tintuc.scss";
-import { removeVietnameseTones } from "../sevices/untils";
+import { Debounced, removeVietnameseTones } from "../sevices/untils";
 import moment from "moment";
 import { nanoid } from "@reduxjs/toolkit";
-import { BiChevronDown, BiChevronRight, BiX } from "react-icons/bi";
+import { BiChevronDown, BiChevronRight, BiSearch, BiX } from "react-icons/bi";
 import cateController, {
   ICateCreate,
 } from "../sevices/controller/cateController";
 import { Header } from "../component";
-import { RiEyeLine } from "react-icons/ri";
+
 import ItemDetailViewMore from "../component/ItemDetailViewMore";
+import "./tintuc.scss";
 let listBlogsData: IDataBlog[] = [];
 type Record<Keys extends keyof any, ValueType> = {
   [Key in Keys]: ValueType;
@@ -151,6 +152,19 @@ export default function Blog() {
     : [];
 
   const [isOpenFilter, setIsOpenFilter] = useState(false);
+  const [isOpenSearch, setIsOpenSearch] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const getListUserSearch = () => {
+    const search = inputRef.current?.value;
+    if (search) {
+      blogController.SearchPage(search).then((data) => {
+        setListBlogs(data);
+      });
+    } else {
+      setListBlogs(() => listBlogsData);
+    }
+  };
+
   return (
     <main>
       <Head>
@@ -174,16 +188,45 @@ export default function Blog() {
       </div>
       <h1 className="text-center mb-8">Tổng hợp tin tức hay tại Zecky</h1>
       <section
-        onClick={() => setIsOpenFilter(!isOpenFilter)}
-        className={`text-right text-sm flex items-center justify-end mb-1 gap-1 cursor-pointer ${
-          isOpenFilter ? "" : "pb-4"
+        className={`text-right text-sm flex items-center justify-between mb-1 gap-1 cursor-pointer ${
+          isOpenFilter || isOpenSearch ? "" : "pb-4"
         }`}
       >
-        Lọc tin tức{" "}
-        <p className="text-xl ">
-          {!isOpenFilter ? <BiChevronDown /> : <BiX />}
-        </p>
+        <div
+          onClick={() => {
+            isOpenSearch && setListBlogs(() => listBlogsData);
+            setIsOpenSearch(!isOpenSearch);
+          }}
+          className="flex items-center justify-between"
+        >
+          Tìm kiếm{" "}
+          <p className="text-xl ">
+            {!isOpenSearch ? <BiChevronDown /> : <BiX />}
+          </p>
+        </div>
+        <div
+          onClick={() => setIsOpenFilter(!isOpenFilter)}
+          className="flex items-center justify-between"
+        >
+          Lọc tin tức{" "}
+          <p className="text-xl ">
+            {!isOpenFilter ? <BiChevronDown /> : <BiX />}
+          </p>
+        </div>
       </section>
+      {isOpenSearch && (
+        <section className="mb-4 -pt-1">
+          <div className="main__title-form py-1 flex items-center bg-[#151f30] rounded-full pr-5">
+            <input
+              ref={inputRef}
+              onInput={Debounced(getListUserSearch, 1000)}
+              type="search "
+              placeholder="Tìm kiếm bài viết..."
+            />
+            <BiSearch />
+          </div>
+        </section>
+      )}
       {isOpenFilter && (
         <>
           <section className="sm:flex gap-4">
