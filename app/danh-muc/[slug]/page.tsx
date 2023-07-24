@@ -176,8 +176,9 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
         </div>
       </div>
       <h1 className="text-center mt-8 ">
-        Tin tức về &quot;<span className="capitalize">{data.cate}</span>&quot;
-        nổi bật tại Zecky 👈👈
+        Tin tức về &quot;
+        <strong className="capitalize font-light">{data.cate}</strong>
+        &quot; nổi bật tại Zecky 👈👈
       </h1>
       <ShareSocial link={`${DOMAIN_HOST + "/tim-kiem"}`} />
       <section className="grid sm:grid-cols-2 grid-cols-1 gap-4">

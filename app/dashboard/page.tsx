@@ -13,11 +13,9 @@ import { getCookie } from "cookies-next";
 import LoginDashBoard from "./component/LoginDashBoard";
 import { RootState } from "../sevices/store";
 import adminController, {
-  IRoom,
-  Icomment,
+  IIdataPageHome,
 } from "../sevices/controller/adminController";
-import { IAccount } from "../sevices/store/slice/AccountSlice";
-import { IDataBlog } from "../sevices/typedata";
+
 import { HandleTimeDiff, handleOpenNewWindown } from "../sevices/untils";
 import { nanoid } from "@reduxjs/toolkit";
 import moment from "moment";
@@ -25,30 +23,31 @@ import { Backdrop } from "@mui/material";
 
 const DashBoard = () => {
   const account = useSelector((state: RootState) => state.account.user);
-  const [dataPage, setDataPage] = useState<{
-    listAccount: IAccount[];
-    listBlog: IDataBlog[];
-    listComment: Icomment[];
-    listRooms: IRoom[];
-  }>({
+  const [firstLoadding, setFirstLoading] = useState(true);
+  const [dataPage, setDataPage] = useState<IIdataPageHome>({
     listAccount: [],
     listBlog: [],
-    listComment: [],
     listRooms: [],
+    totalAccount: 0,
+    totalComent: 0,
+    listAccountOnline: [],
+    totalBlog: 0,
+    totalAccountOnline: 0,
   });
   useEffect(() => {
     if (!account.fullname) return;
     const accessToken: any = getCookie("accessToken") || "";
     if (!accessToken) return;
 
-    adminController.getDataPageHome(accessToken).then((data) => {
+    adminController.getDataPageHome(accessToken, account._id).then((data) => {
       setDataPage(data);
+      setFirstLoading(false);
     });
   }, [account.fullname]);
-  if (account.permission === "member") {
+  if (account.permission === "member" && firstLoadding == false) {
     return <LoginDashBoard />;
   }
-  const totalOnline = dataPage.listAccount.filter((a) => a.status).length;
+
   if (dataPage.listAccount.length <= 0 || !account.fullname)
     return (
       <p className="flex justify-center items-center  mt-40">
@@ -62,157 +61,158 @@ const DashBoard = () => {
       </section>
       <section>
         <div className="grid sm:grid-cols-4 grid-cols-2  gap-2">
-          <article className="py-2 px-3 bg-primary rounded-3xl">
-            <p>Tài khoản</p>
-            <p className="flex justify-between">
-              <span>{dataPage.listAccount.length.toLocaleString()}</span>{" "}
-              <BsPerson />
-            </p>
-          </article>
+          {account.permission != "admin" && (
+            <article className="py-2 px-3 bg-primary rounded-3xl">
+              <p>Tài khoản</p>
+              <p className="flex justify-between">
+                <span>{dataPage.totalAccount.toLocaleString()}</span>{" "}
+                <BsPerson />
+              </p>
+            </article>
+          )}
           <article className="py-2 px-3 bg-primary rounded-3xl">
             <p>Bài viết</p>
             <p className="flex justify-between">
-              <span>{dataPage.listBlog.length.toLocaleString()}</span>{" "}
-              <BsBook />
+              <span>{dataPage.totalBlog.toLocaleString()}</span> <BsBook />
             </p>
           </article>
           <article className="py-2 px-3 bg-primary rounded-3xl">
             <p>Bình luận</p>
             <p className="flex justify-between">
-              <span>{dataPage.listComment.length.toLocaleString()}</span>{" "}
+              <span>{dataPage.totalComent.toLocaleString()}</span>{" "}
               <BsChatLeftDots />
             </p>
           </article>
-          <article className="py-2 px-3 bg-primary rounded-3xl">
-            <p>
-              Đang hoạt động{" "}
-              <span className="inline-block bg-green-800 rounded-full w-3 h-3 border-[1px] border-gray-100"></span>
-            </p>
-            <p className="flex justify-between">
-              <span>{totalOnline}</span> <BsEye />
-            </p>
-          </article>
+          {account.permission != "admin" && (
+            <article className="py-2 px-3 bg-primary rounded-3xl">
+              <p>
+                Đang hoạt động{" "}
+                <span className="inline-block bg-green-800 rounded-full w-3 h-3 border-[1px] border-gray-100"></span>
+              </p>
+              <p className="flex justify-between">
+                <span>{dataPage.totalAccountOnline.toLocaleString()}</span>{" "}
+                <BsEye />
+              </p>
+            </article>
+          )}
         </div>
       </section>
-      <div className="grid lg:grid-cols-2 grid-cols-1  gap-2 mt-3">
-        <article className="bg-primary rounded-2xl p-2">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center">
-              <span className="w-8">
-                <BsGraphDownArrow />
-              </span>
-              <span>Quản trị viên</span>
-            </div>
-            <div className="text-sm bg-main rounded-full py-2 px-4">
-              <Link href="/user">Xem tất cả</Link>
-            </div>
-          </div>
-          <table className="table-auto text-sm w-full text-center">
-            <thead className="border_line-style  border-b-2 text-sm">
-              <tr>
-                <th>
-                  <span className="py-2 inline-block">Họ Tên</span>
-                </th>
-                <th>Liên lạc</th>
-                <th>Trạng thái</th>
-                <th>Hoạt động</th>
-              </tr>
-            </thead>
-            <tbody>
-              {dataPage.listAccount
-                .filter((a) => a.permission !== "member")
-                .slice(0, 5)
-                .map((acc) => (
-                  <tr
-                    key={acc._id}
-                    className="border_line-style  border-b-2 text-xs"
-                  >
-                    <td>
-                      <span className="inline-block py-2 capitalize">
-                        {acc.fullname}
-                      </span>
-                    </td>
-                    <td>
-                      <span>{acc.phone || acc.email || acc.username}</span>
-                    </td>
-                    <td>
-                      <span>{acc.blocked ? "Đã khóa" : "Chưa khóa"}</span>
-                    </td>
-                    <td>
-                      <span>
-                        {acc.status
-                          ? "Online"
-                          : `hoạt động ${HandleTimeDiff(
-                              acc.createdAt,
-                              acc.updatedAt
-                            )} `}
-                      </span>
-                    </td>
+      <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-2 gap-4 mt-3">
+        {account.permission != "admin" && (
+          <>
+            <article className="bg-primary rounded-2xl p-2 overflow-x-auto scroolbar">
+              <div className="flex justify-between items-center">
+                <div className="flex items-center">
+                  <span className="w-8">
+                    <BsGraphDownArrow />
+                  </span>
+                  <span>Quản trị viên</span>
+                </div>
+                <div className="text-sm bg-main rounded-full py-2 px-4">
+                  <Link href="/user">Xem tất cả</Link>
+                </div>
+              </div>
+              <table className="table-auto text-sm w-full text-center">
+                <thead className="border_line-style  border-b-2 text-sm">
+                  <tr>
+                    <th>
+                      <span className="py-2 inline-block">Họ Tên</span>
+                    </th>
+                    <th>
+                      <span className="py-2 inline-block px-4">Liên lạc</span>
+                    </th>
+                    <th>
+                      <span className="py-2 inline-block px-4">Trạng thái</span>
+                    </th>
+                    <th>
+                      <span className="py-2 inline-block px-4">Hoạt động</span>
+                    </th>
                   </tr>
-                ))}
-            </tbody>
-          </table>
-        </article>
-        <article className="bg-primary rounded-2xl p-2">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center">
-              <span className="w-8">
-                <BsGraphDownArrow />
-              </span>
-              <span>Đang hoạt động</span>
-            </div>
-            <div className="text-sm bg-main rounded-full py-2 px-4">
-              <Link href="/user">Xem tất cả</Link>
-            </div>
-          </div>
-          <table className="table-auto text-sm w-full text-center">
-            <thead className="border_line-style  border-b-2 text-sm">
-              <tr>
-                <th>
-                  <span className="py-2 inline-block">Họ Tên</span>
-                </th>
-                <th>Số Điện thoại</th>
-                <th>Trạng thái</th>
-                <th>Hoạt động</th>
-              </tr>
-            </thead>
-            <tbody>
-              {dataPage.listAccount
-                .filter((a) => a.permission !== "member")
-                .slice(0, 5)
-                .map((acc) => (
-                  <tr
-                    key={nanoid()}
-                    className="border_line-style  border-b-2 text-xs"
-                  >
-                    <td>
-                      <span className="inline-block py-2 capitalize">
-                        {acc.fullname}
-                      </span>
-                    </td>
-                    <td>
-                      <span>{acc.phone}</span>
-                    </td>
-                    <td>
-                      <span>{acc.blocked ? "Đã khóa" : "Chưa khóa"}</span>
-                    </td>
-                    <td>
-                      <span>
-                        {acc.status
-                          ? "Online"
-                          : `hoạt động ${HandleTimeDiff(
-                              acc.createdAt,
-                              acc.updatedAt
-                            )} `}
-                      </span>
-                    </td>
+                </thead>
+                <tbody>
+                  {dataPage.listAccount.map((acc) => (
+                    <tr key={acc._id}>
+                      <td>
+                        <span className=" inline-block  text_style-eclipse px-4 sm:max-w-[200px] max-w-[150px] capitalize">
+                          {acc.fullname}
+                        </span>
+                      </td>
+                      <td>
+                        <span>{acc.phone || acc.email || acc.username}</span>
+                      </td>
+                      <td>
+                        <span>{acc.blocked ? "Đã khóa" : "Chưa khóa"}</span>
+                      </td>
+                      <td>
+                        <span>
+                          {acc.status
+                            ? "Online"
+                            : `Off ${HandleTimeDiff(acc.updatedAt)} `}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </article>
+            <article className="bg-primary rounded-2xl p-2 overflow-x-auto scroolbar">
+              <div className="flex justify-between items-center">
+                <div className="flex items-center">
+                  <span className="w-8">
+                    <BsGraphDownArrow />
+                  </span>
+                  <span>Đang hoạt động</span>
+                </div>
+                <div className="text-sm bg-main rounded-full py-2 px-4">
+                  <Link href="/user">Xem tất cả</Link>
+                </div>
+              </div>
+              <table className="table-auto text-sm w-full text-center">
+                <thead className="border_line-style  border-b-2 text-sm">
+                  <tr>
+                    <th>
+                      <span className="py-2 inline-block px-4">Họ Tên</span>
+                    </th>
+                    <th>
+                      <span className="py-2 inline-block px-4">Liên lạc</span>
+                    </th>
+                    <th>
+                      <span className="py-2 inline-block px-4">Trạng thái</span>
+                    </th>
+                    <th>
+                      <span className="py-2 inline-block px-4">Hoạt động</span>
+                    </th>
                   </tr>
-                ))}
-            </tbody>
-          </table>
-        </article>
-
-        <article className="bg-primary rounded-2xl p-2">
+                </thead>
+                <tbody>
+                  {dataPage.listAccountOnline.map((acc) => (
+                    <tr key={nanoid()}>
+                      <td>
+                        <span className="  inline-block  text_style-eclipse px-4 sm:max-w-[200px] max-w-[150px] capitalize">
+                          {acc.fullname}
+                        </span>
+                      </td>
+                      <td>
+                        <span>{acc.phone}</span>
+                      </td>
+                      <td>
+                        <span>{acc.blocked ? "Đã khóa" : "Chưa khóa"}</span>
+                      </td>
+                      <td>
+                        <span>
+                          {acc.status
+                            ? "Online"
+                            : `Off ${HandleTimeDiff(acc.updatedAt)} `}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </article>
+          </>
+        )}
+        <article className="bg-primary rounded-2xl p-2 overflow-x-auto scroolbar">
           <div className="flex justify-between items-center">
             <div className="flex items-center">
               <span className="w-8">
@@ -228,31 +228,34 @@ const DashBoard = () => {
             <thead className="border_line-style  border-b-2 text-sm">
               <tr>
                 <th>
-                  <span className="py-2 inline-block">Tiêu đề</span>
+                  <span className="py-2 inline-block  px-4">Tiêu đề</span>
                 </th>
-                <th>Mô tả</th>
-                <th>Lượt xem</th>
-                <th>Xem bài viết</th>
+                <th>
+                  <span className="">Mô tả</span>
+                </th>
+                <th>
+                  <span className="">Lượt xem</span>
+                </th>
+                <th>
+                  <span className="">Xem bài viết</span>
+                </th>
               </tr>
             </thead>
             <tbody>
-              {dataPage.listBlog.slice(0, 5).map((blog) => (
-                <tr
-                  key={nanoid()}
-                  className="border_line-style  border-b-2 text-xs"
-                >
+              {dataPage.listBlog.map((blog) => (
+                <tr key={nanoid()}>
                   <td>
-                    <span className="inline-block py-2 text_style-eclipse max-w-[100px] capitalize">
+                    <span className=" inline-block  text_style-eclipse px-4 sm:max-w-[100px] max-w-[150px] capitalize">
                       {blog.title}
                     </span>
                   </td>
                   <td>
-                    <span className="text_style-eclipse inline-block  max-w-[100px]">
+                    <span className=" inline-block  text_style-eclipse px-4 sm:max-w-[100px] max-w-[150px] capitalize">
                       {blog.des}
                     </span>
                   </td>
                   <td>
-                    <span>{blog.view.toLocaleString()}</span>
+                    <span>{blog.view?.toLocaleString()}</span>
                   </td>
                   <td>
                     <button>
@@ -270,7 +273,7 @@ const DashBoard = () => {
           </table>
         </article>
 
-        <article className="bg-primary rounded-2xl p-2">
+        <article className="bg-primary rounded-2xl p-2 overflow-x-auto scroolbar ">
           <div className="flex justify-between items-center">
             <div className="flex items-center">
               <span className="w-8">
@@ -286,20 +289,23 @@ const DashBoard = () => {
             <thead className="border_line-style  border-b-2 text-sm">
               <tr>
                 <th>
-                  <span className="py-2 inline-block">Tên nhóm</span>
+                  <span className="py-2 inline-block px-4 ">Tên nhóm</span>
                 </th>
 
-                <th>Số Thành viên</th>
-                <th>Ngày tạo</th>
-                <th>Tham gia nhóm</th>
+                <th>
+                  <span className="py-2 inline-block px-4">Số Thành viên</span>
+                </th>
+                <th>
+                  <span className="py-2 inline-block px-4">Ngày tạo</span>
+                </th>
+                <th>
+                  <span className="py-2 inline-block px-4">Tham gia nhóm</span>
+                </th>
               </tr>
             </thead>
             <tbody>
-              {dataPage.listRooms.slice(0, 5).map((room) => (
-                <tr
-                  key={room._id}
-                  className="border_line-style  border-b-2 text-xs"
-                >
+              {dataPage.listRooms.map((room) => (
+                <tr key={room._id}>
                   <td>
                     <span className="inline-block py-2 text_style-eclipse max-w-[100px] capitalize">
                       {room.name}

@@ -23,7 +23,9 @@ export default async function Home() {
           người dùng dựa trên ChatGPT-Plus bản mới nhất hoàn toàn miễn phí,
           không giới hạn, dễ dàng sử dụng và hỗ trợ hầu hết trên mọi thiết bị.
         </p>
-
+        <p>
+          <br />
+        </p>
         <p className="indent-8">
           Bạn đang cần nguồn tài liệu để học tập, ôn luyên thi Quốc gia, cần gia
           sư online để hướng dẫn giải đáp mọi thắc mắc trên mọi lĩnh vực. Chính
@@ -35,6 +37,9 @@ export default async function Home() {
           để được hồi đáp 24/24. Lượng kiến thức từ hàng tỷ tỷ kho tài liệu uy
           tính trên thế giới được chúng tôi tổng hợp, gói gọn lại nên hãy yên
           tâm sử dụng nhé.
+        </p>
+        <p>
+          <br />
         </p>
         <p className="indent-8">
           Nếu bạn có niềm đam mê với việc sáng tác văn chương, truyện ngắn, tiểu
@@ -91,6 +96,9 @@ export default async function Home() {
           Chứng chỉ SSL cung cấp cho người dùng và máy chủ một phương tiện để
           xác minh danh tính của nhau và thiết lập một kênh truyền an toàn để
           truyền thông tin.
+        </p>
+        <p>
+          <br />
         </p>
         <p className="indent-8">
           Hãy yên tâm khi sử dụng

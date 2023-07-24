@@ -107,3 +107,4 @@ export const firstloginWebsite = createAsyncThunk(
 );
 
 export default AccountSlice.reducer;
+export const { updateFullAccount } = AccountSlice.actions;

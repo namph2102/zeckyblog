@@ -24,7 +24,7 @@ import { Header } from "../component";
 import ItemDetailViewMore from "../component/ItemDetailViewMore";
 import "./tintuc.scss";
 let listBlogsData: IDataBlog[] = [];
-type Record<Keys extends keyof any, ValueType> = {
+export type Record<Keys extends keyof any, ValueType> = {
   [Key in Keys]: ValueType;
 };
 function isTextString(text: string) {

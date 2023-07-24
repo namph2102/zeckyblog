@@ -4,14 +4,20 @@ import TextareaAutosize from "@mui/base/TextareaAutosize";
 import { IData } from "../../sevices/typedata";
 import Image from "next/image";
 import EditorContent from "./EditorContent";
-import { CreateSlug, DOMAIN_HOST } from "@/app/sevices/untils";
+import {
+  CreateSlug,
+  DOMAIN_HOST,
+  deleteFileUpload,
+} from "@/app/sevices/untils";
 import ShareSocial from "@/app/component/ShareSocial";
+import ImageContainer, { IImageUpload } from "./ImageContainer";
 
 interface ViewDescriptionProps {
   data: IData;
   handleCreateBlog: (blog: IData) => void;
   fullname: string;
   isEdit?: boolean;
+  listImage: string[];
 }
 
 const ViewDescription: React.FC<ViewDescriptionProps> = ({
@@ -19,6 +25,7 @@ const ViewDescription: React.FC<ViewDescriptionProps> = ({
   fullname = "Phạm Hoài Nam",
   handleCreateBlog,
   isEdit,
+  listImage = [],
 }) => {
   const [infoSetting, setInfoSettting] = useState<IData>(data);
   const handleChangeContent = (key: any, value: string) => {
@@ -27,13 +34,40 @@ const ViewDescription: React.FC<ViewDescriptionProps> = ({
       return { ...prev };
     });
   };
+  const [listImageUpload, setListImageUpload] = useState<IImageUpload[]>([]);
   const handleSubmit = () => {
-    const blogNew = infoSetting;
-    handleCreateBlog(blogNew);
+    if (infoSetting.content.includes("img") && listImageUpload.length > 0) {
+      const comment = infoSetting.content;
+      const regex = /https?:\/\/\S+/gi;
+      const urls = comment.match(regex);
+      const listPathImageUpload = listImageUpload.map((image) => image.path);
+      const listIDUsed: string[] = [];
+      if (urls && urls.length > 0) {
+        urls.forEach((url) => {
+          const regex = /id=([^&]+)/;
+          const match = url.match(regex);
+          if (match) {
+            const id = match[1];
+            listIDUsed.push(id);
+          } else {
+          }
+        });
+      }
+      listIDUsed.forEach((path) => {
+        if (listPathImageUpload.includes(path)) {
+          listPathImageUpload.splice(listPathImageUpload.indexOf(path), 1);
+        }
+      });
+
+      listPathImageUpload.forEach(async (path) => await deleteFileUpload(path));
+    }
+
+    handleCreateBlog(infoSetting);
   };
   const handleChangecontentEditor = (value: string) => {
     handleChangeContent("content", value);
   };
+
   return (
     <div id="blog_page-detail" className="my-2">
       <hr className="my-4" />
@@ -90,6 +124,11 @@ const ViewDescription: React.FC<ViewDescriptionProps> = ({
         className="w-full px-2 py-1 text-black"
         placeholder="Nhập đường dẫn ảnh"
       />
+      <ImageContainer
+        listImage={listImage}
+        listImageUpload={listImageUpload}
+        setListImageUpload={setListImageUpload}
+      />
       <hr className="my-4" />
       <h2 className="text-center my-8 font-bold">
         {isEdit ? "Chỉnh sửa nội dung" : "Soạn nội dung"}
@@ -115,7 +154,7 @@ const ViewDescription: React.FC<ViewDescriptionProps> = ({
       )}
       <p
         title="Tác giả"
-        className="flex font-bold justify-end text-white capitalize"
+        className="flex font-bold justify-end text-white capitalize text-sm"
       >
         {fullname}
       </p>

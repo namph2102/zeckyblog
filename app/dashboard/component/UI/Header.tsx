@@ -1,6 +1,9 @@
 import { AppDispatch, RootState } from "@/app/sevices/store";
-import { firstloginWebsite } from "@/app/sevices/store/slice/AccountSlice";
-import { getCookie } from "cookies-next";
+import {
+  firstloginWebsite,
+  updateFullAccount,
+} from "@/app/sevices/store/slice/AccountSlice";
+import { getCookie, setCookie } from "cookies-next";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import {
@@ -18,6 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { checkImageUrl } from "@/app/sevices/untils";
+import { toast } from "react-hot-toast";
 
 const HeaderDashboard = () => {
   const router = useRouter();
@@ -45,6 +49,12 @@ const HeaderDashboard = () => {
     }
   }, [account.permission, account.fullname]);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
+  const handleLogout = () => {
+    setCookie("accessToken", "");
+    dispatch(updateFullAccount({ permission: "member", fullname: "" }));
+    toast.success("Đăng xuất thành công");
+    router.push("/dashboard/login");
+  };
   return (
     <div className=" my-4 relative z-[99999] bg-main">
       <header className="border_line-style border-b-[2px] lg:block flex justify-between items-center">
@@ -88,7 +98,10 @@ const HeaderDashboard = () => {
               </p>
             </figcaption>
           </figure>
-          <button className="text-3xl btn_hover p-1 rounded-sm">
+          <button
+            onClick={handleLogout}
+            className="text-3xl btn_hover p-1 rounded-sm"
+          >
             <BiLogInCircle />
           </button>
         </div>
@@ -133,7 +146,9 @@ const HeaderDashboard = () => {
                     <span className="text-2xl">
                       <BiFile />
                     </span>
-                    <span className="font-semibold text-base">Tin Tức</span>
+                    <span className="font-semibold text-base">
+                      Quản lý Tin Tức
+                    </span>
                   </p>
                 </Link>
               </li>

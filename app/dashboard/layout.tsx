@@ -10,7 +10,7 @@ import { store } from "../sevices/store";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <main className="flex">
+    <main className="flex " id="dashboard">
       <QueryClientProvider client={queryClient}>
         <Provider store={store}>
           <section className="lg:basis-1/4 lg:static bg-main fixed top-0 right-0 left-0 border_line-style border-r-2 ">

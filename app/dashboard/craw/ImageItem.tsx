@@ -85,7 +85,7 @@ const ImageItem: React.FC<{
         X
       </button>
       <Image
-        className="w-full h-auto object-cover "
+        className="w-full h-auto max-h-[150px] object-cover "
         src={img}
         width={100}
         height={100}
@@ -102,12 +102,12 @@ const ImageItem: React.FC<{
       </p>
 
       <p className="mt-4 cursor-pointer text-sm flex flex-col">
-        <span> Ảnh Edit:</span>
+        <span> Ảnh dán vào nội dung:</span>
         <button
           onClick={() => handleCopy(2)}
           className="py-2 px-3 cursor-pointer  sm:w-32 mt-2 text-sm rounded-full bg-green-600 hover:bg-green-800"
         >
-          Copy ảnh edit
+          Copy Ảnh Edit
         </button>
       </p>
       <p className="my-0">

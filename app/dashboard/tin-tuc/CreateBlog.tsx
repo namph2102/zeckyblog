@@ -4,13 +4,9 @@ import { IAccount } from "@/app/sevices/store/slice/AccountSlice";
 import CateGorySelect from "../craw/CategorySelect";
 import { IData } from "@/app/sevices/typedata";
 import blogController from "@/app/sevices/controller/blogController";
-import ImageContainer from "../craw/ImageContainer";
+
 import { toast } from "react-hot-toast";
-import {
-  CreateSlug,
-  DOMAIN_HOST,
-  handleOpenNewWindown,
-} from "@/app/sevices/untils";
+import { CreateSlug, handleOpenNewWindown } from "@/app/sevices/untils";
 interface CreateBlogProps {
   account: IAccount;
   setAcction: (value: string) => void;
@@ -100,7 +96,7 @@ const CreateBlog: React.FC<CreateBlogProps> = ({ account, setAcction }) => {
             <section className="container mx-auto   my-12">
               <button
                 onClick={() => seyIsCreateNewBlog(false)}
-                className="hover:text-hover text-3xl  fixed top-3 right-6 sm:right-24"
+                className="hover:text-hover text-3xl  fixed top-3 right-0 sm:right-12"
               >
                 X
               </button>
@@ -119,13 +115,14 @@ const CreateBlog: React.FC<CreateBlogProps> = ({ account, setAcction }) => {
                       onClick={() => setIsOpenCateSelect(!isOpenCateSelect)}
                       className="text-xs bg-green-500 py-1 px-2 hover:bg-green-800 rounded-full"
                     >
-                      Chọn Danh mục
+                      Chọn danh mục
                     </button>
                   </div>
                 </>
               )}
-              <ImageContainer listImage={[]} />
+
               <ViewDescription
+                listImage={[]}
                 data={blogCreate}
                 fullname={account.fullname}
                 handleCreateBlog={handleCreateBlog}

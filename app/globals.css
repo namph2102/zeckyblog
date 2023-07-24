@@ -14,7 +14,7 @@ body {
   color: #ffffff;
   overflow-x: hidden;
   background-color: #222831;
-  font-weight: 400;
+
   text-rendering: optimizeLegibility;
   scroll-behavior: smooth;
 }
@@ -77,18 +77,17 @@ article h2 {
 p,
 ul {
   color: #bcb9b7;
-  line-height: 2;
-  font-weight: 300;
   text-align: justify;
 }
 @media screen and (max-width: 768px) {
   body {
-    font-size: 1.05rem !important;
+    font-size: 1.05rem;
+    line-height: 160%;
   }
+  ul,
   p,
-  ul {
-    line-height: 2;
-    font-weight: 200 !important;
+  span {
+    color: #f0eae8;
   }
   h1 {
     font-size: 1.7rem;
@@ -112,4 +111,10 @@ ul {
 }
 .datetime {
   color: rgb(177, 176, 176);
+}
+#blog_more p {
+  font-size: 14px;
+  text-align: left;
+  line-height: 25px;
+  color: #bcb9b7;
 }

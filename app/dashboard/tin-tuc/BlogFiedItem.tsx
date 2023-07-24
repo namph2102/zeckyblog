@@ -1,10 +1,5 @@
 import { IData, IDataBlog } from "@/app/sevices/typedata";
-import {
-  DOMAIN_SEVER,
-  HandleTimeDiff,
-  customeAxios,
-  handleOpenNewWindown,
-} from "@/app/sevices/untils";
+import { HandleTimeDiff, handleOpenNewWindown } from "@/app/sevices/untils";
 import React, { useState } from "react";
 import { BiEditAlt, BiLock, BiLockOpen, BiTrash } from "react-icons/bi";
 
@@ -14,7 +9,7 @@ import { IAccount } from "@/app/sevices/store/slice/AccountSlice";
 import CateGorySelect from "../craw/CategorySelect";
 import blogController from "@/app/sevices/controller/blogController";
 import { toast } from "react-hot-toast";
-import ImageContainer from "../craw/ImageContainer";
+
 interface BlogFiedItemProps {
   blog: IDataBlog;
   account: IAccount;
@@ -178,9 +173,10 @@ const BlogFiedItem: React.FC<BlogFiedItemProps> = ({
                   </div>
                 </>
               )}
-              <ImageContainer listImage={[]} />
+
               <ViewDescription
                 data={blogEdit}
+                listImage={[]}
                 fullname={account.fullname}
                 handleCreateBlog={handleEdit}
                 isEdit

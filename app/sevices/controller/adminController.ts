@@ -19,18 +19,23 @@ export interface IRoom {
   name: string;
   des: string;
 }
-interface IIdataPageHome {
+export interface IIdataPageHome {
   listAccount: IAccount[];
+  listAccountOnline: IAccount[];
   listBlog: IDataBlog[];
-  listComment: Icomment[];
+  totalComent: number;
+  totalAccount: number;
   listRooms: IRoom[];
+  totalBlog: number;
+  totalAccountOnline: number;
 }
 class Admincontroller {
   accessToken = "";
-  async getDataPageHome(accessToken: string) {
+  async getDataPageHome(accessToken: string, idAccount: string) {
     this.accessToken = accessToken;
-    const res = await customeAxios.get(DOMAIN_SEVER + "/admin/pagehome", {
+    const res = await customeAxios.post(DOMAIN_SEVER + "/admin/pagehome", {
       headers: { Authorization: "Bearer " + this.accessToken },
+      data: idAccount,
     });
     const data: IIdataPageHome = await res.data;
     return data;

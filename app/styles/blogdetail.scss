@@ -21,10 +21,14 @@ $color-text: #bcb9b7;
     min-height: 25px !important;
   }
   .ql-align-center {
+    margin-top: 8px;
     text-align: center !important;
     font-weight: 200;
     opacity: 0.7;
     font-size: 14px;
+    strong {
+      color: #d8d4d2;
+    }
   }
 
   .ql-syntax {
@@ -32,7 +36,7 @@ $color-text: #bcb9b7;
     max-width: max-content;
     overflow-x: auto;
     background-color: #011626;
-    padding: 12px 16px !important;
+    padding: 4px 16px;
     &::-webkit-scrollbar {
       width: 4px;
       height: 8px;
@@ -61,7 +65,6 @@ $color-text: #bcb9b7;
     list-style: disc;
     display: block;
 
-    margin-block-start: 1em;
     margin-block-end: 1em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
@@ -95,10 +98,14 @@ $color-text: #bcb9b7;
   h6 {
     font-size: 0.67rem !important;
   }
-  p,
+  p {
+    padding: 0 !important;
+    color: #bcb9b7;
+  }
+
   li,
   span {
-    padding: 4px 0;
+    padding: 2px 0;
     color: #bcb9b7;
   }
   strong {
@@ -160,16 +167,25 @@ $color-text: #bcb9b7;
     }
   }
 }
+
 @media screen and (max-width: 640px) {
-  .ql-video {
-    min-height: 300px !important;
-  }
-  p {
-    color: #c5bebb;
-    img {
-      width: 100% !important;
+  #blog_page-detail {
+    .ql-video {
+      min-height: 300px;
+    }
+    .ql-syntax {
+      font-size: 16px;
+    }
+    ul,
+    p {
+      font-weight: 200 !important;
+      color: #f0eae8;
+      img {
+        width: 100%;
+      }
     }
   }
+
   .menu_moblie {
     .menu_main__container {
       padding: 8px 12px;

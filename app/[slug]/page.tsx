@@ -30,7 +30,6 @@ export async function generateMetadata({ params }: ParamsBlog) {
     metadataBase: new URL(`${DOMAIN_HOST}/${data.slug}`),
     authors: ["blog.zecky.online", "zecky.online"],
     creator: data.author.fullname,
-
     publisher: data.author.fullname,
     alternates: {
       canonical: `${DOMAIN_HOST}/${data.slug}`,
@@ -58,7 +57,7 @@ export async function generateMetadata({ params }: ParamsBlog) {
       },
       type: "article",
       publishedTime: data.updatedAt,
-      authors: ["zecky.online", "blog.zecky.online", data.author.fullname],
+      authors: ["zecky.online", "blog.zecky.online"],
     },
     robots: {
       index: true,
@@ -187,10 +186,13 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
       <ShareSocial isTextShare link={DOMAIN_HOST + "/" + data.slug} />
       {listBlogRandom && listBlogRandom.length > 0 && (
         <>
-          <h2 className="text-center mt-8 mb-4 text-xl font-semibold">
+          <h2 className="text-center mt-8 mb-4 text-2xl font-semibold">
             Tin tức liên quan
           </h2>
-          <section className="grid sm:grid-cols-2 lg:grid-cols-3 grid-cols-1 sm:gap-4 gap-6">
+          <section
+            id="blog_more"
+            className="grid sm:grid-cols-2 lg:grid-cols-3 grid-cols-1 sm:gap-4 gap-6"
+          >
             {listBlogRandom.map((blog) => (
               <article key={blog.slug}>
                 <Link href={`/${blog.slug}`}>
@@ -201,8 +203,12 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
                     alt={blog.title}
                     className="w-full sm:h-[200px] h-[300px] object-cover"
                   />
-                  <h2 className="line-clamp-1 mt-2 px-2">{blog.title}</h2>
-                  <p className="indent-3 line-clamp-3 text-base">{blog.des} </p>
+                  <h3 className="line-clamp-1 mt-2 pb-0 text-[16px] sm:text-[18px]">
+                    {blog.title}
+                  </h3>
+                  <p className="indent-3 line-clamp-3 test-[14px] sm:text-[16px] my-2">
+                    {blog.des}{" "}
+                  </p>
                 </Link>
               </article>
             ))}

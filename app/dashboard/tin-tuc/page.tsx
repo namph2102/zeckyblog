@@ -59,7 +59,7 @@ const page = () => {
       <section className="my-3 border_line-style  border-b-2 flex justify-between items-center">
         <div>
           <h1>Quản lý tin tức</h1>
-          {listBlogs.totalView && account.permission == "zecky" && (
+          {listBlogs.totalView > 0 && account.permission == "zecky" && (
             <p className="flex items-center gap-2">
               <RiEyeLine />
               {listBlogs.totalView.toLocaleString()}

@@ -20,7 +20,6 @@ import LoginDashBoard from "../component/LoginDashBoard";
 import "../../styles/blogdetail.scss";
 
 import CateGorySelect from "./CategorySelect";
-import ImageContainer from "./ImageContainer";
 
 const CrawWebsite = () => {
   const account = useSelector((state: RootState) => state.account.user);
@@ -180,7 +179,6 @@ const CrawWebsite = () => {
           <hr />
         </>
       )}
-      {info.title && <ImageContainer listImage={listImage} />}
 
       <section className="container mx-auto">
         <h1 className="text-color-head text-center first-letter:uppercase my-4">
@@ -188,6 +186,7 @@ const CrawWebsite = () => {
         </h1>
         {info.title && url && (
           <ViewDescription
+            listImage={listImage}
             fullname={account.fullname}
             handleCreateBlog={handleCreateBlog}
             data={info}
