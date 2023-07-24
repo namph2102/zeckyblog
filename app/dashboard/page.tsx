@@ -39,10 +39,14 @@ const DashBoard = () => {
     const accessToken: any = getCookie("accessToken") || "";
     if (!accessToken) return;
 
-    adminController.getDataPageHome(accessToken, account._id).then((data) => {
-      setDataPage(data);
-      setFirstLoading(false);
-    });
+    adminController
+      .getDataPageHome(accessToken, account._id)
+      .then((data) => {
+        setDataPage(data);
+      })
+      .finally(() => {
+        setFirstLoading(false);
+      });
   }, [account.fullname]);
   if (account.permission === "member" && firstLoadding == false) {
     return <LoginDashBoard />;

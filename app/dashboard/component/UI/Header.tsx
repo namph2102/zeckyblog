@@ -16,6 +16,7 @@ import {
   BiBookReader,
   BiMenu,
   BiX,
+  BiLogOutCircle,
 } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
@@ -102,7 +103,13 @@ const HeaderDashboard = () => {
             onClick={handleLogout}
             className="text-3xl btn_hover p-1 rounded-sm"
           >
-            <BiLogInCircle />
+            {account.fullname ? (
+              <BiLogInCircle />
+            ) : (
+              <Link href="/dashboard/login">
+                <BiLogOutCircle />
+              </Link>
+            )}
           </button>
         </div>
         {!account.permission || account.permission !== "member" ? (
@@ -166,9 +173,21 @@ const HeaderDashboard = () => {
             </ul>
           </nav>
         ) : (
-          <p className="px-2 text-red-500 text-base">
-            Lưu ý: chỉ có quản trị viên mới được vào đây
-          </p>
+          <>
+            <p className="px-4 text-base">
+              Lưu ý: chỉ có quản trị viên mới được vào đây
+            </p>
+            <div className="mt-2">
+              <button>
+                <Link
+                  href="dashboard/login"
+                  className="mt-4 py-1 px-4 bg-green-500 hover:bg-green-800 rounded-3xl"
+                >
+                  Đăng nhập
+                </Link>
+              </button>
+            </div>
+          </>
         )}
       </main>
     </div>
