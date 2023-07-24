@@ -7,7 +7,7 @@ $color-text: #bcb9b7;
   h4,
   h5,
   h5 {
-    color: $color-header;
+    color: $color-header !important;
   }
 
   font-family: Nunito, sans-serif !important;
@@ -15,6 +15,7 @@ $color-text: #bcb9b7;
     font-family: Nunito, sans-serif !important;
     font-size: 16px;
   }
+
   button.ql-video {
     width: 10px !important;
     height: 10px !important;
@@ -30,7 +31,18 @@ $color-text: #bcb9b7;
       color: #d8d4d2;
     }
   }
-
+  .ql-picker-label,
+  .ql-picker-options > span {
+    color: #1e1414 !important;
+    font-size: 16px;
+    font-weight: 300;
+    z-index: 100;
+  }
+  .ql-picker-options {
+    z-index: 999 !important;
+    background-color: white;
+    opacity: 1 !important;
+  }
   .ql-syntax {
     overflow-wrap: break-word;
     max-width: max-content;
@@ -79,10 +91,10 @@ $color-text: #bcb9b7;
     }
   }
   h1 {
-    font-size: 2rem !important;
+    font-size: 1.9rem;
   }
   h2 {
-    font-size: 1.5rem !important;
+    font-size: 1.5rem;
     border-bottom: 2px solid #555555;
     padding-bottom: 10px;
   }
@@ -101,6 +113,8 @@ $color-text: #bcb9b7;
   p {
     padding: 0 !important;
     color: #bcb9b7;
+    line-height: 2;
+    font-size: 1rem;
   }
 
   li,
@@ -170,6 +184,12 @@ $color-text: #bcb9b7;
 
 @media screen and (max-width: 640px) {
   #blog_page-detail {
+    h1 {
+      font-size: 1.7rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+    }
     .ql-video {
       min-height: 300px;
     }
@@ -179,7 +199,7 @@ $color-text: #bcb9b7;
     ul,
     p {
       font-weight: 200 !important;
-      color: #f0eae8;
+      color: #dbd7d5;
       img {
         width: 100%;
       }

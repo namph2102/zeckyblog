@@ -1,23 +1,33 @@
+$texct--color: #e9e5e5;
+.border_line-style {
+  border-color: rgba(47, 128, 237, 0.1);
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: $texct--color;
+}
+p,
+span,
+ul {
+  color: #e0dede;
+  opacity: 0.8;
+}
+ul {
+  &::marker {
+    background-color: yellow;
+  }
+}
 #dashboard {
-  .border_line-style {
-    border-color: rgba(47, 128, 237, 0.1);
-  }
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    color: #e9e5e5;
-  }
-  p,
-  span,
-  ul {
-    color: #c7c6c6;
-  }
-  ul {
-    &::marker {
-      background-color: yellow;
+  color: white !important ;
+  table {
+    p,
+    span {
+      color: white !important ;
+      font-size: 14px;
     }
   }
   .btn_hover {

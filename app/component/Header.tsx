@@ -9,7 +9,7 @@ interface HeaderProps {
 }
 const Header: React.FC<HeaderProps> = ({ listMenu }) => {
   return (
-    <header className="flex sm:justify-start justify-between gap-2 mb-4 bg-main items-baseline py-4 sticky top-0  left-0 right-0 ease-in duration-300">
+    <header className="flex sm:justify-start z-[99] justify-between gap-2 mb-4 bg-main items-baseline py-4 sticky top-0  left-0 right-0 ease-in duration-300">
       <div className="mr-6">
         <Link className="flex items-baseline" href="/">
           <>
@@ -42,12 +42,12 @@ const Header: React.FC<HeaderProps> = ({ listMenu }) => {
             <p className="flex gap-1 items-center">
               <span> Danh mục</span> <RiArrowDownSLine />
             </p>
-            <ul className="absolute hidden overflow-y-auto scroolbar max-h-[80vh] top-full left-0 sm:w-[500px] bg-primary w-[300px]  gap-2 flex-wrap menuDrop">
+            <ul className="absolute hidden overflow-y-auto scroolbar max-h-[80vh] top-full left-0 lg:w-[500px] bg-primary  w-[300px]  gap-2 flex-wrap menuDrop">
               {listMenu &&
                 listMenu.map((cate) => (
                   <li key={cate.slug}>
                     <Link
-                      className="capitalize text-sm"
+                      className="capitalize text-sm py-1 inline-block"
                       href={`/danh-muc/${cate.slug}`}
                     >
                       {cate.cate}

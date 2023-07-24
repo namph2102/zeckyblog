@@ -9,6 +9,7 @@ import ShareSocial from "../component/ShareSocial";
 import moment from "moment";
 import { Header } from "../component";
 import { ICateCreate } from "../sevices/controller/cateController";
+import "../component/style.scss";
 interface ParamsBlog {
   params: { slug: string };
 }
@@ -138,6 +139,7 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
       ratingCount: `${listBlogRandom.length}`,
     },
   };
+
   return (
     <main>
       <script
@@ -179,7 +181,7 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
       ></article>
       <p
         title="Tác giả"
-        className="flex font-normal capitalize text-sm justify-end text-white"
+        className="flex font-normal capitalize text-sm justify-end text-white mt-6"
       >
         {data.author.fullname}
       </p>

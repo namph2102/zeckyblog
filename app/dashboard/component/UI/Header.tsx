@@ -41,6 +41,8 @@ const HeaderDashboard = () => {
         .catch(() => {
           router.push("/dashboard/login");
         });
+    } else {
+      router.push("/dashboard/login");
     }
   }, []);
   useEffect(() => {
@@ -58,14 +60,14 @@ const HeaderDashboard = () => {
   };
   return (
     <div className=" my-4 relative z-[99999] bg-main">
-      <header className="border_line-style border-b-[2px] lg:block flex justify-between items-center">
+      <header className="border_line-style border-b-[2px] z-[99999] lg:block flex justify-between items-center">
         <h2 className="font-bold px-6 my-4">
           <span className="text-2xl">Zecky</span>{" "}
           <sub className="text-xs text-yellow-300">AI</sub>
         </h2>
         <button
           onClick={() => setIsOpenMenu(!isOpenMenu)}
-          className="text-3xl hover:text-hover lg:hidden pr-2"
+          className="text-3xl hover:text-hover lg:hidden pr-2 text-white"
         >
           {isOpenMenu ? <BiX /> : <BiMenu />}
         </button>

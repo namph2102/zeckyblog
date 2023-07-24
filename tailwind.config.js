@@ -15,7 +15,7 @@ module.exports = {
   theme: {
     colors: {
       hover: "#f59bac",
-
+      main: "#dbd7d5",
       ...colors,
     },
     backgroundColor: {

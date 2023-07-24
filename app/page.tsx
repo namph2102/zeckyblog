@@ -66,7 +66,7 @@ export default async function Home() {
         <p>
           <br />
         </p>
-        <ul className="list-disc pl-12">
+        <ul className="list-disc pl-12 marker:bg-yellow-600 marker:text-yellow-600">
           <li>Giải đáp mọi thắc mắc với ChatGPT4-Plus</li>
           <li>Nhắn tin cho bạn bè, nhóm</li>
           <li>Gửi mọi tài liệu, âm thanh, đường dẫn</li>

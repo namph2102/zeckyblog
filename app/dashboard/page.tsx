@@ -19,7 +19,7 @@ import adminController, {
 import { HandleTimeDiff, handleOpenNewWindown } from "../sevices/untils";
 import { nanoid } from "@reduxjs/toolkit";
 import moment from "moment";
-import { Backdrop } from "@mui/material";
+import { Backdrop, CircularProgress } from "@mui/material";
 
 const DashBoard = () => {
   const account = useSelector((state: RootState) => state.account.user);
@@ -37,7 +37,11 @@ const DashBoard = () => {
   useEffect(() => {
     if (!account.fullname) return;
     const accessToken: any = getCookie("accessToken") || "";
-    if (!accessToken) return;
+    if (!accessToken) {
+      setFirstLoading(false);
+
+      return;
+    }
 
     adminController
       .getDataPageHome(accessToken, account._id)
@@ -52,11 +56,25 @@ const DashBoard = () => {
     return <LoginDashBoard />;
   }
 
-  if (dataPage.listAccount.length <= 0 || !account.fullname)
+  if (firstLoadding == true && account.fullname)
     return (
       <p className="flex justify-center items-center  mt-40">
         Đang lấy dữ liệu
       </p>
+    );
+  if (firstLoadding)
+    return (
+      <>
+        <div>
+          <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={true}
+          >
+            {" "}
+            <CircularProgress color="inherit" />
+          </Backdrop>
+        </div>
+      </>
     );
   return (
     <main>
@@ -101,7 +119,10 @@ const DashBoard = () => {
           )}
         </div>
       </section>
-      <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-2 gap-4 mt-3">
+      <div
+        id="dashboard"
+        className="grid lg:grid-cols-2 grid-cols-1 lg:gap-2 gap-4 mt-3 "
+      >
         {account.permission != "admin" && (
           <>
             <article className="bg-primary rounded-2xl p-2 overflow-x-auto scroolbar">
