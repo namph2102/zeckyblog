@@ -149,7 +149,10 @@ const BlogFiedItem: React.FC<BlogFiedItemProps> = ({
       </td>
 
       {isOpenEdit && (
-        <td className="fixed inset-0 bg-main block z-10  scroolbar h-screen  text-base !text-left overflow-y-auto">
+        <td
+          id="blog_page-detail"
+          className="fixed inset-0 bg-main block z-10  scroolbar h-screen  text-base !text-left overflow-y-auto"
+        >
           <div className="absolute inset-0">
             <section className="container mx-auto   my-12">
               <button
@@ -171,7 +174,7 @@ const BlogFiedItem: React.FC<BlogFiedItemProps> = ({
                   <div className="flex justify-center ">
                     <button
                       onClick={() => setIsOpenCateSelect(!isOpenCateSelect)}
-                      className="text-xs bg-green-500 py-1 px-2 hover:bg-green-800 rounded-full"
+                      className="text-sm bg-green-800 py-1 px-4 hover:bg-green-700 rounded-full"
                     >
                       Chọn lại danh mục
                     </button>

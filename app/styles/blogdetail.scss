@@ -2,10 +2,12 @@ body {
   font-size: 1.125rem;
   line-height: 32px;
   color: #dbd7d5;
+  font-weight: 400;
   overflow-x: hidden;
   background-color: #222831;
   text-rendering: optimizeLegibility;
   scroll-behavior: smooth;
+  font-family: "Inter", Nunito, sans-serif;
 }
 $color-header: #efbb35;
 $color-text: #bcb9b7;
@@ -30,7 +32,15 @@ $color-text: #bcb9b7;
   }
 
   .ql-container {
+    font-family: "Inter", Nunito, sans-serif !important;
     font-size: 16px;
+    li {
+      display: list-item;
+      text-align: -webkit-match-parent;
+      &::before {
+        color: $color-header;
+      }
+    }
   }
 
   button.ql-video {
@@ -52,7 +62,7 @@ $color-text: #bcb9b7;
   .ql-picker-options > span {
     color: #1e1414;
     font-size: 16px;
-    font-weight: 300;
+    font-weight: 400;
     z-index: 100;
   }
   .ql-picker-options {
@@ -139,7 +149,7 @@ $color-text: #bcb9b7;
     text-align: justify;
     font-size: 18px;
     line-height: 32px;
-    font-weight: 300;
+    font-weight: 400;
   }
 
   li,
@@ -302,6 +312,12 @@ table {
 }
 @media screen and (max-width: 768px) {
   #blog_page-detail {
+    .ql-container {
+      font-size: 16px;
+      li {
+        font-size: 16px;
+      }
+    }
     ul,
     p,
     span {

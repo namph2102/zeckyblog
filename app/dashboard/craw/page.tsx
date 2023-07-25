@@ -20,10 +20,10 @@ import LoginDashBoard from "../component/LoginDashBoard";
 import "../../styles/blogdetail.scss";
 
 import CateGorySelect from "./CategorySelect";
-
+const initValuecate = { value: "", label: "" };
 const CrawWebsite = () => {
   const account = useSelector((state: RootState) => state.account.user);
-  const [category, setCategory] = useState({ value: "", label: "" });
+  const [category, setCategory] = useState(initValuecate);
   const infoInitValue: IData = {
     title: "",
     des: "",
@@ -115,7 +115,6 @@ const CrawWebsite = () => {
   const handleSubmitData = async (formData: FormData) => {
     setInfo((prev) => ({ ...prev, ...infoInitValue }));
     setListImage(() => []);
-    setCategory(() => ({ label: "", value: "" }));
     const data: any = formData.get("url");
     if (data && checkImageUrl(data)) {
       handleCrawLink(data);
@@ -127,7 +126,7 @@ const CrawWebsite = () => {
 
   if (!account.fullname && account.permission === "member")
     return <LoginDashBoard />;
-
+  console.log(category);
   return (
     <div className="my-2">
       <section className="my-3 border_line-style  border-b-2">
@@ -135,11 +134,21 @@ const CrawWebsite = () => {
       </section>
       {!category.label && <CateGorySelect setNewCatogory={setCategory} />}
       {category.label && (
-        <>
+        <section className="flex flex-col justify-center">
           <h2 className="text-center">
             Danh mục: <span className="capitalize">{category.label}</span>
           </h2>
-        </>
+          <div>
+            <button
+              onClick={() => {
+                setCategory(() => initValuecate);
+              }}
+              className="text-sm py-2 bg-green-900 hover:bg-green-500 max-w-[250px]"
+            >
+              Chọn danh mục khác
+            </button>
+          </div>
+        </section>
       )}
       {account._id && category.value && (
         <form action={handleSubmitData}>

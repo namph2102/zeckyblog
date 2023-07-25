@@ -7,8 +7,10 @@ html {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
 body {
-  font-family: Nunito, sans-serif;
+  font-family: "Inter", Nunito, sans-serif;
   font-size: 1.125rem;
   line-height: 32px;
   color: #dfdada;

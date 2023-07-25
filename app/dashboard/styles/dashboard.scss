@@ -1,4 +1,5 @@
 $texct--color: #e9e5e5;
+$cover-hover: #efbb35;
 .border_line-style {
   border-color: rgba(47, 128, 237, 0.1);
 }
@@ -13,26 +14,27 @@ h6 {
 
 ul {
   &::marker {
-    background-color: yellow;
+    background-color: $cover-hover;
   }
 }
 #dashboard {
-  nav ul li a {
-    color: $texct--color !important ;
+  nav > ul > li {
+    color: $texct--color;
   }
-  table {
-    tr {
-      span {
-        color: $texct--color !important ;
-        font-size: 14px;
-      }
-    }
+
+  table > tr > span {
+    color: $texct--color;
+    font-size: 16px;
+  }
+  h2 > span {
+    font-size: 26px;
+    color: $cover-hover !important;
   }
   .accept {
-    color: rgb(2, 180, 2) !important;
+    color: rgb(2, 180, 2);
   }
   .wating {
-    color: rgb(243, 4, 4) !important;
+    color: rgb(243, 4, 4);
   }
   .btn_hover {
     transition: all 0.3s ease-in-out;
@@ -54,9 +56,9 @@ ul {
     word-break: break-word;
   }
   a.active_href:hover {
-    color: rgb(202, 189, 0);
+    color: $cover-hover;
   }
   .text-color-head {
-    color: #efbb35;
+    color: $cover-hover;
   }
 }
