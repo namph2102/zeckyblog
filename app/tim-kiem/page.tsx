@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   ],
   description: descriptionMessage,
   alternates: {
-    canonical: process.env.DOMAIN_URL + "/search",
+    canonical: process.env.DOMAIN_URL + "/tim-kiem",
     languages: {
       "en-US": "/en-US",
       "de-DE": "/de-DE",
@@ -35,14 +35,11 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
-    nocache: true,
+
     googleBot: {
       index: true,
-      follow: false,
-      noimageindex: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
+      follow: true,
+      noimageindex: false,
     },
   },
 };

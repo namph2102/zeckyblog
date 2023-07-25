@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 export const dynamic = "force-dynamic";
 import { IData } from "../../sevices/typedata";
 
@@ -78,6 +78,12 @@ const CrawWebsite = () => {
     },
     [url]
   );
+  useEffect(() => {
+    return;
+    if (category.value) {
+      setInfo((prev) => ({ ...prev, category: category.value }));
+    }
+  }, [category.value]);
 
   const handleCreateBlog = (info: IData) => {
     if (info.content && info.slug && info.image && info.title) {
@@ -126,7 +132,7 @@ const CrawWebsite = () => {
 
   if (!account.fullname && account.permission === "member")
     return <LoginDashBoard />;
-  console.log(category);
+
   return (
     <div className="my-2">
       <section className="my-3 border_line-style  border-b-2">
@@ -138,12 +144,12 @@ const CrawWebsite = () => {
           <h2 className="text-center">
             Danh mục: <span className="capitalize">{category.label}</span>
           </h2>
-          <div>
+          <div className="flex items-center justify-center text-center">
             <button
               onClick={() => {
                 setCategory(() => initValuecate);
               }}
-              className="text-sm py-2 bg-green-900 hover:bg-green-500 max-w-[250px]"
+              className="text-xs py-2 px-5 bg-yellow-800  hover:bg-yellow-600 rounded-full"
             >
               Chọn danh mục khác
             </button>

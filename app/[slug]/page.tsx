@@ -66,11 +66,8 @@ export async function generateMetadata({ params }: ParamsBlog) {
 
       googleBot: {
         index: true,
-        follow: false,
-        noimageindex: true,
-        "max-video-preview": -1,
-        "max-image-preview": "large",
-        "max-snippet": -1,
+        follow: true,
+        noimageindex: false,
       },
     },
   };

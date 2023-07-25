@@ -146,12 +146,14 @@ $color-text: #bcb9b7;
   ol,
   ul {
     color: #bfbebd;
-    text-align: justify;
+
     font-size: 18px;
     line-height: 32px;
     font-weight: 400;
   }
-
+  p {
+    text-align: justify;
+  }
   li,
   span {
     padding: 2px 0;
