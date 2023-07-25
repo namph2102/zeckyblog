@@ -1,3 +1,12 @@
+body {
+  font-size: 1.125rem;
+  line-height: 32px;
+  color: #dbd7d5;
+  overflow-x: hidden;
+  background-color: #222831;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
 $color-header: #efbb35;
 $color-text: #bcb9b7;
 #blog_page-detail {
@@ -20,9 +29,7 @@ $color-text: #bcb9b7;
     }
   }
 
-  font-family: Nunito, sans-serif;
   .ql-container {
-    font-family: Nunito, sans-serif;
     font-size: 16px;
   }
 
@@ -220,7 +227,7 @@ $color-text: #bcb9b7;
     ol,
     p {
       color: #dbd7d5;
-      font-weight: 200;
+      font-weight: 300 !important;
       img {
         width: 100%;
       }
@@ -291,5 +298,15 @@ header {
 table {
   th {
     white-space: nowrap;
+  }
+}
+@media screen and (max-width: 768px) {
+  #blog_page-detail {
+    ul,
+    p,
+    span {
+      color: #dbd7d5;
+      font-weight: 300;
+    }
   }
 }
