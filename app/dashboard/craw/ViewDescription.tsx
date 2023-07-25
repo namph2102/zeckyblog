@@ -154,6 +154,7 @@ const ViewDescription: React.FC<ViewDescriptionProps> = ({
             ></article>
           )}
           <p
+            id="author_write"
             title="Tác giả"
             className="flex font-bold justify-end text-white capitalize text-sm"
           >

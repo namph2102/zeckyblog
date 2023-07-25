@@ -110,18 +110,14 @@ const ImageItem: React.FC<{
           Copy Ảnh Edit
         </button>
       </p>
-      <p className="my-0">
+      <p className="my-0 flex items-center">
         {!path && (
           <Link
             download="Tải về máy"
             target="_blank"
-            className=" item-center gap-2 text-base inline-flex mt-3"
+            className=" item-center gap-2 text-base inline-flex mt-3 text-center justify-center"
             href={img}
           >
-            <span className="text-2xl">
-              {" "}
-              <BiDownload />
-            </span>
             Tải về máy
           </Link>
         )}

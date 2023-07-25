@@ -10,25 +10,29 @@ h5,
 h6 {
   color: $texct--color;
 }
-p,
-span,
-ul {
-  color: #e0dede;
-  opacity: 0.8;
-}
+
 ul {
   &::marker {
     background-color: yellow;
   }
 }
 #dashboard {
-  color: white !important ;
+  nav ul li a {
+    color: $texct--color !important ;
+  }
   table {
-    p,
-    span {
-      color: white !important ;
-      font-size: 14px;
+    tr {
+      span {
+        color: $texct--color !important ;
+        font-size: 14px;
+      }
     }
+  }
+  .accept {
+    color: rgb(2, 180, 2) !important;
+  }
+  .wating {
+    color: rgb(243, 4, 4) !important;
   }
   .btn_hover {
     transition: all 0.3s ease-in-out;

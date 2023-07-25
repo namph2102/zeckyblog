@@ -46,7 +46,7 @@ const page = () => {
       .finally(() => {
         setIsLoadding(false);
       });
-  }, [account._id, currentPage, acction]);
+  }, [account._id, currentPage, account.fullname, acction]);
   const listBlog = listBlogs.listBlog || [];
   const totalBlog = listBlogs.total || 0;
   const totalPage = Math.ceil(totalBlog / listBlogs.pageinBlog);

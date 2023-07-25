@@ -40,11 +40,12 @@ const BlogFiedItem: React.FC<BlogFiedItemProps> = ({
       category: CategorySelect.value,
     };
     delete dataCover["author"];
-    dataCover.status = false;
+    dataCover.status = account.permission == "admin";
     blogController.editBlog(dataCover, blog._id).then((message) => {
-      toast.success(message), setIsOpenEdit(false);
-      setAcction(`${Math.floor(Math.random() * 100)}`);
+      toast.success(message);
+      setIsOpenEdit(false);
       setListBlog((prev: any) => ({ ...prev, pageinBlog: 7 }));
+      setAcction(`${Math.floor(Math.random() * 100)}`);
     });
   };
   const [CategorySelect, setCategorySelect] = useState<{
@@ -105,7 +106,11 @@ const BlogFiedItem: React.FC<BlogFiedItemProps> = ({
         </button>
       </td>
       <td>
-        <span>{blog.status ? "Đã kiểm duyệt" : "Chờ kiểm duyệt"}</span>
+        {blog.status ? (
+          <span className="accept">đã kiểm duyệt</span>
+        ) : (
+          <span className="wating">chờ kiểm duyệt</span>
+        )}
       </td>
 
       <td>

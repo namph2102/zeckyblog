@@ -17,6 +17,7 @@ import {
   BiMenu,
   BiX,
   BiLogOutCircle,
+  BiBell,
 } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
@@ -54,12 +55,14 @@ const HeaderDashboard = () => {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const handleLogout = () => {
     setCookie("accessToken", "");
-    dispatch(updateFullAccount({ permission: "member", fullname: "" }));
+    dispatch(
+      updateFullAccount({ permission: "member", fullname: "", _id: "" })
+    );
     toast.success("Đăng xuất thành công");
     router.push("/dashboard/login");
   };
   return (
-    <div className=" my-4 relative z-[99999] bg-main">
+    <div className=" my-4 relative z-[99999] bg-main text-white">
       <header className="border_line-style border-b-[2px] z-[99999] lg:block flex justify-between items-center">
         <h2 className="font-bold px-6 my-4">
           <span className="text-2xl">Zecky</span>{" "}
@@ -90,13 +93,13 @@ const HeaderDashboard = () => {
               height={40}
               alt="logo"
             />
-            <figcaption className="text-base ">
-              <span className="text-xs first-letter:uppercase">
+            <figcaption className="text-base">
+              <span className="!text-xs first-letter:uppercase ">
                 {account.permission == "zecky"
                   ? "Quản trị viên cao cấp"
                   : account.permission}
               </span>
-              <p className="font-semibold capitalize">
+              <p className="font-normal capitalize !text-sm">
                 {account.fullname || "Zecky"}
               </p>
             </figcaption>
@@ -130,24 +133,42 @@ const HeaderDashboard = () => {
                   </span>
                 </Link>
               </li>
+              {account.permission !== "admin" && (
+                <>
+                  <li>
+                    <Link
+                      href="/dashboard/tai-khoan"
+                      className="flex gap-2 items-center my-4 cursor-pointer hover:text-blue-600"
+                    >
+                      <span className="text-2xl">
+                        <BiUser />
+                      </span>
+                      <span className="font-semibold text-base">Tài khoản</span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/dashboard/nhom-chat">
+                      <p className="flex gap-2 items-center my-4 cursor-pointer hover:text-blue-600">
+                        <span className="text-2xl">
+                          <BiChat />
+                        </span>
+                        <span className="font-semibold text-base">
+                          Nhóm chat
+                        </span>
+                      </p>
+                    </Link>
+                  </li>
+                </>
+              )}
               <li>
-                <Link
-                  href="/dashboard/user"
-                  className="flex gap-2 items-center my-4 cursor-pointer hover:text-blue-600"
-                >
-                  <span className="text-2xl">
-                    <BiUser />
-                  </span>
-                  <span className="font-semibold text-base">Tài khoản</span>
+                <Link href="/dashboard/thông-bao">
+                  <p className="flex gap-2 items-center my-4 cursor-pointer hover:text-blue-600">
+                    <span className="text-2xl">
+                      <BiBell />
+                    </span>
+                    <span className="font-semibold text-base">Thông báo</span>
+                  </p>
                 </Link>
-              </li>
-              <li>
-                <p className="flex gap-2 items-center my-4 cursor-pointer hover:text-blue-600">
-                  <span className="text-2xl">
-                    <BiChat />
-                  </span>
-                  <span className="font-semibold text-base">Nhóm chat</span>
-                </p>
               </li>
               <li>
                 <Link href="/dashboard/tin-tuc">
@@ -156,7 +177,7 @@ const HeaderDashboard = () => {
                       <BiFile />
                     </span>
                     <span className="font-semibold text-base">
-                      Quản lý Tin Tức
+                      Quản lý bài viết
                     </span>
                   </p>
                 </Link>
@@ -168,7 +189,9 @@ const HeaderDashboard = () => {
                     <span className="text-2xl">
                       <BiBookReader />
                     </span>
-                    <span className="font-semibold text-base">Cào Website</span>
+                    <span className="font-semibold text-base">
+                      Lấy nội Từ website khác
+                    </span>
                   </p>
                 </Link>
               </li>

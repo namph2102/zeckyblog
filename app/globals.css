@@ -18,9 +18,10 @@ body {
   scroll-behavior: smooth;
 }
 ::selection {
-  background-color: #3f51b5 !important;
+  background-color: #0765d6 !important;
   -webkit-user-select: none;
   user-select: none;
+  color: #ffff !important;
 }
 .text-color-head,
 h1,
@@ -78,13 +79,23 @@ h6 {
 }
 .text-color-read,
 p,
-ul {
-  color: #bcb9b7;
+ul,
+ol {
+  color: #bfbebd;
   text-align: justify;
-  font-size: 1rem;
+  font-size: 18px;
+  line-height: 32px;
+  font-weight: 400;
 }
-
+ol li::marker,
+ul li::marker {
+  background-color: #e29218;
+  color: #e29218;
+}
 @media screen and (max-width: 768px) {
+  footer p {
+    font-size: 14px !important;
+  }
   body {
     font-size: 1.05rem;
     line-height: 30px;
@@ -94,13 +105,15 @@ ul {
   p,
   span {
     color: #dbd7d5;
+    font-weight: 300;
   }
   h1 {
     font-size: 1.9rem;
-    line-height: 32px;
+    line-height: 36px;
   }
   h2 {
     font-size: 1.6rem;
+    line-height: 32px;
   }
 }
 .menu a {
@@ -117,4 +130,8 @@ ul {
 }
 .datetime {
   color: rgb(177, 176, 176);
+}
+#author_write {
+  font-size: 14px !important;
+  color: #cfc2c2 !important;
 }

@@ -180,8 +180,9 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
         dangerouslySetInnerHTML={{ __html: data.content }}
       ></article>
       <p
+        id="author_write"
         title="Tác giả"
-        className="flex font-normal capitalize text-sm justify-end text-white mt-6"
+        className="flex font-normal capitalize text-sm justify-end mt-6"
       >
         {data.author.fullname}
       </p>

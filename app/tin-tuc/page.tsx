@@ -207,7 +207,7 @@ export default function Blog() {
             isOpenSearch && setListBlogs(() => listBlogsData);
             setIsOpenSearch(!isOpenSearch);
           }}
-          className="flex items-center justify-between sm:text-base text-lg"
+          className="flex items-center justify-between sm:text-base text-base"
         >
           Tìm kiếm{" "}
           <p className="text-xl ">
@@ -216,7 +216,7 @@ export default function Blog() {
         </div>
         <div
           onClick={() => setIsOpenFilter(!isOpenFilter)}
-          className="flex items-center justify-between sm:text-base text-lg"
+          className="flex items-center justify-between sm:text-base text-base"
         >
           Lọc tin tức{" "}
           <p className="text-xl ">

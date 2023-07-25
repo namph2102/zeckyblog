@@ -115,6 +115,7 @@ const CrawWebsite = () => {
   const handleSubmitData = async (formData: FormData) => {
     setInfo((prev) => ({ ...prev, ...infoInitValue }));
     setListImage(() => []);
+    setCategory(() => ({ label: "", value: "" }));
     const data: any = formData.get("url");
     if (data && checkImageUrl(data)) {
       handleCrawLink(data);

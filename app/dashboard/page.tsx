@@ -51,7 +51,7 @@ const DashBoard = () => {
       .finally(() => {
         setFirstLoading(false);
       });
-  }, [account.fullname]);
+  }, [account.fullname, account._id]);
   if (account.permission === "member" && firstLoadding == false) {
     return <LoginDashBoard />;
   }
@@ -166,7 +166,7 @@ const DashBoard = () => {
                         <span>{acc.phone || acc.email || acc.username}</span>
                       </td>
                       <td>
-                        <span>{acc.blocked ? "Đã khóa" : "Chưa khóa"}</span>
+                        <span>{acc.blocked ? "đã khóa" : "hoạt động"}</span>
                       </td>
                       <td>
                         <span>
@@ -306,9 +306,11 @@ const DashBoard = () => {
               </span>
               <span>Nhóm</span>
             </div>
-            <div className="text-sm bg-main rounded-full py-2 px-4">
-              <Link href="/user">Xem tất cả</Link>
-            </div>
+            {account.permission != "admin" && (
+              <div className="text-sm bg-main rounded-full py-2 px-4">
+                <Link href="/user">Xem tất cả</Link>
+              </div>
+            )}
           </div>
           <table className="table-auto text-sm w-full text-center">
             <thead className="border_line-style  border-b-2 text-sm">
