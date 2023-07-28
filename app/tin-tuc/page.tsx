@@ -311,7 +311,13 @@ export default function Blog() {
                   key={key}
                   className="capitalize"
                 >
-                  <span>{key}</span>
+                  <span
+                    className={`${
+                      fillterChar.value == key && "text-[#926b09]"
+                    }`}
+                  >
+                    {key}
+                  </span>
                 </li>
               ))}
             </ul>

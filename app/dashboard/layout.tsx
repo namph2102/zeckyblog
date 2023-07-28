@@ -4,10 +4,8 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { HeaderDashboard } from "./component/UI";
 const queryClient = new QueryClient();
 import "./styles/dashboard.scss";
-
 import { Provider } from "react-redux";
 import { store } from "../sevices/store";
-
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <main className="flex " id="dashboard">

@@ -17,11 +17,11 @@ class BlogController {
     const data = await res.data;
     return data;
   }
-  async getDashboardPage(skip = 10, limit = 10, userId = "") {
+  async getDashboardPage(skip = 10, limit = 10, userId = "", authorID = "") {
     if (!userId) return { total: 0, listBlog: [], totalView: 0 };
     this.userId = userId;
     const res = await customeAxios.post(this.pathUrlBlog + "/admin/blog", {
-      data: { skip, limit, userId },
+      data: { skip, limit, userId, authorID },
       message: "Lấy Nội dung",
     });
     const data: {

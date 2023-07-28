@@ -39,11 +39,6 @@ export async function generateMetadata({ params }: ParamsBlog) {
 
     alternates: {
       canonical: `${DOMAIN_HOST}/danh-muc/${data.slug}`,
-      languages: {
-        "en-US": "/en-US",
-        "de-DE": "/de-DE",
-        "vi-VN": "/vi-VN",
-      },
     },
     twitter: {
       card: "summary_large_image",
@@ -68,7 +63,6 @@ export async function generateMetadata({ params }: ParamsBlog) {
     robots: {
       index: true,
       follow: true,
-
       googleBot: {
         index: true,
         follow: true,

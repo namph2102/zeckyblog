@@ -1,5 +1,6 @@
 import axios from "axios";
 import moment from "moment";
+import { StringExpression } from "mongoose";
 
 import { toast } from "react-hot-toast";
 import slugify from "slugify";
@@ -23,7 +24,14 @@ export const getAllBlogFromSever = async () => {
   const data = await res.data;
   return data;
 };
+export const getTopBlog = async (limit = 100) => {
+  const res = await instantAxiosSever.post("/blog/topblog", {
+    data: limit,
+  });
+  const data = await res.data;
 
+  return data;
+};
 export const getData = async () => {
   const res = await instantAxiosSever.get("/blog/allblog");
   const data = await res.data;
@@ -251,4 +259,36 @@ export const checkImageExist = (url: string) => {
     img.onerror = () => resolve(false);
     img.src = url;
   });
+};
+
+export const formatNumber = (value: number) => {
+  if (!value) return 0;
+  else return value.toLocaleString();
+};
+export interface IFile {
+  path: string;
+  fileName: string;
+  url: string;
+  size: number;
+}
+export const filePath: Record<string, string> = {
+  pdf: "pdf",
+  mp3: "media",
+  xls: "xls",
+  png: "png",
+  jpg: "png",
+  jpeg: "gif",
+  svg: "png",
+  webp: "png",
+  txt: "txt",
+  zip: "zip",
+  "7z": "zip",
+  rest: "document",
+};
+export const CheckTypeImage: any = (filePath: string) => {
+  // Regular expression to match image file extensions (png and svg)
+  const imageRegex = /\.(png|svg|jpeg|gif|jpg)$/i;
+
+  // Test if the file path matches the regex
+  return imageRegex.test(filePath);
 };

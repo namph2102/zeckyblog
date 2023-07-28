@@ -1,6 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
-import { getData } from "../sevices/untils";
+import { getTopBlog } from "../sevices/untils";
 import Link from "next/link";
 
 import { IDataBlog } from "../sevices/typedata";
@@ -26,16 +26,10 @@ export const metadata: Metadata = {
   description: descriptionMessage,
   alternates: {
     canonical: process.env.DOMAIN_URL + "/tim-kiem",
-    languages: {
-      "en-US": "/en-US",
-      "de-DE": "/de-DE",
-      "vi-VN": "/vi-VN",
-    },
   },
   robots: {
     index: true,
     follow: true,
-
     googleBot: {
       index: true,
       follow: true,
@@ -45,7 +39,7 @@ export const metadata: Metadata = {
 };
 
 const AllBlog = async () => {
-  const listBlogInPage: IDataBlog[] = await getData();
+  const listBlogInPage: IDataBlog[] = await getTopBlog(50);
   const { listCate } = await cateController.getAllcate();
   const schema1 = {
     "@context": "http://schema.org",
@@ -112,7 +106,7 @@ const AllBlog = async () => {
             tin tức
           </Link>
           <BiChevronRight />
-          <p className="capitalize">tin tức tổng hợp</p>
+          <p className="capitalize text-sm">tin tức tổng hợp</p>
         </nav>
       </div>
       <h1 className="text-center mt-8">

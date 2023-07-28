@@ -71,10 +71,12 @@ $color-text: #bcb9b7;
     opacity: 1;
   }
   .ql-syntax {
+    overscroll-behavior-x: contain;
     overflow-wrap: break-word;
     max-width: max-content;
     overflow-x: auto;
     background-color: #011626;
+    white-space: pre;
     padding: 4px 16px;
     &::-webkit-scrollbar {
       width: 4px;

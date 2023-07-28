@@ -9,6 +9,8 @@ import { IAccount } from "@/app/sevices/store/slice/AccountSlice";
 import CateGorySelect from "../craw/CategorySelect";
 import blogController from "@/app/sevices/controller/blogController";
 import { toast } from "react-hot-toast";
+import moment from "moment";
+import { RiEyeLine } from "react-icons/ri";
 
 interface BlogFiedItemProps {
   blog: IDataBlog;
@@ -82,7 +84,7 @@ const BlogFiedItem: React.FC<BlogFiedItemProps> = ({
   return (
     <tr key={blog._id} className="border_line-style  border-b-2 text-xs">
       <td>
-        <span className="inline-block py-2 text_style-eclipse max-w-[200px] capitalize px-2">
+        <span className="inline-block py-2 text_style-eclipse max-w-[200px]  px-2">
           {blog.title}
         </span>
       </td>
@@ -95,16 +97,7 @@ const BlogFiedItem: React.FC<BlogFiedItemProps> = ({
       <td>
         <span>{blog.view.toLocaleString()}</span>
       </td>
-      <td>
-        <button>
-          <a
-            className="active_href underline py-1 px-3  cursor-pointer hover:text-hover"
-            onClick={() => handleOpenNewWindown(blog.slug)}
-          >
-            Tại đây
-          </a>
-        </button>
-      </td>
+
       <td>
         {blog.status ? (
           <span className="accept">đã kiểm duyệt</span>
@@ -112,7 +105,11 @@ const BlogFiedItem: React.FC<BlogFiedItemProps> = ({
           <span className="wating">chờ kiểm duyệt</span>
         )}
       </td>
-
+      <td>
+        <span className="px-2">
+          {moment(blog.createdAt).format("DD/MM/YYYY")}
+        </span>
+      </td>
       <td>
         <span>{HandleTimeDiff(blog.updatedAt)}</span>
       </td>
@@ -130,7 +127,12 @@ const BlogFiedItem: React.FC<BlogFiedItemProps> = ({
               {!blog.status ? <BiLock /> : <BiLockOpen />}
             </button>
           )}
-
+          <button
+            className="bg-yellow-600/20 hover:bg-yellow-600/50 p-2 rounded-full  text-yellow-500"
+            onClick={() => handleOpenNewWindown(blog.slug)}
+          >
+            <RiEyeLine />
+          </button>
           <button
             onClick={() => setIsOpenEdit(true)}
             className="bg-blue-600/20 hover:bg-blue-600/50 p-2 rounded-full  text-blue-500"

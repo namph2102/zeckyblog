@@ -19,17 +19,17 @@ export const metadata: Metadata = {
   ],
   creator: "Phạm Hoài Nam",
   publisher: "Phạm Hoài Nam",
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
+
   alternates: {
     canonical: domainsever,
-    languages: {
-      "en-US": "/en-US",
-      "de-DE": "/de-DE",
-      "vi-VN": "/vi-VN",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: false,
     },
   },
   metadataBase: new URL(domainsever),

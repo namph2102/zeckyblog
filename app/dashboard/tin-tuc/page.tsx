@@ -1,64 +1,117 @@
 "use client";
 import blogController from "@/app/sevices/controller/blogController";
 import { Pagination } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { RiEyeLine } from "react-icons/ri";
 import BlogFiedItem from "./BlogFiedItem";
-import "./blognews.scss";
+import "../styles/blognews.scss";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/sevices/store";
 import LoadingPage from "@/app/component/LoadingPage";
-import SearchContainer from "./SearchContainer";
+
 import { IDataBlog } from "@/app/sevices/typedata";
 import CreateBlog from "./CreateBlog";
+import SelectSimpleItem, { ISelect } from "../component/form/SelectSimpleItem";
+import adminController from "@/app/sevices/controller/adminController";
+import { IAccount } from "@/app/sevices/store/slice/AccountSlice";
+import { capitalizeText } from "@/app/sevices/untils";
+import SearchContainer from "../component/form/SearchContainer";
+const getDataShow = (
+  skip: number,
+  limit: number,
+  userId?: string,
+  authorID?: string
+) => {
+  return blogController.getDashboardPage(skip, limit, userId, authorID);
+};
 
-const page = () => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+const BlogDashboard = () => {
+  const pageinBlog = 7;
   const account = useSelector((state: RootState) => state.account.user);
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [currentPage, setCurrentPage] = useState(1);
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [acction, setAcction] = useState("");
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [isLoadding, setIsLoadding] = useState(true);
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [listCate, setListCate] = useState<ISelect[]>([]);
+  const [idUseSelect, setIdUserSelect] = useState("");
   const [listBlogs, setListBlog] = useState<{
     total: number;
     listBlog: IDataBlog[];
     totalView: number;
     pageinBlog: number;
-  }>({ listBlog: [], total: 0, totalView: 0, pageinBlog: 7 });
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+  }>({ listBlog: [], total: 0, totalView: 0, pageinBlog });
+
   useEffect(() => {
     if (!account._id) return;
-    blogController
-      .getDashboardPage(
-        (currentPage - 1) * listBlogs.pageinBlog,
-        listBlogs.pageinBlog,
-        account._id
-      )
+
+    getDataShow(
+      (currentPage - 1) * listBlogs.pageinBlog,
+      listBlogs.pageinBlog,
+      account._id,
+      idUseSelect
+    )
       .then((data) => {
         setListBlog((prev) => ({ ...prev, ...data }));
       })
       .finally(() => {
         setIsLoadding(false);
       });
-  }, [account._id, currentPage, account.fullname, acction]);
+  }, [account._id, currentPage, account.fullname, acction, idUseSelect]);
+
   const listBlog = listBlogs.listBlog || [];
   const totalBlog = listBlogs.total || 0;
   const totalPage = Math.ceil(totalBlog / listBlogs.pageinBlog);
   const handleChangePage = (event: any, page: number) => {
     setCurrentPage(page);
   };
+  //get listaccount
+  useEffect(() => {
+    if (account.permission == "zecky") {
+      adminController.getListAccountAdmin().then((data: any) => {
+        const listAccount: Pick<IAccount, "_id" | "fullname">[] =
+          data.listAccount;
+        if (listAccount) {
+          const listCateCover: ISelect[] = listAccount.map((user) => ({
+            value: user._id,
+            label: capitalizeText(user.fullname),
+          }));
+          setListCate(listCateCover);
+        }
+      });
+    }
+  }, [account.permission]);
 
+  const handleChagneSelect = useCallback(
+    (data: any) => {
+      setIdUserSelect(data.value);
+      setCurrentPage(1);
+    },
+    [account._id]
+  );
+  const handleSearBlog = useCallback(
+    (search: string) => {
+      if (search) {
+        blogController.adminSearchBlog(search, account._id).then((listBlog) => {
+          setListBlog((prev: any) => ({
+            ...prev,
+            listBlog,
+            pageinBlog: 1000,
+          }));
+        });
+      } else {
+        blogController
+          .getDashboardPage(0, pageinBlog, account._id)
+          .then((data) => {
+            setListBlog((prev: any) => ({ ...prev, ...data, pageinBlog }));
+          });
+      }
+    },
+    [account._id]
+  );
   return (
     <div className="my-2">
-      <section className="my-3 border_line-style  border-b-2 flex justify-between items-center">
+      <section className="my-3 border_line-style  border-b-2 flex lg:flex-row flex-col justify-between items-center">
         <div>
-          <h1>Quản lý tin tức</h1>
+          <h2 className="sm:text-2xl text-base">Quản lý tin tức</h2>
           {listBlogs.totalView > 0 && account.permission == "zecky" && (
             <p className="flex items-center gap-2">
               <RiEyeLine />
@@ -66,7 +119,18 @@ const page = () => {
             </p>
           )}
         </div>
-        <SearchContainer setListBlog={setListBlog} idAccount={account._id} />
+        {account.permission == "zecky" && (
+          <SelectSimpleItem
+            listCate={listCate}
+            handleChange={handleChagneSelect}
+            title="Quản trị viên"
+          />
+        )}
+        <SearchContainer
+          handleSearch={handleSearBlog}
+          title="Tìm kiếm bài viết"
+          idAccount={account._id}
+        />
       </section>
       <section className="min-h-[80vh] lg:w-full w-[100vw] overflow-x-auto scroolbar">
         {isLoadding && <LoadingPage />}
@@ -84,21 +148,22 @@ const page = () => {
                   <span className="py-2 inline-block px-4">Danh mục</span>
                 </th>
                 <th>
-                  <span className="py-2 px-4">Người tạo</span>{" "}
+                  <span className="py-2 px-4">Người tạo</span>
                 </th>
                 <th>
-                  <span className="py-2 px-4">Lượt xem</span>{" "}
+                  <span className="py-2 px-4">Lượt xem</span>
+                </th>
+
+                <th>
+                  <span className="py-2 px-4">Trạng thái</span>
                 </th>
                 <th>
-                  <span className="py-2 px-4">Xem bài viết</span>{" "}
+                  <span className="py-2 px-4">Ngày tạo</span>
                 </th>
                 <th>
-                  <span className="py-2 px-4">Trạng thái</span>{" "}
+                  <span className="py-2 px-4">Cập nhập</span>
                 </th>
-                <th>
-                  <span className="py-2 px-4">Cập nhập</span>{" "}
-                </th>
-                <th colSpan={3}>
+                <th colSpan={4}>
                   <span className="py-2 px-4">Hành động</span>
                 </th>
               </tr>
@@ -143,4 +208,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default BlogDashboard;

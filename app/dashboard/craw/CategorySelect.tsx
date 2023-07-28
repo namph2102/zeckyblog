@@ -1,11 +1,7 @@
 "use client";
 import cateController from "@/app/sevices/controller/cateController";
 import { RootState } from "@/app/sevices/store";
-import {
-  CreateSlug,
-  capitalizeText,
-  removeVietnameseTones,
-} from "@/app/sevices/untils";
+import { CreateSlug, capitalizeText } from "@/app/sevices/untils";
 import React, { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { useSelector } from "react-redux";

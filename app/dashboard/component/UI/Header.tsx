@@ -18,12 +18,14 @@ import {
   BiX,
   BiLogOutCircle,
   BiBell,
+  BiSolidBell,
 } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { checkImageUrl } from "@/app/sevices/untils";
 import { toast } from "react-hot-toast";
+import { Badge } from "@mui/material";
 
 const HeaderDashboard = () => {
   const router = useRouter();
@@ -93,6 +95,7 @@ const HeaderDashboard = () => {
               height={40}
               alt="logo"
             />
+
             <figcaption className="text-base">
               <span className="!text-xs first-letter:uppercase ">
                 {account.permission == "zecky"
@@ -147,13 +150,25 @@ const HeaderDashboard = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link href="/dashboard/nhom-chat">
+                    <Link href="/dashboard/danh-muc">
+                      <p className="flex gap-2 items-center my-4 cursor-pointer hover:text-blue-600">
+                        <span className="text-2xl">
+                          <BiBook />
+                        </span>
+                        <span className="font-semibold text-base">
+                          Danh mục
+                        </span>
+                      </p>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/dashboard/google-drive">
                       <p className="flex gap-2 items-center my-4 cursor-pointer hover:text-blue-600">
                         <span className="text-2xl">
                           <BiChat />
                         </span>
                         <span className="font-semibold text-base">
-                          Nhóm chat
+                          Quản lý Google Drive
                         </span>
                       </p>
                     </Link>
@@ -161,7 +176,7 @@ const HeaderDashboard = () => {
                 </>
               )}
               <li>
-                <Link href="/dashboard/thông-bao">
+                <Link href="/dashboard/thong-bao">
                   <p className="flex gap-2 items-center my-4 cursor-pointer hover:text-blue-600">
                     <span className="text-2xl">
                       <BiBell />
@@ -190,7 +205,7 @@ const HeaderDashboard = () => {
                       <BiBookReader />
                     </span>
                     <span className="font-semibold text-base">
-                      Lấy nội Từ website khác
+                      Cào nội dung
                     </span>
                   </p>
                 </Link>

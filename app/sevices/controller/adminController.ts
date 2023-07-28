@@ -40,5 +40,24 @@ class Admincontroller {
     const data: IIdataPageHome = await res.data;
     return data;
   }
+  async getListAccountAdmin() {
+    const res = await customeAxios.get(DOMAIN_SEVER + "/admin/listaccount", {});
+    const data: Pick<IAccount, "_id" | "fullname">[] = await res.data;
+    return data;
+  }
+  async getListNotice(idAccount: string, limit = 10, skip = 0) {
+    const res = await customeAxios.post(DOMAIN_SEVER + "/admin/listnotice", {
+      data: { idAccount, limit, skip },
+    });
+    const data = await res.data;
+    return data;
+  }
+  async handleDeleteInfo(idInfo: string) {
+    const res = await customeAxios.delete(
+      DOMAIN_SEVER + "/info/admin/" + idInfo
+    );
+    const data = await res.data;
+    return data;
+  }
 }
 export default new Admincontroller();

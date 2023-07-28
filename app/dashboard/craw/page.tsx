@@ -162,7 +162,7 @@ const CrawWebsite = () => {
             <TextareaAutosize
               ref={inputRef}
               className="text-black py-2 px-4 min-h-[38px] w-full "
-              placeholder="Nhập url website"
+              placeholder="Nhập đường dẫn ()url) từ website bạn muốn lấy nội dung..."
               name="url"
               minRows={1}
             />

@@ -19,7 +19,7 @@ import adminController, {
 import { HandleTimeDiff, handleOpenNewWindown } from "../sevices/untils";
 import { nanoid } from "@reduxjs/toolkit";
 import moment from "moment";
-import { Backdrop, CircularProgress } from "@mui/material";
+import LoadingPage from "../component/LoadingPage";
 
 const DashBoard = () => {
   const account = useSelector((state: RootState) => state.account.user);
@@ -62,20 +62,7 @@ const DashBoard = () => {
         Đang lấy dữ liệu
       </p>
     );
-  if (firstLoadding)
-    return (
-      <>
-        <div>
-          <Backdrop
-            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-            open={true}
-          >
-            {" "}
-            <CircularProgress color="inherit" />
-          </Backdrop>
-        </div>
-      </>
-    );
+  if (firstLoadding) return <LoadingPage />;
   return (
     <main>
       <section className="my-3 border_line-style  border-b-2">
@@ -134,7 +121,7 @@ const DashBoard = () => {
                   <span>Quản trị viên</span>
                 </div>
                 <div className="text-sm bg-main rounded-full py-2 px-4">
-                  <Link href="/user">Xem tất cả</Link>
+                  <Link href="/dashboard/tai-khoan">Xem tất cả</Link>
                 </div>
               </div>
               <table className="table-auto text-sm w-full text-center">
@@ -189,7 +176,7 @@ const DashBoard = () => {
                   <span>Đang hoạt động</span>
                 </div>
                 <div className="text-sm bg-main rounded-full py-2 px-4">
-                  <Link href="/user">Xem tất cả</Link>
+                  <Link href="/dashboard/tai-khoan">Xem tất cả</Link>
                 </div>
               </div>
               <table className="table-auto text-sm w-full text-center">
@@ -308,7 +295,7 @@ const DashBoard = () => {
             </div>
             {account.permission != "admin" && (
               <div className="text-sm bg-main rounded-full py-2 px-4">
-                <Link href="/user">Xem tất cả</Link>
+                <Link href="/dashboard/nhom-chat">Xem tất cả</Link>
               </div>
             )}
           </div>

@@ -15,6 +15,9 @@ export interface IAccount {
   updatedAt: string;
   email: string;
   username: string;
+  joinWeb: number;
+  timeOff: string;
+  address: string;
 }
 const AccountSlice = createSlice({
   name: "account",

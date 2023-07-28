@@ -140,45 +140,40 @@ const ViewDescription: React.FC<ViewDescriptionProps> = ({
       />
 
       <hr className="h-2" />
-      {infoSetting.content ? (
-        <>
-          <h2 className="text-center mt-12">Nội dung sẽ được tạo</h2>
-          <h1 className="mt-8 text-center  first-letter:uppercase">
-            {infoSetting.title}
-          </h1>
-          <ShareSocial link={`${DOMAIN_HOST + "/" + infoSetting.slug}`} />
-          {infoSetting.content && (
-            <article
-              id="blog_page-detail"
-              dangerouslySetInnerHTML={{ __html: infoSetting.content }}
-            ></article>
-          )}
-          <p
-            id="author_write"
-            title="Tác giả"
-            className="flex font-bold justify-end text-white capitalize text-sm"
-          >
-            {fullname}
-          </p>
 
-          <ShareSocial
-            link={`${DOMAIN_HOST + "/" + infoSetting.slug}`}
-            isTextShare
-          />
-
-          <div className="flex justify-center">
-            <button
-              type="button"
-              className="py-2 px-5 bg-green-600 hover:bg-green-900 my-3 rounded-full"
-              onClick={handleSubmit}
-            >
-              {isEdit ? "Chỉnh sửa " : "Tạo "} bài viết
-            </button>
-          </div>
-        </>
-      ) : (
-        <p className="mb-12"></p>
+      <h2 className="text-center mt-12">Nội dung sẽ được tạo</h2>
+      <h1 className="mt-8 text-center  first-letter:uppercase">
+        {infoSetting.title}
+      </h1>
+      <ShareSocial link={`${DOMAIN_HOST + "/" + infoSetting.slug}`} />
+      {infoSetting.content && (
+        <article
+          id="blog_page-detail"
+          dangerouslySetInnerHTML={{ __html: infoSetting.content }}
+        ></article>
       )}
+      <p
+        id="author_write"
+        title="Tác giả"
+        className="flex font-bold justify-end text-white capitalize text-sm"
+      >
+        {fullname}
+      </p>
+
+      <ShareSocial
+        link={`${DOMAIN_HOST + "/" + infoSetting.slug}`}
+        isTextShare
+      />
+
+      <div className="flex justify-center">
+        <button
+          type="button"
+          className="py-2 px-5 bg-green-600 hover:bg-green-900 my-3 rounded-full"
+          onClick={handleSubmit}
+        >
+          {isEdit ? "Chỉnh sửa " : "Tạo "} bài viết
+        </button>
+      </div>
     </div>
   );
 };
