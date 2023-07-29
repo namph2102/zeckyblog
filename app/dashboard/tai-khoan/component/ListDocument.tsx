@@ -87,9 +87,9 @@ const ListDocument: FC<ListDocumentProps> = ({ idAccount }) => {
                           {CheckTypeImage(file.fileName) ? (
                             <Image
                               src={file.url}
-                              className="h-auto object-cover"
+                              className="h-auto object-cover w-full"
                               alt="error"
-                              width={60}
+                              width={100}
                               height={30}
                             />
                           ) : (

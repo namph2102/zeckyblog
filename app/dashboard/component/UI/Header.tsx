@@ -220,7 +220,7 @@ const HeaderDashboard = () => {
             <div className="mt-2">
               <button>
                 <Link
-                  href="dashboard/login"
+                  href="/dashboard/login"
                   className="mt-4 py-1 px-4 bg-green-500 hover:bg-green-800 rounded-3xl"
                 >
                   Đăng nhập

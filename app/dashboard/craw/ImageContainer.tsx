@@ -11,13 +11,13 @@ export interface IImageUpload {
 }
 interface ImageContainerProps {
   listImage: string[];
-
+  isCloseGuild?: boolean;
   setListImageUpload: (value: any) => any;
   listImageUpload: IImageUpload[];
 }
 const ImageContainer: React.FC<ImageContainerProps> = ({
   listImage,
-
+  isCloseGuild = false,
   setListImageUpload,
   listImageUpload,
 }) => {
@@ -89,44 +89,50 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
           Tải ảnh lên từ máy tính
         </label>
       </div>
-      <div className="text-yellow-500 font-semibold text-xl">Lưy ý</div>
-      <ul className="list-disc marker:bg-yellow-300">
-        <li>Nhớ chọn danh mục nha kẽo quên</li>
-        <li>Nếu nội dung cần nguồn ảnh thì cứ tải từ máy lên</li>
+      {!isCloseGuild && (
+        <>
+          <div className="text-yellow-500 font-semibold text-xl">Lưy ý</div>
+          <ul className="list-disc marker:bg-yellow-300">
+            <li>Nhớ chọn danh mục nha kẽo quên</li>
+            <li>Nếu nội dung cần nguồn ảnh thì cứ tải từ máy lên</li>
 
-        <li>
-          Nếu nội dung ảnh từ bất kỳ nguồn nào chỉ cần (chuột phải: sao chép địa
-          chỉ hình ảnh) và định dạng lại như thế này linkimage***linkimage{" "}
-        </li>
-        <li>
-          Ví dụ linkimagehttps://zecky.online/icons/favicon-32x32.pnglinkimage
-        </li>
-        <li>Rồi copy dán vào phần nội dung</li>
-        <li className="flex gap-2">
-          Nguồn ảnh đẹp miễn phí:
-          <Link
-            target="_blank"
-            className="inline-block px-1 font-medium "
-            href="https://www.pinterest.com/"
-          >
-            Pinterest
-          </Link>
-          <Link
-            target="_blank"
-            className="inline-block px-1 font-medium "
-            href="https://www.pexels.com/vi-vn/"
-          >
-            Pexels
-          </Link>
-          <Link
-            target="_blank"
-            className="inline-block px-1 font-medium "
-            href="https://www.imcreator.com/"
-          >
-            Imcreator
-          </Link>
-        </li>
-      </ul>
+            <li>
+              Nếu nội dung ảnh từ bất kỳ nguồn nào chỉ cần (chuột phải: sao chép
+              địa chỉ hình ảnh) và định dạng lại như thế này
+              linkimage***linkimage{" "}
+            </li>
+            <li>
+              Ví dụ
+              linkimagehttps://zecky.online/icons/favicon-32x32.pnglinkimage
+            </li>
+            <li>Rồi copy dán vào phần nội dung</li>
+            <li className="flex gap-2">
+              Nguồn ảnh đẹp miễn phí:
+              <Link
+                target="_blank"
+                className="inline-block px-1 font-medium "
+                href="https://www.pinterest.com/"
+              >
+                Pinterest
+              </Link>
+              <Link
+                target="_blank"
+                className="inline-block px-1 font-medium "
+                href="https://www.pexels.com/vi-vn/"
+              >
+                Pexels
+              </Link>
+              <Link
+                target="_blank"
+                className="inline-block px-1 font-medium "
+                href="https://www.imcreator.com/"
+              >
+                Imcreator
+              </Link>
+            </li>
+          </ul>
+        </>
+      )}
       <input
         type="file"
         onChange={handleUploadImage}

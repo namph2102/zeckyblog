@@ -47,6 +47,7 @@ class BlogController {
     return result;
   }
   async adminSearchBlog(search: string, userId = "") {
+    console.log(search, userId);
     const res = await customeAxios.post(this.pathUrlBlog + "/admin/search", {
       data: { search, userId },
       message: "tìm kiếm theo userid",

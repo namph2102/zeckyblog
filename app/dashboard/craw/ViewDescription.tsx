@@ -30,6 +30,9 @@ const ViewDescription: React.FC<ViewDescriptionProps> = ({
   const [infoSetting, setInfoSettting] = useState<IData>(data);
   const handleChangeContent = (key: any, value: string) => {
     setInfoSettting((prev: any) => {
+      if (key == "title") {
+        prev["slug"] = CreateSlug(value);
+      }
       prev[key] = value;
       return { ...prev };
     });

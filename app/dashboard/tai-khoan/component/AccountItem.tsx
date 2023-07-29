@@ -60,7 +60,7 @@ const AccountItem: FC<AccountItemProps> = ({
     <tr ref={ElementREF} className="border_line-style border-b-2 text-xs">
       <td>
         <span className="flex gap-2 items-center capitalize w-[200px] pl-4">
-          <Image
+          <img
             width={40}
             height={40}
             alt={account.fullname}
@@ -69,7 +69,7 @@ const AccountItem: FC<AccountItemProps> = ({
                 ? account.avatar
                 : "http://flixtv.volkovdesign.com/admin/img/user.svg"
             }
-            className="2-10 h-10 object-cover rounded-xl"
+            className="w-10 h-10 object-cover rounded-xl"
           />
           {account.fullname}
         </span>

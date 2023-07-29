@@ -43,7 +43,7 @@ const CrawWebsite = () => {
   const inputRef = useRef<any>(null);
   const handleCrawLink = useCallback(
     (linkCraw: string) => {
-      if (!linkCraw) return;
+      if (!linkCraw || !account._id) return;
       blogController
         .crawWebsite(linkCraw)
         .then(
@@ -76,14 +76,8 @@ const CrawWebsite = () => {
           toast.error("Không thể lấy nội dung");
         });
     },
-    [url]
+    [url, account._id]
   );
-  useEffect(() => {
-    return;
-    if (category.value) {
-      setInfo((prev) => ({ ...prev, category: category.value }));
-    }
-  }, [category.value]);
 
   const handleCreateBlog = (info: IData) => {
     if (info.content && info.slug && info.image && info.title) {

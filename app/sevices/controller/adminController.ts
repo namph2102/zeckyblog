@@ -59,5 +59,24 @@ class Admincontroller {
     const data = await res.data;
     return data;
   }
+  async getListCate() {
+    const res = await customeAxios.get(DOMAIN_SEVER + "/cate/admin/listcate");
+    const data = await res.data;
+    return data;
+  }
+  async updateCategory(info: any, idCate: string) {
+    const res = await customeAxios.put(DOMAIN_SEVER + "/cate/admin/update", {
+      data: { info, idCate },
+    });
+    const data = await res.data;
+    return data;
+  }
+  async deleteCategory(idCate: string) {
+    const res = await customeAxios.delete(
+      DOMAIN_SEVER + "/cate/admin/delete/" + idCate
+    );
+    const data = await res.data;
+    return data;
+  }
 }
 export default new Admincontroller();

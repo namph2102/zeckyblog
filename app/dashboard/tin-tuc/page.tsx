@@ -121,7 +121,11 @@ const BlogDashboard = () => {
         </div>
         {account.permission == "zecky" && (
           <SelectSimpleItem
-            listCate={listCate}
+            listCate={[
+              { value: "true", label: "Đã kiểm duyệt" },
+              { value: "false", label: "Chưa kiểm duyệt" },
+              ...listCate,
+            ]}
             handleChange={handleChagneSelect}
             title="Quản trị viên"
           />
