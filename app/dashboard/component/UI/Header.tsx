@@ -19,6 +19,7 @@ import {
   BiLogOutCircle,
   BiBell,
   BiSolidBell,
+  BiChurch,
 } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
@@ -162,6 +163,16 @@ const HeaderDashboard = () => {
                     </Link>
                   </li>
                   <li>
+                    <Link href="/dashboard/phong">
+                      <p className="flex gap-2 items-center my-4 cursor-pointer hover:text-blue-600">
+                        <span className="text-2xl">
+                          <BiChurch />
+                        </span>
+                        <span className="font-semibold text-base">Phòng</span>
+                      </p>
+                    </Link>
+                  </li>
+                  <li>
                     <Link href="/dashboard/google-drive">
                       <p className="flex gap-2 items-center my-4 cursor-pointer hover:text-blue-600">
                         <span className="text-2xl">
@@ -217,11 +228,11 @@ const HeaderDashboard = () => {
             <p className="px-4 text-base">
               Lưu ý: chỉ có quản trị viên mới được vào đây
             </p>
-            <div className="mt-2">
+            <div className="mt-2 flex justify-center items-center">
               <button>
                 <Link
                   href="/dashboard/login"
-                  className="mt-4 py-1 px-4 bg-green-500 hover:bg-green-800 rounded-3xl"
+                  className="mt-4 py-2 px-4 bg-green-500 hover:bg-green-800 rounded-3xl"
                 >
                   Đăng nhập
                 </Link>

@@ -43,7 +43,7 @@ const GoogleDriveItem: React.FC<googleDriveItemProps> = ({
           ) : item.mimeType.includes("video") ? (
             <>
               <audio
-                className="w-24"
+                className="w-32"
                 controls
                 src={`https://drive.google.com/uc?export=download&id=${item.id}`}
               ></audio>

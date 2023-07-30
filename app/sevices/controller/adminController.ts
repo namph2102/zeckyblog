@@ -97,5 +97,19 @@ class Admincontroller {
     const data = await res.data;
     return data;
   }
+  async getListRoom(skip = 0, limit = 8) {
+    const res = await customeAxios.post(DOMAIN_SEVER + "/admin/room/list", {
+      data: { limit, skip },
+    });
+    const data = await res.data;
+    return data;
+  }
+  async deleteRoomId(idRoom: string) {
+    const res = await customeAxios.delete(
+      DOMAIN_SEVER + "/admin/room/delete/" + idRoom
+    );
+    const data = await res.data;
+    return data;
+  }
 }
 export default new Admincontroller();
