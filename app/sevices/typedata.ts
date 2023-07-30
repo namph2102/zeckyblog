@@ -4,6 +4,7 @@ interface IIData {
   image: string;
   content: string;
   slug: string;
+  keywords: string;
   source?: string;
 }
 // idataCreateBlog

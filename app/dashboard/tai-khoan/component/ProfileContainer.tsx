@@ -13,6 +13,7 @@ import { toast } from "react-hot-toast";
 import { checkImageUrl, componentsProps } from "@/app/sevices/untils";
 import { Tooltip } from "@mui/material";
 import ListDocument from "./ListDocument";
+import ListComment from "./ListComment";
 interface ProfileContainerProps {
   account: IAccount;
   setAccountEdit: (value: string) => void;
@@ -84,7 +85,7 @@ const ProfileContainer: FC<ProfileContainerProps> = ({
       toast.error("Xóa tất cả thông báo thất bại");
     }
   };
-  const [showInfo, setShowInfo] = useState(true);
+  const [showInfo, setShowInfo] = useState(1);
   return (
     <div id="form_select">
       <h2>Tải khoản</h2>
@@ -109,16 +110,22 @@ const ProfileContainer: FC<ProfileContainerProps> = ({
         </div>
         <div className="flex gap-2">
           <button
-            onClick={() => setShowInfo(true)}
-            className={` ${showInfo && " text-yellow-600"}`}
+            onClick={() => setShowInfo(1)}
+            className={` ${showInfo == 1 && " text-yellow-600"}`}
           >
             Thông tin
           </button>
           <button
-            onClick={() => setShowInfo(false)}
-            className={` ${!showInfo && " text-yellow-600"}`}
+            onClick={() => setShowInfo(2)}
+            className={` ${showInfo == 2 && " text-yellow-600"}`}
           >
-            Tệp dữ liệu{" "}
+            Tệp dữ liệu
+          </button>
+          <button
+            onClick={() => setShowInfo(3)}
+            className={` ${showInfo == 3 && " text-yellow-600"}`}
+          >
+            Bình luận
           </button>
         </div>
         <div className="mr-4 text-2xl">
@@ -166,7 +173,7 @@ const ProfileContainer: FC<ProfileContainerProps> = ({
         </div>
       </div>
       <div className="grid lg:grid-cols-2 grid-cols-1 gap-2 max-h-[80vh] overflow-y-auto scroolbar">
-        {showInfo ? (
+        {showInfo == 1 ? (
           <>
             <section>
               <form
@@ -339,9 +346,13 @@ const ProfileContainer: FC<ProfileContainerProps> = ({
               </form>
             </section>
           </>
-        ) : (
+        ) : showInfo == 2 ? (
           <section className="lg:col-span-2 col-span-1">
             <ListDocument idAccount={account._id} />
+          </section>
+        ) : (
+          <section className="lg:col-span-2 col-span-1">
+            <ListComment id={account._id} />
           </section>
         )}
       </div>

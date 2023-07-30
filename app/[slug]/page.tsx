@@ -1,5 +1,5 @@
 import { IData, IDataBlog } from "@/app/sevices/typedata";
-import { getData, getDataDetail } from "@/app/sevices/untils";
+import { getData, getDataDetail, listIconsSeo } from "@/app/sevices/untils";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -24,10 +24,11 @@ export async function generateMetadata({ params }: ParamsBlog) {
   if (!data) {
     return {};
   }
+
   return {
     title: data.title,
     description: data.des,
-    keywords: [data.title, ...data.title.split(" ")],
+    keywords: [data.keywords || data.title, ...data.title.split(" ")],
     metadataBase: new URL(`${DOMAIN_HOST}/${data.slug}`),
     authors: ["blog.zecky.online", "zecky.online"],
     creator: data.author.fullname,
@@ -55,6 +56,7 @@ export async function generateMetadata({ params }: ParamsBlog) {
       publishedTime: data.updatedAt,
       authors: ["zecky.online", "blog.zecky.online"],
     },
+    icons: listIconsSeo,
     robots: {
       index: true,
       follow: true,
@@ -201,7 +203,7 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
                     {blog.title}
                   </h3>
                   <p className="indent-3 line-clamp-3 test-[14px] sm:text-[16px] my-2">
-                    {blog.des}{" "}
+                    {blog.des}
                   </p>
                 </Link>
               </article>

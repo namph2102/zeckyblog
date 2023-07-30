@@ -1,6 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
-import { getTopBlog } from "../sevices/untils";
+import { getTopBlog, listIconsSeo } from "../sevices/untils";
 import Link from "next/link";
 
 import { IDataBlog } from "../sevices/typedata";
@@ -36,6 +36,7 @@ export const metadata: Metadata = {
       noimageindex: false,
     },
   },
+  icons: listIconsSeo,
 };
 
 const AllBlog = async () => {

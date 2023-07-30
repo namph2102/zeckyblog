@@ -32,6 +32,7 @@ export const metadata: Metadata = {
       noimageindex: false,
     },
   },
+
   metadataBase: new URL(domainsever),
   description:
     "Tin tức 24h, đọc báo TN cập nhật tin nóng online Việt Nam và thế giới mới nhất trong ngày, tin nhanh thời sự, chính trị, xã hội hôm nay, tin tức, top news VN",

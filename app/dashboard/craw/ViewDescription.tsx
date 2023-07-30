@@ -85,6 +85,7 @@ const ViewDescription: React.FC<ViewDescriptionProps> = ({
         onChange={(e) => handleChangeContent("title", e.target.value)}
         placeholder="Nhập nội dung tiêu đề"
         maxLength={120}
+        required
       />
       {infoSetting.slug && (
         <>
@@ -96,14 +97,26 @@ const ViewDescription: React.FC<ViewDescriptionProps> = ({
             className="w-full px-2 py-1 text-black"
             placeholder="Đường dẫn url"
             maxLength={600}
+            required
           />
         </>
       )}
       <hr className="my-4" />
+      <h4>Keyworks SEO</h4>
+      <TextareaAutosize
+        value={infoSetting.keywords}
+        required
+        onChange={(e) => handleChangeContent("keywords", e.target.value)}
+        className="w-full px-2 py-1 text-black"
+        placeholder="Keywords Seo"
+        maxLength={400}
+      />
 
+      <hr className="my-4" />
       <h4>Mô tả SEO</h4>
       <TextareaAutosize
         value={infoSetting.des}
+        required
         onChange={(e) => handleChangeContent("des", e.target.value)}
         className="w-full px-2 py-1 text-black"
         placeholder="Mô tả seo"
@@ -126,6 +139,7 @@ const ViewDescription: React.FC<ViewDescriptionProps> = ({
         value={infoSetting.image}
         className="w-full px-2 py-1 text-black"
         placeholder="Nhập đường dẫn ảnh"
+        required
       />
       <ImageContainer
         listImage={listImage}

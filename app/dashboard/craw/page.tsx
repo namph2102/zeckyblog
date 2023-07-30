@@ -34,6 +34,7 @@ const CrawWebsite = () => {
     category: category.value,
     pathImage: "",
     source: "",
+    keywords: "",
   };
 
   const [url, setUrl] = useState("");
@@ -53,6 +54,7 @@ const CrawWebsite = () => {
             des = "",
             source = url,
             content = "",
+            keywords = "",
             listImageCover = [],
           }) => {
             if (title) {
@@ -61,6 +63,7 @@ const CrawWebsite = () => {
                 title: title.trim(),
                 image,
                 des,
+                keywords,
                 content,
                 slug: CreateSlug(title),
                 source,
@@ -85,11 +88,12 @@ const CrawWebsite = () => {
         icon: "👏",
       });
       const coverData = info;
-      coverData.slug = info.slug.trim();
-      coverData.des = info.des.trim();
-      coverData.title = info.title.trim();
-      coverData.image = info.image.trim();
-      coverData.source = url.trim().toLowerCase();
+      coverData.slug = info.slug?.trim();
+      coverData.des = info.des?.trim();
+      coverData.title = info.title?.trim();
+      coverData.image = info.image?.trim();
+      coverData.source = url?.trim().toLowerCase();
+      coverData.keywords = info.keywords?.trim().toLowerCase();
       blogController
         .createNewblog(coverData)
         .then((data) => {

@@ -34,6 +34,7 @@ const BlogFiedItem: React.FC<BlogFiedItemProps> = ({
     slug: blog.slug,
     pathImage: blog.image,
     source: blog.source,
+    keywords: blog.keywords,
   });
   const handleEdit = async (data: IData) => {
     const dataCover: any = {

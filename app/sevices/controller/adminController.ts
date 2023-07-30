@@ -78,5 +78,24 @@ class Admincontroller {
     const data = await res.data;
     return data;
   }
+  async listGoogleDrive() {
+    const res = await customeAxios.post(DOMAIN_SEVER + "/admin/drive");
+    const data = await res.data;
+    return data;
+  }
+  async getListComment(author: string, limit = 6, skip = 0) {
+    const res = await customeAxios.post(DOMAIN_SEVER + "/admin/comment/list", {
+      data: { author, limit, skip },
+    });
+    const data = await res.data;
+    return data;
+  }
+  async deletecomment(idComment: string) {
+    const res = await customeAxios.delete(
+      DOMAIN_SEVER + "/admin/comment/delete/" + idComment
+    );
+    const data = await res.data;
+    return data;
+  }
 }
 export default new Admincontroller();

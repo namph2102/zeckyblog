@@ -26,6 +26,7 @@ const CreateBlog: React.FC<CreateBlogProps> = ({ account, setAcction }) => {
     category: CategorySelect.value,
     pathImage: "",
     source: "",
+    keywords: "",
   };
   const [isCreateNewBlog, seyIsCreateNewBlog] = useState(false);
   const [blogCreate, setBlogCreate] = useState<IData>(infoInitValue);
@@ -56,10 +57,11 @@ const CreateBlog: React.FC<CreateBlogProps> = ({ account, setAcction }) => {
         icon: "👏",
       });
       const coverData = info;
-      coverData.slug = info.slug.trim();
-      coverData.des = info.des.trim();
-      coverData.title = info.title.trim();
-      coverData.image = info.image.trim();
+      coverData.slug = info.slug?.trim();
+      coverData.des = info.des?.trim();
+      coverData.title = info.title?.trim();
+      coverData.image = info.image?.trim();
+      coverData.keywords = info.keywords?.trim().toLowerCase();
       blogController
         .createNewblog(coverData)
         .then((data) => {

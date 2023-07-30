@@ -1,5 +1,5 @@
-import { IData, IDataBlog } from "@/app/sevices/typedata";
-import { getData, capitalizeText } from "@/app/sevices/untils";
+import { IDataBlog } from "@/app/sevices/typedata";
+import { capitalizeText, listIconsSeo } from "@/app/sevices/untils";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import React, { FC } from "react";
@@ -69,6 +69,7 @@ export async function generateMetadata({ params }: ParamsBlog) {
         noimageindex: false,
       },
     },
+    icons: listIconsSeo,
   };
 }
 
