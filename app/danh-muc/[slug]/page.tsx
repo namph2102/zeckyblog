@@ -28,11 +28,12 @@ export async function generateMetadata({ params }: ParamsBlog) {
     return {};
   }
   const titleCover = `Tin tức về ${capitalizeText(data.cate)}`;
+  const description =
+    data.des ||
+    `${titleCover} được cập nhật tin nóng online Việt Nam và thế giới mới nhất trong ngày `;
   return {
     title: titleCover,
-    description:
-      data.des ||
-      `${titleCover} được cập nhật tin nóng online Việt Nam và thế giới mới nhất trong ngày `,
+    description: description,
     keywords: [data.cate],
     metadataBase: new URL(`${DOMAIN_HOST}/${data.slug}`),
     authors: ["blog.zecky.online", "zecky.online"],
@@ -43,15 +44,16 @@ export async function generateMetadata({ params }: ParamsBlog) {
     twitter: {
       card: "summary_large_image",
       title: titleCover,
-      description: data.des,
+      description: description,
       siteId: "1646660186759892992",
       creator: "blog.zecky.online",
       creatorId: "1646660186759892992",
       images: [data.image, DOMAIN_HOST + "/opengraph-image.png"],
     },
+
     openGraph: {
       title: titleCover,
-      description: data.des,
+      description: description,
       images: {
         url: data.image || DOMAIN_HOST + "/opengraph-image.png",
         alt: titleCover,
@@ -89,6 +91,9 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
   if (!data) {
     notFound();
   }
+  const description =
+    data.des ||
+    `Tin tức về ${data.cate} được cập nhật tin nóng online Việt Nam và thế giới mới nhất trong ngày `;
   const listCateCover = listCate.map((item, index) => ({
     "@type": "ListItem",
     position: index + 3,
@@ -125,7 +130,7 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
     "@context": "http://schema.org/",
     "@type": "Book",
     name: `${data.cate}`,
-    description: data.des,
+    description: description,
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: "5.0",
