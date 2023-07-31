@@ -4,6 +4,8 @@ import { BiTrash } from "react-icons/bi";
 import { IGoogleDrive } from "./page";
 import { Controlled as ControlledZoom } from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
+import { handleCopyClick } from "@/app/sevices/untils";
+const handleCopyText = () => {};
 interface googleDriveItemProps {
   item: IGoogleDrive;
   handleDelete: (id: string) => void;
@@ -17,13 +19,25 @@ const GoogleDriveItem: React.FC<googleDriveItemProps> = ({
   const handleZoomChange = useCallback((shouldZoom: boolean) => {
     setIsZoomed(shouldZoom);
   }, []);
+
   return (
     <tr>
       <td>
-        <span className="max-w-[100px] px-2 overflow-hidden">{item.name}</span>
+        <span className="max-w-[100px] px-2 overflow-hidden text-ellipsis inline-block whitespace-nowrap">
+          {item.name}
+        </span>
       </td>
       <td>
-        <span>{item.kind}</span>
+        <span>
+          <button
+            onClick={() =>
+              handleCopyClick("https://drive.google.com/uc?id=" + item.id)
+            }
+            className="py-1 rounded-full px-2 cursor-pointer bg-blue-500"
+          >
+            Copy Link
+          </button>
+        </span>
       </td>
       <td>
         <span>{item.mimeType}</span>

@@ -119,16 +119,19 @@ export function checkImageUrl(url: string) {
   return pattern.test(url);
 }
 
-export async function uploadFileSever(file: File) {
-  if (!file.type.includes("image")) {
-    toast.error("Đây không phải ảnh ");
-    return;
-  } else if (file.size / 1000 > 1500) {
-    toast.error("Ảnh phải nhỏ hơn 1.5MB ");
-    return;
-  } else {
-    toast.success("Đang xử lý...");
+export async function uploadFileSever(file: File, isImage = true) {
+  if (isImage) {
+    if (!file.type.includes("image")) {
+      toast.error("Đây không phải ảnh ");
+      return;
+    } else if (file.size / 1000 > 5000) {
+      toast.error("Ảnh phải nhỏ hơn 5MB ");
+      return;
+    } else {
+      toast.success("Đang xử lý...");
+    }
   }
+
   const formdata = new FormData();
   formdata.append("file", file);
   return fetch(DOMAIN_SEVER + "/upload", {
@@ -139,13 +142,13 @@ export async function uploadFileSever(file: File) {
     .then((data) => {
       if (data.status == 201) {
         if (data?.fileInform?.fileName) {
-          toast.success("Tải ảnh thành công");
+          toast.success(isImage ? "Tải ảnh thành công" : "Tải tệp thành công");
           return data.fileInform;
         }
       }
     })
     .catch(() => {
-      toast.error("Tải ảnh thất bại");
+      toast.error(isImage ? "Tải ảnh thất bại" : "Tải tệp thất bại");
     });
 }
 export async function deleteFileUpload(path: string) {
@@ -312,4 +315,18 @@ export const listIconsSeo = {
       url: "/apple-icon-precomposed.png",
     },
   ],
+};
+export const handleCopyClick = (textToCopy: string) => {
+  if (textToCopy) {
+    navigator.clipboard
+      .writeText(textToCopy)
+      .then(() => {
+        toast.success("Copy thành công!");
+      })
+      .catch(() => {
+        toast.error("Copy thất bại!");
+      });
+    return;
+  }
+  toast.error("Copy thất bại!");
 };
