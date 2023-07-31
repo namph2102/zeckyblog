@@ -11,7 +11,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <main className="flex " id="dashboard">
       <QueryClientProvider client={queryClient}>
         <Provider store={store}>
-          <section className="lg:basis-1/4 lg:static min-w-[300px] bg-main fixed top-0 right-0 left-0 border_line-style border-r-2 ">
+          <section className="lg:basis-1/4 z-[99999] lg:static min-w-[300px] bg-main fixed top-0 right-0 left-0 border_line-style border-r-2 ">
             <div className="sticky top-4 lg:min-h-[90vh] overflow-y-auto  left-0 bottom-0">
               <HeaderDashboard />
             </div>

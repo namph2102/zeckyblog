@@ -12,6 +12,16 @@ body {
 $color-header: #efbb35;
 $color-text: #bcb9b7;
 #blog_page-detail {
+  .ql-editor {
+    border-top: 2px solid white !important;
+  }
+  .ql-toolbar {
+    position: sticky !important;
+    z-index: 9999px;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
   h1,
   h2,
   h3,
@@ -332,6 +342,9 @@ table {
 }
 @media screen and (max-width: 768px) {
   #blog_page-detail {
+    .ql-toolbar {
+      top: 100px;
+    }
     .ql-container {
       font-size: 16px;
       li {

@@ -64,8 +64,8 @@ const HeaderDashboard = () => {
     router.push("/dashboard/login");
   };
   return (
-    <div className=" my-4 relative z-[99999] bg-main text-white">
-      <header className="border_line-style border-b-[2px] z-[99999] lg:block flex justify-between items-center">
+    <div className=" my-4 relative bg-main text-white">
+      <header className="border_line-style border-b-[2px] lg:block flex justify-between items-center">
         <h2 className="font-bold px-6 my-4">
           <span className="text-2xl">Zecky</span>{" "}
           <sub className="text-xs text-yellow-300">AI</sub>
