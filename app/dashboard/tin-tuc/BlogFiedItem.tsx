@@ -115,7 +115,7 @@ const BlogFiedItem: React.FC<BlogFiedItemProps> = ({
         <span>{HandleTimeDiff(blog.updatedAt)}</span>
       </td>
       <td>
-        <span className="flex text-xl justify-center text-red-500 gap-2 news_action py-2 z-50 shadow-2xl">
+        <span className="flex text-xl justify-center text-red-500 md:min-w-[250px]  min-w-[300px] gap-2 news_action py-2 z-50 shadow-2xl">
           {account.permission == "zecky" && (
             <button
               onClick={ToggleStatus}
