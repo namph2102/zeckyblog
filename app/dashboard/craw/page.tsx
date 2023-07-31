@@ -17,7 +17,6 @@ import blogController from "../../sevices/controller/blogController";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/sevices/store";
 import LoginDashBoard from "../component/LoginDashBoard";
-import "../../styles/blogdetail.scss";
 
 import CateGorySelect from "./CategorySelect";
 const initValuecate = { value: "", label: "" };
@@ -69,7 +68,9 @@ const CrawWebsite = () => {
                 source,
               }));
               if (listImageCover && listImageCover?.length > 0) {
-                setListImage(listImageCover);
+                const imageList =
+                  listImageCover.filter((img: any) => checkImageUrl(img)) || [];
+                setListImage(imageList);
               }
               toast.success("Lấy thành công nội dung");
             }

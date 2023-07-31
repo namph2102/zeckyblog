@@ -4,6 +4,7 @@ import TextareaAutosize from "@mui/base/TextareaAutosize";
 import { IData } from "../../sevices/typedata";
 import Image from "next/image";
 import EditorContent from "./EditorContent";
+import "../../styles/blogdetail.scss";
 import {
   CreateSlug,
   DOMAIN_HOST,

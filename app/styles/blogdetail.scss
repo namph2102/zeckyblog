@@ -30,7 +30,13 @@ $color-text: #bcb9b7;
       font-size: auto;
     }
   }
-
+  blockquote {
+    border-left: 4px solid #85670e;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    padding-left: 16px;
+    font-size: 1rem !important;
+  }
   .ql-container {
     font-family: "Inter", Nunito, sans-serif !important;
     font-size: 16px;
@@ -70,6 +76,15 @@ $color-text: #bcb9b7;
     background-color: white;
     opacity: 1;
   }
+  .ql-size-huge {
+    font-size: 2.5rem !important;
+  }
+  .ql-size-small {
+    font-size: 0.75rem !important;
+  }
+  .ql-size-large {
+    font-size: 1.5rem !important;
+  }
   .ql-syntax {
     overscroll-behavior-x: contain;
     overflow-wrap: break-word;
@@ -103,9 +118,11 @@ $color-text: #bcb9b7;
 
   ul {
     list-style: disc;
+    font-size: 17px;
   }
   ol {
     list-style-type: decimal;
+    font-size: 17px;
   }
   ul,
   ol {
@@ -148,13 +165,12 @@ $color-text: #bcb9b7;
   ol,
   ul {
     color: #bfbebd;
-
-    font-size: 18px;
     line-height: 32px;
     font-weight: 400;
   }
   p {
     text-align: justify;
+    font-size: 18px;
   }
   li,
   span {

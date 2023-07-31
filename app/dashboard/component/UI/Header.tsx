@@ -4,7 +4,7 @@ import {
   updateFullAccount,
 } from "@/app/sevices/store/slice/AccountSlice";
 import { getCookie, setCookie } from "cookies-next";
-import Image from "next/image";
+
 import React, { useEffect, useState } from "react";
 import {
   BiLogInCircle,
@@ -18,7 +18,6 @@ import {
   BiX,
   BiLogOutCircle,
   BiBell,
-  BiSolidBell,
   BiChurch,
 } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
@@ -85,7 +84,7 @@ const HeaderDashboard = () => {
       >
         <div className="flex justify-between items-center border_line-style  py-1  border-b-2">
           <figure className="flex  items-center gap-2 font-bold px-6 my-4">
-            <Image
+            <img
               className="object-cover rounded-lg"
               src={
                 checkImageUrl(account.avatar)
