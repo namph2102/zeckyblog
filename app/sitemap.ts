@@ -25,5 +25,16 @@ export default async function sitemap() {
       url: `${domain}/danh-muc/${cate.slug}`,
       lastModified: cate.updatedAt,
     })) || [];
-  return [...listData, ...listsitemapblog, ...listSiteMapCate];
+  const listSiteSearch =
+    listCategory.listCate.map((cate: ICateData) => ({
+      url: `${domain}/tin-tuc?category=${cate.slug}`,
+      lastModified: cate.updatedAt,
+    })) || [];
+
+  return [
+    ...listData,
+    ...listsitemapblog,
+    ...listSiteMapCate,
+    ...listSiteSearch,
+  ];
 }

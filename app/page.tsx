@@ -97,7 +97,7 @@ export default async function Home() {
           <br />
         </p>
         <Image
-          alt={"Giao diện Zecky"}
+          alt={"Giao diện chat bot"}
           src="https://i.imgur.com/EvZMBh2.png"
           className="w-full h-auto object-cover"
           width={700}

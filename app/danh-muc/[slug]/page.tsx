@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: ParamsBlog) {
       siteId: "1646660186759892992",
       creator: "blog.zecky.online",
       creatorId: "1646660186759892992",
-      images: [data.image, DOMAIN_HOST + "/opengraph-image.png"],
+      images: data.image || DOMAIN_HOST + "/opengraph-image.png",
     },
 
     openGraph: {
