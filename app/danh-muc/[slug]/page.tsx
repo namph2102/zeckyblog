@@ -88,6 +88,7 @@ export async function generateStaticParams() {
 const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
   const { data, listBlogRandom, listCate }: ISlugApi =
     await cateController.getCateDetail(params.slug);
+
   if (!data) {
     notFound();
   }
@@ -138,6 +139,7 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
       ratingCount: `${listCate.length}`,
     },
   };
+
   return (
     <main>
       <script
@@ -174,9 +176,9 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
         </div>
       </div>
       <h1 className="text-center mt-8 ">
-        Tin tức về &quot;
+        Tổng hợp tin tức về &quot;
         <strong className="capitalize font-light">{data.cate}</strong>
-        &quot; nổi bật tại Zecky 👈👈
+        &quot; nổi bật
       </h1>
       <ShareSocial link={`${DOMAIN_HOST + "/tim-kiem"}`} />
       <section className="grid sm:grid-cols-2 grid-cols-1 gap-4">

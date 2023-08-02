@@ -11,15 +11,19 @@ import ShareSocial from "../component/ShareSocial";
 
 import ItemDetailViewMore from "../component/ItemDetailViewMore";
 const DOMAIN_HOST = process.env.DOMAIN_URL || "https://blog.zecky.online";
-const titleMessage = "Tổng hợp tin tức nổi bật nhất";
+const titleMessage = "Học lập trình cơ bản";
 const descriptionMessage =
-  "Tổng hợp tin tức tâm huyết tại Zecky, Hãy tham gia zecky để sử dụng ChatGPT phiên bản mới nhất, hoàn toàn miễn phí nhé!";
+  "Danh mục học lập trình là tập hợp các khóa học và tài liệu liên quan đến việc học và phát triển kỹ năng lập trình. Chương trình bao gồm các khía cạnh cơ bản và nâng cao của lập trình, bao gồm ngôn ngữ lập trình phổ biến như Python, Java, JavaScript và C++. Các học viên sẽ tìm hiểu về cú pháp, lô-gic, thuật toán, và quy trình phát triển phần mềm. Ngoài ra, họ cũng sẽ được làm quen với công cụ và kỹ thuật để tối ưu hoá mã nguồn và xây dựng ứng dụng.";
 export const metadata: Metadata = {
   title: titleMessage,
   keywords: [
-    "tin tức chatgpt",
-    "zecky chat bot",
-    "Chat GPT miễn phí",
+    "hoc lap trinh",
+    "hoc lap javascript",
+    "hoc lap reactjs",
+    "hoc lap nodejs",
+    "hoc lap express",
+    "hoc lap python",
+
     "nhắn tin",
     "trí tuệ nhân tạo",
   ],
@@ -40,7 +44,10 @@ export const metadata: Metadata = {
 };
 
 const AllBlog = async () => {
-  const listBlogInPage: IDataBlog[] = await getTopBlog(50);
+  const listBlog: IDataBlog[] = await cateController.getblogfollowCate(
+    "lap-trinh",
+    50
+  );
   const { listCate } = await cateController.getAllcate();
   const schema1 = {
     "@context": "http://schema.org",
@@ -59,7 +66,7 @@ const AllBlog = async () => {
         "@type": "ListItem",
         position: 2,
         item: {
-          "@id": DOMAIN_HOST,
+          "@id": DOMAIN_HOST + "/tin-tuc",
           name: "blog-developer",
         },
       },
@@ -68,7 +75,7 @@ const AllBlog = async () => {
         "@type": "ListItem",
         position: 3,
         item: {
-          "@id": `${DOMAIN_HOST}/search`,
+          "@id": `${DOMAIN_HOST}/hoc-lap-trinh`,
           name: `✅${titleMessage}`,
         },
       },
@@ -83,7 +90,7 @@ const AllBlog = async () => {
       "@type": "AggregateRating",
       ratingValue: "5.0",
       bestRating: "5",
-      ratingCount: "6",
+      ratingCount: listBlog.length,
     },
   };
   return (
@@ -104,21 +111,26 @@ const AllBlog = async () => {
           </Link>
           <BiChevronRight />
           <Link className="capitalize" href={`/tin-tuc`}>
-            tin tức
+            tìm kiếm nâng cao
           </Link>
           <BiChevronRight />
-          <p className="capitalize text-sm">tin tức tổng hợp</p>
+          <p className="capitalize text-sm">Tips học lập trình</p>
         </nav>
       </div>
       <h1 className="text-center mt-8">
-        Tổng hợp {listBlogInPage.length} tin tức nổi bật tại Zecky 👈👈
+        Tổng hợp {listBlog.length} Tips học lập trình
       </h1>
-      <ShareSocial link={`${DOMAIN_HOST + "/tim-kiem"}`} />
+      <ShareSocial link={`${DOMAIN_HOST + "/hoc-lap-trinh"}`} />
       <section className="grid sm:grid-cols-2 grid-cols-1 gap-4">
-        {listBlogInPage.map((blog) => (
+        {listBlog.map((blog) => (
           <ItemDetailViewMore key={blog._id} blog={blog} />
         ))}
       </section>
+      <p className="text-center flex justify-center mt-4 ">
+        <Link className="hover:text-hover" href={`/tin-tuc?category=lap-trinh`}>
+          Xem thêm...
+        </Link>
+      </p>
     </div>
   );
 };

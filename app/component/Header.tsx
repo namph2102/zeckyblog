@@ -59,14 +59,12 @@ const Header: React.FC<HeaderProps> = ({ listMenu }) => {
 
           <li className="text-sm   py-2 font-semibold ">
             <span>
-              {" "}
               <Link href="/tin-tuc"> Tin tức</Link>
             </span>
           </li>
           <li className="text-sm  py-2 font-semibold ">
             <span>
-              {" "}
-              <Link href="/tim-kiem"> Bảng xếp hạng</Link>
+              <Link href="/hoc-lap-trinh"> Học lập trình</Link>
             </span>
           </li>
           <label

@@ -105,7 +105,7 @@ export function Debounced(callback: any, delay: number = 200) {
     }
     timeId = setTimeout(() => {
       callback(args);
-      console.log(timeId);
+     
       clearTimeout(timeId);
     }, delay);
   };

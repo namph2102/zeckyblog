@@ -212,7 +212,10 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
         </>
       )}
       <p className="text-center flex justify-center mt-4 ">
-        <Link className="hover:text-hover" href="/tin-tuc">
+        <Link
+          className="hover:text-hover"
+          href={`/tin-tuc?category=${data.category.slug}`}
+        >
           Xem thêm...
         </Link>
       </p>

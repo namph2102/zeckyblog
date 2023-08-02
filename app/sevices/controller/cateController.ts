@@ -23,9 +23,17 @@ class CateController {
     const data = await res.data;
     return data;
   }
-  async getCateDetail(slug: string) {
+  async getblogfollowCate(slug: string, limit = 30) {
+    const res = await customeAxios.post(`/cate/blog/slug`, {
+      data: { slug, limit },
+      method: "POST",
+    });
+    const data = await res.data;
+    return data;
+  }
+  async getCateDetail(slug: string, limit = 30) {
     const res = await customeAxios.post(`/cate/getslug`, {
-      data: slug,
+      data: { slug, limit },
       method: "POST",
     });
     const data = await res.data;

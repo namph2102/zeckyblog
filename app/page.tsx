@@ -4,6 +4,7 @@ import ShareSocial from "./component/ShareSocial";
 import { DOMAIN_HOST } from "./sevices/untils";
 
 import cateController from "./sevices/controller/cateController";
+import Image from "next/image";
 export default async function Home() {
   const { listCate } = await cateController.getAllcate();
 
@@ -100,6 +101,12 @@ export default async function Home() {
         <p>
           <br />
         </p>
+        <Image
+          alt={"asdsaddsa"}
+          src="https://res.cloudinary.com/db7qiv8vn/image/upload/v1688926551/axfnvy15zdtpfmjtqhc3.png"
+          width={200}
+          height={200}
+        />
         <p className="indent-8">
           Hãy yên tâm khi sử dụng
           <a target="_blank" href="https://zecky.online/" className="font-bold">

@@ -9,6 +9,7 @@ import BlogItemSketon from "../component/BlogItemSketon";
 import blogController from "../sevices/controller/blogController";
 import "./tintuc.scss";
 import {
+  CreateSlug,
   Debounced,
   capitalizeText,
   removeVietnameseTones,
@@ -23,6 +24,8 @@ import { Header } from "../component";
 
 import ItemDetailViewMore from "../component/ItemDetailViewMore";
 import "./tintuc.scss";
+import { useSearchParams } from "next/navigation";
+import { toast } from "react-hot-toast";
 let listBlogsData: IDataBlog[] = [];
 export type Record<Keys extends keyof any, ValueType> = {
   [Key in Keys]: ValueType;
@@ -33,6 +36,10 @@ function isTextString(text: string) {
 }
 type IListChar = Record<string, IDataBlog[]>;
 export default function Blog() {
+  const searchParams = useSearchParams();
+  const querySearch = searchParams.get("q");
+  const cateSearch = searchParams.get("category");
+
   const pageInblog = 10;
   const [listBlogs, setListBlogs] = useState<IDataBlog[]>(listBlogsData);
   const [ListValueChar, setListValueChar] = useState<IListChar>({});
@@ -47,15 +54,6 @@ export default function Blog() {
   });
   const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {
-    blogController
-      .getAllBlogFromSever()
-      .then((data) => {
-        if (data?.length > 0) {
-          setListBlogs(data);
-          listBlogsData = data;
-        }
-      })
-      .finally(() => setFirstLoadding(() => false));
     cateController.getAllcate().then(({ listCate }) => {
       if (listCate) {
         setListCate(listCate);
@@ -65,6 +63,40 @@ export default function Blog() {
   const handleChangePage = (event: any, page: number) => {
     setCurrentPage(page);
   };
+  const handleGetAllBlog = () => {
+    blogController
+      .getAllBlogFromSever()
+      .then((data) => {
+        if (data?.length > 0) {
+          setListBlogs(data);
+          listBlogsData = data;
+        }
+      })
+      .finally(() => setFirstLoadding(() => false));
+  };
+  useEffect(() => {
+    if (querySearch) {
+      blogController
+        .SearchPage(querySearch)
+        .then((data) => {
+          if (data?.length > 0) {
+            setListBlogs(data);
+          }
+        })
+        .finally(() => setFirstLoadding(() => false));
+    } else if (cateSearch) {
+      cateController
+        .getblogfollowCate(cateSearch, 1000)
+        .then((data) => {
+          if (data?.length > 0) {
+            setListBlogs(data);
+          }
+        })
+        .finally(() => setFirstLoadding(() => false));
+    } else {
+      handleGetAllBlog();
+    }
+  }, []);
 
   useEffect(() => {
     if (listBlogs.length <= 0) return;
@@ -165,16 +197,31 @@ export default function Blog() {
   const getListUserSearch = () => {
     const search = inputRef.current?.value;
     if (search) {
+      const newStateData = { q: search };
+      const newTitle = "Tìm kiếm theo từ khóa " + search;
+      const newURL = "/tin-tuc?q=" + CreateSlug(search);
+      history.replaceState(newStateData, newTitle, newURL);
+      document.title = newTitle;
+      // history.replaceState (DOMAIN_HOST + "/tin-tuc?q=" + search);
       blogController.SearchPage(search).then((data) => {
         if (data?.length > 0) {
           setListBlogs(data);
+        } else {
+          toast.error(`Từ khóa "${search}" không có bài viết nào`);
         }
       });
     } else {
-      setListBlogs(() => listBlogsData);
+      handleGetAllBlog();
     }
   };
-
+  let titleH1 = "Tổng hợp tin tức hay tại Zecky";
+  if (querySearch) {
+    titleH1 = `Tổng hợp tin tức theo từ khóa "${querySearch}"`;
+  } else if (cateSearch) {
+    titleH1 = `Tổng hợp tin tức theo danh mục "${
+      listCate.find((cate) => cate.slug == cateSearch)?.cate || cateSearch
+    }"`;
+  }
   return (
     <main>
       <Head>
@@ -196,7 +243,7 @@ export default function Blog() {
           </Link>
         </nav>
       </div>
-      <h1 className="text-center mb-8">Tổng hợp tin tức hay tại Zecky</h1>
+      <h1 className="text-center mb-8">{titleH1}</h1>
       <section
         className={`text-right text-sm flex items-center justify-between mb-1 gap-1 cursor-pointer ${
           isOpenFilter || isOpenSearch ? "" : "pb-4"
@@ -329,7 +376,11 @@ export default function Blog() {
           <ItemDetailViewMore key={blog._id} blog={blog} />
         ))}
       </section>
-
+      {!fisrtLoadding && listBlogInPage.length <= 0 && (
+        <p className="text-center mt-4 text-red-400 text-sm">
+          Hiện tại chưa có bài viết nào phù hợp với yêu cầu
+        </p>
+      )}
       {fisrtLoadding && (
         <section className="grid sm:grid-cols-2 grid-cols-1 gap-4">
           <BlogItemSketon />

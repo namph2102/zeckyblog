@@ -9,8 +9,8 @@ export default async function sitemap() {
   const listurl = [
     domain,
     "https://zecky.online/",
-    `${domain}/tim-kiem`,
-    `${domain}/tim-tuc`,
+    `${domain}/hoc-lap-trinh`,
+    `${domain}/tin-tuc`,
   ];
   const listData = listurl.map((url) => ({
     url,
