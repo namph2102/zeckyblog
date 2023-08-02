@@ -95,14 +95,7 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
   const description =
     data.des ||
     `Tin tức về ${data.cate} được cập nhật tin nóng online Việt Nam và thế giới mới nhất trong ngày `;
-  const listCateCover = listCate.map((item, index) => ({
-    "@type": "ListItem",
-    position: index + 3,
-    item: {
-      "@id": `${DOMAIN_HOST}/danh-muc/${item.slug}`,
-      name: `✅${`${item.cate}`}`,
-    },
-  }));
+
   const schema1 = {
     "@context": "http://schema.org",
     "@type": "BreadcrumbList",
@@ -124,7 +117,14 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
           name: "blog-developer",
         },
       },
-      ...listCateCover,
+      {
+        "@type": "ListItem",
+        position: 3,
+        item: {
+          "@id": `${DOMAIN_HOST}/danh-muc/${data.slug}`,
+          name: `✅${`${data.cate}`}`,
+        },
+      },
     ],
   };
   const schema2 = {
