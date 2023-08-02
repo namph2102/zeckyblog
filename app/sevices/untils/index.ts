@@ -18,6 +18,7 @@ export const customeAxios = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+  timeout: 6000,
 });
 export const getAllBlogFromSever = async () => {
   const res = await axios.get(DOMAIN_SEVER + "/blog/allblog");
@@ -105,7 +106,7 @@ export function Debounced(callback: any, delay: number = 200) {
     }
     timeId = setTimeout(() => {
       callback(args);
-     
+
       clearTimeout(timeId);
     }, delay);
   };

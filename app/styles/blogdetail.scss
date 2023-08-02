@@ -99,10 +99,11 @@ $color-text: #bcb9b7;
     overscroll-behavior-x: contain;
     overflow-wrap: break-word;
     max-width: max-content;
+    min-width: -webkit-fill-available;
     overflow-x: auto;
     background-color: #011626;
     white-space: pre;
-    padding: 4px 16px;
+    padding: 8px 16px;
     &::-webkit-scrollbar {
       width: 4px;
       height: 8px;
@@ -152,15 +153,15 @@ $color-text: #bcb9b7;
     }
   }
   h1 {
-    font-size: 1.9rem;
+    font-size: 2rem;
   }
   h2 {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     border-bottom: 2px solid #555555;
     padding-bottom: 10px;
   }
   h3 {
-    font-size: 1.17rem;
+    font-size: 1.2rem;
   }
   h4 {
     font-size: 1rem;
@@ -342,6 +343,9 @@ table {
 }
 @media screen and (max-width: 768px) {
   #blog_page-detail {
+    p {
+      text-align: left;
+    }
     .ql-toolbar {
       top: 100px;
     }
