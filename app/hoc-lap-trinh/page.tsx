@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   ],
   description: descriptionMessage,
   alternates: {
-    canonical: process.env.DOMAIN_URL + "/tim-kiem",
+    canonical: process.env.DOMAIN_URL + "/hoc-lap-trinh",
   },
   robots: {
     index: true,
@@ -40,6 +40,28 @@ export const metadata: Metadata = {
       noimageindex: false,
     },
   },
+  twitter: {
+    card: "summary_large_image",
+    title: titleMessage,
+    description: descriptionMessage,
+    siteId: "1646660186759892992",
+    creator: "blog.zecky.online",
+    creatorId: "1646660186759892992",
+    images: "https://i.imgur.com/6BSxNTi.jpg",
+  },
+
+  openGraph: {
+    title: titleMessage,
+    description: descriptionMessage,
+    images: {
+      url: "https://i.imgur.com/6BSxNTi.jpg",
+      alt: titleMessage,
+    },
+    type: "article",
+
+    authors: ["zecky.online", "blog.zecky.online"],
+  },
+
   icons: listIconsSeo,
 };
 

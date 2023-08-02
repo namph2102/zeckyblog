@@ -159,7 +159,7 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
           <span className="sm:block hidden">
             <BiChevronRight />
           </span>
-          <Link className="capitalize" href={`/danh-muc/${data.slug}`}>
+          <Link className="capitalize" href={`/tin-tuc?category=${data.slug}`}>
             Danh mục
           </Link>
           <BiChevronRight />
@@ -180,7 +180,7 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
         <strong className="capitalize font-light">{data.cate}</strong>
         &quot; nổi bật
       </h1>
-      <ShareSocial link={`${DOMAIN_HOST + "/tim-kiem"}`} />
+      <ShareSocial link={`${DOMAIN_HOST + `/danh-muc/${data.slug}`}`} />
       <section className="grid sm:grid-cols-2 grid-cols-1 gap-4">
         {listBlogRandom.map((blog) => (
           <ItemDetailViewMore key={blog._id} blog={blog} />
