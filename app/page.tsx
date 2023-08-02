@@ -79,6 +79,31 @@ export default async function Home() {
         <p>
           <br />
         </p>
+        <Image
+          alt={"Giao diện Zecky"}
+          src="https://i.imgur.com/FpX5nQ7.png"
+          className="w-full h-auto object-cover"
+          width={700}
+          height={350}
+        />
+
+        <p className="flex justify-center gap-1 text-sm mb-3">
+          Giao diện
+          <a href="https://zecky.online/" target="_blank">
+            Zecky.online
+          </a>
+        </p>
+        <p>
+          <br />
+        </p>
+        <Image
+          alt={"Giao diện Zecky"}
+          src="https://i.imgur.com/EvZMBh2.png"
+          className="w-full h-auto object-cover"
+          width={700}
+          height={350}
+        />
+        <p className="text-center text-sm mb-3">Tích hợp Chat GPT - Plus</p>
         <h2 className="text-color-head !text-2xl mt-4 haveunline">
           Chính sách bảo mật
         </h2>
@@ -101,12 +126,7 @@ export default async function Home() {
         <p>
           <br />
         </p>
-        <Image
-          alt={"asdsaddsa"}
-          src="https://res.cloudinary.com/db7qiv8vn/image/upload/v1688926551/axfnvy15zdtpfmjtqhc3.png"
-          width={200}
-          height={200}
-        />
+
         <p className="indent-8">
           Hãy yên tâm khi sử dụng
           <a target="_blank" href="https://zecky.online/" className="font-bold">

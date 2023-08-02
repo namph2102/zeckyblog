@@ -18,7 +18,7 @@ export const customeAxios = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  timeout: 6000,
+  timeout: 10000,
 });
 export const getAllBlogFromSever = async () => {
   const res = await axios.get(DOMAIN_SEVER + "/blog/allblog");

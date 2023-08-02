@@ -186,9 +186,12 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
           <ItemDetailViewMore key={blog._id} blog={blog} />
         ))}
       </section>
-      <p className="text-center flex justify-center mt-4 text-white">
-        <Link className="hover:text-hover" href="/tin-tuc">
-          Xem thêm...
+      <p className="text-center flex justify-center mt-4 ">
+        <Link
+          className="hover:text-hover"
+          href={`/tin-tuc?category=${data.slug}`}
+        >
+          Xem thêm
         </Link>
       </p>
     </main>

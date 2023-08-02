@@ -56,7 +56,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
             setListInmage={setListInmage}
             img={img}
             path={""}
-            key={nanoid()}
+            key={img}
           />
         ))}
       </section>
@@ -74,7 +74,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
                 setListInmage={setListImageUpload}
                 img={img.url}
                 path={img.path}
-                key={nanoid()}
+                key={img.path}
               />
             ))}
           </section>

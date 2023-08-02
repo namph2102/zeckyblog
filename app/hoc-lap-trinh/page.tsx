@@ -110,7 +110,7 @@ const AllBlog = async () => {
             Trang chủ
           </Link>
           <BiChevronRight />
-          <Link className="capitalize" href={`/tin-tuc`}>
+          <Link className="capitalize" href={`/tin-tuc?category=lap-trinh`}>
             tìm kiếm nâng cao
           </Link>
           <BiChevronRight />
@@ -128,7 +128,7 @@ const AllBlog = async () => {
       </section>
       <p className="text-center flex justify-center mt-4 ">
         <Link className="hover:text-hover" href={`/tin-tuc?category=lap-trinh`}>
-          Xem thêm...
+          Xem thêm
         </Link>
       </p>
     </div>
