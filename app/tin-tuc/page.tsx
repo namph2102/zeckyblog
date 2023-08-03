@@ -3,7 +3,7 @@ import Link from "next/link";
 import { IDataBlog } from "../sevices/typedata";
 
 import { Pagination } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Head from "next/head";
 import BlogItemSketon from "../component/BlogItemSketon";
 import blogController from "../sevices/controller/blogController";
@@ -49,11 +49,13 @@ export default function Blog() {
   const [listCateKey, setListCateKey] = useState<IListChar>({});
   const [fisrtLoadding, setFirstLoadding] = useState(true);
   const [fillterChar, setFillterChar] = useState<{ kind: string; value: any }>({
-    kind: "view",
-    value: "sort",
+    kind: querySearch?'querySearch':cateSearch?'cateSearch':"",
+    value:  querySearch?querySearch:cateSearch?cateSearch:"",
   });
+
   const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {
+    handleGetAllBlog();
     cateController.getAllcate().then(({ listCate }) => {
       if (listCate) {
         setListCate(listCate);
@@ -74,32 +76,12 @@ export default function Blog() {
       })
       .finally(() => setFirstLoadding(() => false));
   };
-  useEffect(() => {
-    if (querySearch) {
-      blogController
-        .SearchPage(querySearch)
-        .then((data) => {
-          if (data?.length > 0) {
-            setListBlogs(data);
-          }
-        })
-        .finally(() => setFirstLoadding(() => false));
-    } else if (cateSearch) {
-      cateController
-        .getblogfollowCate(cateSearch, 1000)
-        .then((data) => {
-          if (data?.length > 0) {
-            setListBlogs(data);
-          }
-        })
-        .finally(() => setFirstLoadding(() => false));
-    } else {
-      handleGetAllBlog();
-    }
-  }, []);
+
+
 
   useEffect(() => {
     if (listBlogs.length <= 0) return;
+  
     const listChars: IListChar = {};
     const listYears: IListChar = {};
     const listAuthor: IListChar = {};
@@ -140,7 +122,10 @@ export default function Blog() {
     setListCateKey(listCateKey);
   }, [listBlogs.length]);
 
+
+
   let listBlogFillter: IDataBlog[] = [];
+ 
   switch (fillterChar.kind) {
     case "char":
       listBlogFillter = ListValueChar[fillterChar.value];
@@ -179,8 +164,15 @@ export default function Blog() {
         .filter((item) => item.category.cate == fillterChar.value)
         .sort((a, b) => b.view - a.view);
       break;
-    default:
+    case 'querySearch':
+        listBlogFillter = listBlogs.filter((blog)=>(blog.title).toLowerCase().includes(fillterChar.value.toLowerCase()||""))
+      break;
+    case 'cateSearch':
+        listBlogFillter = listBlogs.filter((blog)=>blog.category.slug==fillterChar.value) || []
+        break;
+      default:
       listBlogFillter = listBlogs;
+    
   }
   let totalPage = Math.ceil((listBlogFillter?.length || 1) / pageInblog);
   const currentPageFormat = currentPage > totalPage ? 1 : currentPage;
@@ -194,26 +186,23 @@ export default function Blog() {
   const [isOpenFilter, setIsOpenFilter] = useState(false);
   const [isOpenSearch, setIsOpenSearch] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const getListUserSearch = () => {
+  const getListUserSearch = useCallback(() => {
     const search = inputRef.current?.value;
+    setIsOpenFilter(false)
     if (search) {
       const newStateData = { q: search };
       const newTitle = "Tìm kiếm theo từ khóa " + search;
       const newURL = "/tin-tuc?q=" + CreateSlug(search);
       history.replaceState(newStateData, newTitle, newURL);
       document.title = newTitle;
-      // history.replaceState (DOMAIN_HOST + "/tin-tuc?q=" + search);
-      blogController.SearchPage(search).then((data) => {
-        if (data?.length > 0) {
-          setListBlogs(data);
-        } else {
-          toast.error(`Từ khóa "${search}" không có bài viết nào`);
-        }
-      });
+      setFillterChar(()=>({kind:'querySearch',value:search}))
+
     } else {
-      handleGetAllBlog();
+      setFillterChar(()=>({kind:'',value:""}))
+     
     }
-  };
+  },[listBlogs.length]);
+ 
   let titleH1 = "Tổng hợp tin tức hay tại Zecky";
   if (querySearch) {
     titleH1 = `Tổng hợp tin tức theo từ khóa "${querySearch}"`;
@@ -225,7 +214,7 @@ export default function Blog() {
   return (
     <main>
       <Head>
-        <title>Tổng hợp tin tức hay tại Zecky</title>
+        <title>{titleH1}</title>
         <meta
           name="description"
           content="Tổng hợp tin tức hay tâm huyết tại Zecky, Hãy tham gia zecky để sử dụng ChatGPT phiên bản mới nhất, hoàn toàn miễn phí nhé!"
@@ -253,6 +242,7 @@ export default function Blog() {
           onClick={() => {
             isOpenSearch && setListBlogs(() => listBlogsData);
             setIsOpenSearch(!isOpenSearch);
+            setIsOpenFilter(false);
           }}
           className="flex items-center justify-between sm:text-base text-base"
         >
@@ -262,7 +252,7 @@ export default function Blog() {
           </p>
         </div>
         <div
-          onClick={() => setIsOpenFilter(!isOpenFilter)}
+          onClick={() => {setIsOpenFilter(!isOpenFilter);  setIsOpenSearch(false);}}
           className="flex items-center justify-between sm:text-base text-base"
         >
           Lọc tin tức{" "}
@@ -276,6 +266,7 @@ export default function Blog() {
           <div className="main__title-form py-1 flex items-center bg-[#151f30] rounded-full pr-5">
             <input
               ref={inputRef}
+              autoFocus
               onInput={Debounced(getListUserSearch, 1000)}
               type="search"
               placeholder="Tìm kiếm bài viết..."
