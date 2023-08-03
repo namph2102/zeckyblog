@@ -34,14 +34,12 @@ const Header: React.FC<HeaderProps> = ({ listMenu }) => {
       <nav className="menu_moblie relative sm:block hidden">
         <ul className="sm:flex hidden gap-x-6 gap-y-2  menu_main__container">
           <li className="text-sm   py-2 font-semibold ">
-            <span>
-              <Link href="/"> Trang chủ</Link>
-            </span>
+          <Link className="block" href="/"> Trang chủ</Link>
           </li>
-          <li className="text-sm cursor-pointer relative py-2 menu-drop_parent font-semibold ">
-            <p className="flex gap-1 items-center">
+          <li className="text-sm  cursor-pointer relative py-2  menu-drop_parent font-semibold ">
+            <button className="flex gap-1 items-center">
               <span> Danh mục</span> <RiArrowDownSLine />
-            </p>
+            </button>
             <ul className="absolute hidden overflow-y-auto scroolbar max-h-[80vh] top-full left-0 lg:w-[500px] bg-primary  w-[300px]  gap-2 flex-wrap menuDrop">
               {listMenu &&
                 listMenu.map((cate) => (
@@ -58,14 +56,10 @@ const Header: React.FC<HeaderProps> = ({ listMenu }) => {
           </li>
 
           <li className="text-sm   py-2 font-semibold ">
-            <span>
-              <Link href="/tin-tuc"> Tin tức</Link>
-            </span>
+          <Link className="block" href="/tin-tuc"> Tin tức</Link>
           </li>
           <li className="text-sm  py-2 font-semibold ">
-            <span>
-              <Link href="/hoc-lap-trinh"> Học lập trình</Link>
-            </span>
+          <Link className="block" href="/hoc-lap-trinh"> Học lập trình</Link>
           </li>
           <label
             htmlFor="openmenu"

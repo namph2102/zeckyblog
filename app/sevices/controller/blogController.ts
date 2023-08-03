@@ -13,7 +13,8 @@ class BlogController {
     const res = await customeAxios.post(this.pathUrlBlog + "/create", {
       data: blog,
       message: "Tạo bài viết mới",
-    });
+    }
+    );
     const data = await res.data;
     return data;
   }

@@ -18,6 +18,7 @@ body {
   background-color: #222831;
   text-rendering: optimizeLegibility;
   scroll-behavior: smooth;
+
 }
 ::selection {
   background-color: #0765d6 !important;

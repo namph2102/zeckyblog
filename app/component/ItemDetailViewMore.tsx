@@ -12,18 +12,20 @@ interface ItemDetailViewMoreProps {
 const ItemDetailViewMore: React.FC<ItemDetailViewMoreProps> = ({ blog }) => {
   return (
     <article id="blog_more" key={blog.slug}>
-      <Link href={`/${blog.slug}`}>
+      <Link  href={`/${blog.slug}`}>
         <Image
           src={blog.image}
           width={200}
-          height={100}
+          height={160}
           alt={blog.title}
-          className="w-full sm:h-[200px] h-[300px] object-cover"
+        
+         priority
+          className="w-full sm:h-[250px] lg:max-h-[320px] md:max-h-[160px] max-h-[240px] h-auto object-cover"
         />
         <h2 className="line-clamp-1  mt-2 pb-0">{blog.title}</h2>
         <p className="indent-3 line-clamp-3 text-base my-2">{blog.des} </p>
-        <div className="flex justify-between capitalize">
-          <span></span>
+        <div className="flex justify-end capitalize">
+       
           <Tooltip
             arrow
             componentsProps={componentsProps}

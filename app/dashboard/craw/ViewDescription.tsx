@@ -39,7 +39,7 @@ const ViewDescription: React.FC<ViewDescriptionProps> = ({
     });
   };
   const [listImageUpload, setListImageUpload] = useState<IImageUpload[]>([]);
-  const handleSubmit = (e: any) => {
+  const handleSubmit = () => {
     if (infoSetting.content.includes("img") && listImageUpload.length > 0) {
       const comment = infoSetting.content;
       const regex = /https?:\/\/\S+/gi;
@@ -67,7 +67,7 @@ const ViewDescription: React.FC<ViewDescriptionProps> = ({
     }
 
     handleCreateBlog(infoSetting);
-    e.target.classList.add("hidden");
+ 
   };
   const handleChangecontentEditor = (value: string) => {
     handleChangeContent("content", value);

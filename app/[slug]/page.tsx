@@ -129,7 +129,7 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
       "@type": "AggregateRating",
       ratingValue: "5.0",
       bestRating: "5",
-      ratingCount: `${listBlogRandom.length}`,
+      ratingCount: `${listBlogRandom.length ||1}`,
     },
   };
 
