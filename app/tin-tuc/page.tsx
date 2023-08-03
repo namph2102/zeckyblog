@@ -246,7 +246,7 @@ export default function Blog() {
           }}
           className="flex items-center justify-between sm:text-base text-base"
         >
-          Tìm kiếm{" "}
+          Tìm kiếm
           <p className="text-xl ">
             {!isOpenSearch ? <BiChevronDown /> : <BiX />}
           </p>
@@ -255,7 +255,7 @@ export default function Blog() {
           onClick={() => {setIsOpenFilter(!isOpenFilter);  setIsOpenSearch(false);}}
           className="flex items-center justify-between sm:text-base text-base"
         >
-          Lọc tin tức{" "}
+          Lọc tin tức
           <p className="text-xl ">
             {!isOpenFilter ? <BiChevronDown /> : <BiX />}
           </p>
