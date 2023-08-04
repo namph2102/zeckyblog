@@ -89,7 +89,7 @@ const AllBlog = async () => {
         position: 2,
         item: {
           "@id": DOMAIN_HOST + "/tin-tuc",
-          name: "blog-developer",
+          name: "Tin tức",
         },
       },
 
@@ -98,7 +98,7 @@ const AllBlog = async () => {
         position: 3,
         item: {
           "@id": `${DOMAIN_HOST}/hoc-lap-trinh`,
-          name: `✅${titleMessage}`,
+          name: `✅ Học Lập trình`,
         },
       },
     ],
@@ -112,7 +112,7 @@ const AllBlog = async () => {
       "@type": "AggregateRating",
       ratingValue: "5.0",
       bestRating: "5",
-      ratingCount: listBlog.length,
+      ratingCount: listBlog.length || 13,
     },
   };
   return (

@@ -108,21 +108,12 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
           name: "Trang chủ",
         },
       },
-
       {
         "@type": "ListItem",
         position: 2,
         item: {
-          "@id": DOMAIN_HOST,
-          name: "blog-developer",
-        },
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
-        item: {
           "@id": `${DOMAIN_HOST}/danh-muc/${data.slug}`,
-          name: `✅${`${data.cate}`}`,
+          name: `✅${`${capitalizeText(data.cate)}`}`,
         },
       },
     ],
