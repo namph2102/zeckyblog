@@ -16,13 +16,14 @@ import adminController from "@/app/sevices/controller/adminController";
 import { IAccount } from "@/app/sevices/store/slice/AccountSlice";
 import { capitalizeText } from "@/app/sevices/untils";
 import SearchContainer from "../component/form/SearchContainer";
+import cateController from "@/app/sevices/controller/cateController";
 const getDataShow = (
   skip: number,
   limit: number,
   userId?: string,
   authorID?: string
 ) => {
-  return blogController.getDashboardPage(skip, limit, userId, authorID);
+  return blogController.getDashboardPage(skip, limit, userId, authorID,);
 };
 
 const BlogDashboard = () => {
@@ -58,6 +59,7 @@ const BlogDashboard = () => {
   }, [account._id, currentPage, account.fullname, acction, idUseSelect]);
 
   const listBlog = listBlogs.listBlog || [];
+
   const totalBlog = listBlogs.total || 0;
   const totalPage = Math.ceil(totalBlog / listBlogs.pageinBlog);
   const handleChangePage = (event: any, page: number) => {
@@ -74,9 +76,17 @@ const BlogDashboard = () => {
             value: user._id,
             label: capitalizeText(user.fullname),
           }));
-          setListCate(listCateCover);
+          setListCate((prev)=>[...listCateCover,...prev,]);
         }
       });
+    cateController.getAllcate().then((data)=>{
+      if(data.listCate){
+        const listCategory:ISelect[]=data.listCate.map((item:any)=>({value:item.slug,label:capitalizeText(item.cate)}))
+        setListCate((prev)=>[...prev,...listCategory])
+      }
+    });
+ 
+    
     }
   }, [account.permission]);
 

@@ -24,7 +24,7 @@ const SelectSimpleItem: FC<SelectSimpleItem> = ({
         onChange={handleChange}
         id="long-value-select"
         instanceId="long-value-select"
-        className="max-w-[400] z-10 my-2 sm:my-0 bg-main"
+        className="max-w-[400px] min-w-[300px] z-10 my-2 sm:my-0 bg-main"
       />
     </div>
   );

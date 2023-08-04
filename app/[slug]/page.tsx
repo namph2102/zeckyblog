@@ -195,9 +195,10 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
                   <Image
                     src={blog.image}
                     width={200}
-                    height={100}
+                    height={160}
                     alt={blog.title}
-                    className="w-full sm:h-[200px] h-[300px] object-cover"
+                    priority
+                    className="w-full sm:h-[250px] lg:max-h-[200px] md:max-h-[130px] max-h-[240px] h-auto object-cover"
                   />
                   <h3 className="line-clamp-1 mt-2 pb-0 text-[16px] sm:text-[18px]">
                     {blog.title}

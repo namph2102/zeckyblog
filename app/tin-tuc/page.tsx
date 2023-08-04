@@ -25,7 +25,6 @@ import { Header } from "../component";
 import ItemDetailViewMore from "../component/ItemDetailViewMore";
 import "./tintuc.scss";
 import { useSearchParams } from "next/navigation";
-import { toast } from "react-hot-toast";
 let listBlogsData: IDataBlog[] = [];
 export type Record<Keys extends keyof any, ValueType> = {
   [Key in Keys]: ValueType;
@@ -205,10 +204,10 @@ export default function Blog() {
  
   let titleH1 = "Tổng hợp tin tức hay tại Zecky";
   if (querySearch) {
-    titleH1 = `Tổng hợp tin tức theo từ khóa "${querySearch}"`;
+    titleH1 = `Danh sách  tin tức theo từ khóa "${querySearch}"`;
   } else if (cateSearch) {
-    titleH1 = `Tổng hợp tin tức theo danh mục "${
-      listCate.find((cate) => cate.slug == cateSearch)?.cate || cateSearch
+    titleH1 = `Danh sách  tin tức theo danh mục "${
+      capitalizeText( listCate.find((cate) => cate.slug == cateSearch)?.cate || cateSearch)
     }"`;
   }
   return (
@@ -301,7 +300,7 @@ export default function Blog() {
               <option value={listCate[0].slug}>Danh mục </option>
               {Object.keys(listCateKey).map((cate) => (
                 <option key={nanoid()} className="capitalize" value={cate}>
-                  {cate}
+                  {capitalizeText(cate)}
                 </option>
               ))}
             </select>

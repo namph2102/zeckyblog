@@ -17,8 +17,7 @@ const ItemDetailViewMore: React.FC<ItemDetailViewMoreProps> = ({ blog }) => {
           src={blog.image}
           width={200}
           height={160}
-          alt={blog.title}
-        
+          alt={blog.title}      
          priority
           className="w-full sm:h-[250px] lg:max-h-[320px] md:max-h-[160px] max-h-[240px] h-auto object-cover"
         />
