@@ -10,3 +10,15 @@
     display: block;
 
 }
+@media screen and (max-width:768px) {
+    #mega-menu-full{
+        ul{
+            li{
+              a,label{ 
+                
+                padding: 8px 12px !important;
+              }
+            }
+        }
+    }
+}
