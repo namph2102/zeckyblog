@@ -4,6 +4,7 @@ export interface ICateCreate {
   slug: string;
   cate: string;
   author: string;
+  des?:string;
 
 }
 export interface ICateData extends ICateCreate {

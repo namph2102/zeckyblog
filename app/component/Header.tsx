@@ -3,11 +3,10 @@ import React from "react";
 
 import LogoIcon from "../assets/logo.png";
 import Link from "next/link";
+import { ICateCreate } from "../sevices/controller/cateController";
 import "./Header.scss"
-import { ICateData } from "../sevices/controller/cateController";
-
 interface HeaderProps {
-  listMenu: ICateData[];
+  listMenu: ICateCreate[];
 }
 const Header: React.FC<HeaderProps> = ({ listMenu }) => {
   
