@@ -1,0 +1,12 @@
+#mega-menu-full-dropdown{
+   transform: scale(0);
+   transition: 0.3s ease-in;
+
+}
+#idcheckbox:checked ~ #mega-menu-full-dropdown{
+    transform: scale(1);
+}
+#mega-menu-full:checked ~ #mega-menu-full{
+    display: block;
+
+}

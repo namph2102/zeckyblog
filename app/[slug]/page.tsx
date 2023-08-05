@@ -161,7 +161,7 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
           </Link>
         </nav>
         <div className="datetime text-xs">
-          {" "}
+        
           {moment(data.createdAt).format("hh:mm:ss - DD/MM/YYYY")}
         </div>
       </div>

@@ -88,15 +88,6 @@ const AllBlog = async () => {
         "@type": "ListItem",
         position: 2,
         item: {
-          "@id": DOMAIN_HOST + "/tin-tuc",
-          name: "Tin tức",
-        },
-      },
-
-      {
-        "@type": "ListItem",
-        position: 3,
-        item: {
           "@id": `${DOMAIN_HOST}/hoc-lap-trinh`,
           name: `✅ Học Lập trình`,
         },
@@ -132,11 +123,11 @@ const AllBlog = async () => {
             Trang chủ
           </Link>
           <BiChevronRight />
-          <Link className="capitalize" href={`/tin-tuc?category=lap-trinh`}>
-            tìm kiếm nâng cao
+          <Link className="capitalize last_child" href={`/tin-tuc?category=lap-trinh`}>
+               Học lập trình
           </Link>
-          <BiChevronRight />
-          <p className="capitalize text-sm">Tips học lập trình</p>
+   
+     
         </nav>
       </div>
       <h1 className="text-center mt-8">
