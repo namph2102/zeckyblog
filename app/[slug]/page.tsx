@@ -54,7 +54,7 @@ export async function generateMetadata({ params }: ParamsBlog) {
       },
       type: "article",
       publishedTime: data.updatedAt,
-      authors: ["zecky.online", "blog.zecky.online"],
+
     },
     icons: listIconsSeo,
     robots: {

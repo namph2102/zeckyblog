@@ -34,14 +34,14 @@ h4,
 h5,
 h6 {
   color: #efbb35;
-  font-weight: 600;
+  font-weight: 500;
 }
 strong{
-  font-weight: 600;
+  font-weight: 500;
 
 }
 h1 {
-  font-size: 2em;
+  font-size: 1.8em;
   line-height: 40px;
 }
 h2 {

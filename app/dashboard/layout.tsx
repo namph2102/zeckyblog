@@ -6,6 +6,15 @@ const queryClient = new QueryClient();
 import "./styles/dashboard.scss";
 import { Provider } from "react-redux";
 import { store } from "../sevices/store";
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Quản trị viên website Zecky ",
+  generator: "Quản trị viên website Zecky  ",
+  applicationName:
+    "Quản trị viên website Zecky ",
+  description:
+    "Quản trị viên website mới vào được trang này nhé!",
+};
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <main className="flex " id="dashboard">
