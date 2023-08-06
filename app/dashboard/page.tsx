@@ -35,7 +35,9 @@ const DashBoard = () => {
     totalAccountOnline: 0,
   });
   useEffect(() => {
+    document.title="Trang quản trị";
     if (!account.fullname) return;
+
     const accessToken: any = getCookie("accessToken") || "";
     if (!accessToken) {
       setFirstLoading(false);
