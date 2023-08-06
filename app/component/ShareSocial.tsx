@@ -12,7 +12,7 @@ const ShareSocial: React.FC<ShareSocialProps> = ({ link, isTextShare }) => {
   const className = `flex gap-2 items-center ${
     isTextShare
       ? "border-t-2 border-gray-500 py-4 mt-2"
-      : " mb-8 sm:mb-12 justify-center"
+      : " mb-8 sm:mb-12 justify-center mt-3"
   }`;
 
   return (

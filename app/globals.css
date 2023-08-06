@@ -33,33 +33,36 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: 400;
   color: #efbb35;
-  padding-bottom: 10px;
+  font-weight: 600;
+}
+strong{
+  font-weight: 600;
+
 }
 h1 {
-  font-size: 2.2rem;
+  font-size: 2em;
   line-height: 40px;
 }
 h2 {
-  font-size: 1.7rem;
+  font-size: 1.5em;
 }
 h2.haveunline {
-  font-size: 1.7rem;
+  font-size: 1.5em;
   border-bottom: 2px solid #555555;
   padding-bottom: 10px;
 }
 h3 {
-  font-size: 1.4rem;
+  font-size: 1.17em;
 }
 h4 {
-  font-size: 1.25rem;
+  font-size: 1em;
 }
 h5 {
-  font-size: 1.2rem;
+  font-size: 0.83em;
 }
 h6 {
-  font-size: 1rem;
+  font-size: .67em;
 }
 .MuiBreadcrumbs-separator {
   color: #ffffff !important;
@@ -99,6 +102,9 @@ ul li::marker {
   color: #e29218;
 }
 @media screen and (max-width: 768px) {
+  h1,h2,h3,h4,h5,h6{
+    font-weight:400;
+  }
   footer p {
     font-size: 14px !important;
   }
@@ -113,14 +119,7 @@ ul li::marker {
     color: #dbd7d5;
     font-weight: 300;
   }
-  h1 {
-    font-size: 1.9rem;
-    line-height: 36px;
-  }
-  h2 {
-    font-size: 1.6rem;
-    line-height: 32px;
-  }
+
 }
 .menu a {
   color: #3e97d5;

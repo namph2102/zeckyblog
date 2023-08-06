@@ -29,6 +29,9 @@ $color-text: #bcb9b7;
   h5,
   h6 {
     color: $color-header;
+      > strong{
+        color: $color-header;
+      }
     > a {
       color: $color-header;
       font-size: auto;
@@ -40,6 +43,7 @@ $color-text: #bcb9b7;
       font-size: auto;
     }
   }
+ 
   blockquote {
     border-left: 4px solid #85670e;
     margin-bottom: 5px;
@@ -152,26 +156,15 @@ $color-text: #bcb9b7;
       }
     }
   }
-  h1 {
-    font-size: 2rem;
-  }
+
   h2 {
-    font-size: 1.7rem;
     border-bottom: 2px solid #555555;
     padding-bottom: 10px;
+    strong{
+      color: #e29218;
+    }
   }
-  h3 {
-    font-size: 1.2rem;
-  }
-  h4 {
-    font-size: 1rem;
-  }
-  h5 {
-    font-size: 0.83rem;
-  }
-  h6 {
-    font-size: 0.67rem;
-  }
+ 
   p,
   ol,
   ul {

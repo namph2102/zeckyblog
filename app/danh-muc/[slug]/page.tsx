@@ -166,9 +166,9 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
           {moment(data.createdAt).format("hh:mm:ss - DD/MM/YYYY")}
         </div>
       </div>
-      <h1 className="text-center mt-8 ">
+      <h1 className="text-center mt-8">
         Tổng hợp tin tức về &quot;
-        <strong className="capitalize font-light">{data.cate}</strong>
+      <strong className="capitalize">{data.cate}</strong> 
         &quot; nổi bật
       </h1>
       <ShareSocial link={`${DOMAIN_HOST + `/danh-muc/${data.slug}`}`} />
