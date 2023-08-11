@@ -4,7 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import React, { FC } from "react";
 import { BiChevronRight } from "react-icons/bi";
-
+export const revalidate = 3600;
 import moment from "moment";
 import cateController, {
   ICateData,
@@ -127,7 +127,7 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
       "@type": "AggregateRating",
       ratingValue: "5.0",
       bestRating: "5",
-      ratingCount: `${listCate.length||2}`,
+      ratingCount: `${listCate.length || 2}`,
     },
   };
 
@@ -168,7 +168,7 @@ const BlogDetail: FC<ParamsBlog> = async ({ params }) => {
       </div>
       <h1 className="text-center mt-8">
         Tổng hợp tin tức về &quot;
-      <strong className="capitalize">{data.cate}</strong> 
+        <strong className="capitalize">{data.cate}</strong>
         &quot; nổi bật
       </h1>
       <ShareSocial link={`${DOMAIN_HOST + `/danh-muc/${data.slug}`}`} />

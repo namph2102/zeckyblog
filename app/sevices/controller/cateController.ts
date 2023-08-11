@@ -4,8 +4,7 @@ export interface ICateCreate {
   slug: string;
   cate: string;
   author: string;
-  des?:string;
-
+  des?: string;
 }
 export interface ICateData extends ICateCreate {
   des: string;
@@ -25,7 +24,7 @@ class CateController {
     const data = await res.data;
     return data;
   }
-  
+
   async getblogfollowCate(slug: string, limit = 30) {
     const res = await customeAxios.post(`/cate/blog/slug`, {
       data: { slug, limit },

@@ -10,6 +10,7 @@ import moment from "moment";
 import { Header } from "../component";
 import { ICateCreate } from "../sevices/controller/cateController";
 import "../component/style.scss";
+export const revalidate = 3600; 
 interface ParamsBlog {
   params: { slug: string };
 }

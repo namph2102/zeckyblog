@@ -10,6 +10,7 @@ import { BiChevronRight } from "react-icons/bi";
 import ShareSocial from "../component/ShareSocial";
 
 import ItemDetailViewMore from "../component/ItemDetailViewMore";
+export const revalidate = 3600;
 const DOMAIN_HOST = process.env.DOMAIN_URL || "https://blog.zecky.online";
 const titleMessage = "Học lập trình cơ bản";
 const descriptionMessage =
@@ -123,11 +124,12 @@ const AllBlog = async () => {
             Trang chủ
           </Link>
           <BiChevronRight />
-          <Link className="capitalize last_child" href={`/tin-tuc?category=lap-trinh`}>
-               Học lập trình
+          <Link
+            className="capitalize last_child"
+            href={`/tin-tuc?category=lap-trinh`}
+          >
+            Học lập trình
           </Link>
-   
-     
         </nav>
       </div>
       <h1 className="text-center mt-8">
